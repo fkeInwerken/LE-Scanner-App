@@ -1,0 +1,18 @@
+{
+  "generator-ui5-app": {
+    "namespace": "inw.le_scanner",
+    "framework": "OpenUI5",
+    "frameworkVersion": "1.131.1",
+    "author": "inwerken",
+    "initrepo": true,
+    "appId": "inw.le_scanner",
+    "appURI": "inw/le_scanner",
+    "cdnDomain": "sdk.openui5.org",
+    "defaultTheme": "sap_horizon",
+    "qunitCoverageFile": "qunit-coverage-istanbul.js",
+    "gte1_98_0": true,
+    "gte1_104_0": true,
+    "lt1_124_0": false,
+    "setupCompleted": true
+  }
+}
