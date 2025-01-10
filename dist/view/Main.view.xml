@@ -1,7 +1,7 @@
 <mvc:View controllerName="inw.le_scanner.controller.Main" displayBlock="true" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" xmlns:ndc="sap.ndc" core:require="{
 		formatter: 'inw/le_scanner/model/formatter'
 	}">
-	<Page title="{i18n>appTitle}" id="page">
+	<Page title="{i18n>appTitle}" id="page" class="sapUiContentPadding">
 		<content>
 			<Label text="Paletten Barcode:" required="true" class="sapUiSmallMarginTop" />
 			<Input id="istLagereinheitBarcode" value="{viewModel>/istLagereinheitBarcode}" width="100%">
