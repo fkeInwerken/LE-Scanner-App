@@ -1,0 +1,7 @@
+.sapMBtn:focus, .ndcBarcodeScannerButton:focus {
+    outline: none; /* Entfernt den Standard-Outline */
+    border: 1px solid #5c9eff; /* Umrandung bei Fokus */
+    border-radius: 5px; /* Runde Ecken für den Fokus */
+    box-shadow: 0 0 8px rgba(92, 158, 255, 0.7); /* Sanfter Schatten für den Fokus */
+}
+
