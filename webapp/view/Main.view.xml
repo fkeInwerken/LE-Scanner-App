@@ -15,13 +15,11 @@
 		<content>
 			
 		<Label text="Paletten Barcode:" required="true" class="sapUiSmallMarginTop"/>	
-		<ndc:BarcodeScannerButton
+		<Input
 			id="istLagereinheitBarcode"
-			scanSuccess="onistLagereinheitBarcodeSuccess"
-			scanFail="onistLagereinheitBarcodeError"
-			inputLiveUpdate="onBarcodeLiveupdate"
+			value="{viewModel>/istLagereinheitBarcode}"
 			width="100%"
-			fieldHelpDisplay="true" 
+
 			
 		/>
 	
@@ -50,22 +48,18 @@
 		<Text text=''/>
 
 		<Label text="Lagerplatz Barcode:" class="sapUiLargeMarginTop"/>	
-		<ndc:BarcodeScannerButton
+		<Input
 			id="wechselLagerplatzBarcode"
-			scanSuccess="onwechselLagerplatBarcodeSuccess"
-			scanFail="onBarcodeError"
-			inputLiveUpdate="onBarcodeLiveupdate"
+			value="{viewModel>/wechselLagerplatzBarcode}"
 			width="100%"
 			
 			
 		/>
 
 		<Label text="Lagereinheit Barcode:" required="true" class="sapUiLargeMarginTop"/>	
-		<ndc:BarcodeScannerButton
+		<Input
 			id="sollLagereinheitBarcode"
-			scanSuccess="onsollLagereinheitBarcodeSuccess"
-			scanFail="onBarcodeError"
-			inputLiveUpdate="onBarcodeLiveupdate"
+			value="{viewModel>/sollLagereinheitBarcode}"
 			width="100%"
 		/>
 		</content>
