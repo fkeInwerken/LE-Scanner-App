@@ -1,9 +1,17 @@
-sap.ui.define(["./BaseController", "sap/m/MessageBox", "sap/m/MessageToast",], function (BaseController, MessageBox, MessageToast) {
+sap.ui.define(["./BaseController","sap/ui/model/json/JSONModel",], function (BaseController,JSONModel) {
 	"use strict";
 
 	return BaseController.extend("inw.le_scanner.controller.Main", {
 		onInit: function () {
-			
+			const oViewModel = new JSONModel({
+				istLagereinheitBarcode:"",
+				wechselLagerplatzBarcode:"",
+				sollLagereinheitBarcode:"",
+				TANummer: "",
+				anzahlPositionen: "",
+				Lagerplatz: "",
+			});
+			this.setModel(oViewModel, "viewModel");
 		
 			
 		},
@@ -12,58 +20,10 @@ sap.ui.define(["./BaseController", "sap/m/MessageBox", "sap/m/MessageToast",], f
 			const oAnzahlPositionen = this.byId("anzahlPositionen");
 			const oLagerplatz = this.byId("Lagerplatz");
 			   // Füge das Delegate hinzu, um nach dem Rendern den tabindex zu setzen
-			   this._setTabIndexAfterRendering(oTANummer);
-			   this._setTabIndexAfterRendering(oAnzahlPositionen);
-			   this._setTabIndexAfterRendering(oLagerplatz);
+			   oTANummer.addEventDelegate;
+			   oAnzahlPositionen.addEventDelegate;
+			   oLagerplatz.addEventDelegate;
 		},
-		_setTabIndexAfterRendering: function(oControl) {
-			oControl.addEventDelegate({
-				onAfterRendering: function () {
-					// Setze tabindex auf -1, damit das Element von der Tabulator-Navigation ausgeschlossen wird
-					oControl.getDomRef().setAttribute("tabindex", -1);
-				}
-			});
-		},
-
-		 // Handler for "istLagereinheitBarcode"
-		 onistLagereinheitBarcodeSuccess: function (oEvent) {
-			const sScannedValue = oEvent.getParameter("text"); // Gescannter Wert auslesen
-			if (sScannedValue) {
-				// Scannerdaten ins Model schreiben
-				
-
-				// Daten aus Backend holen/nehmen
-
-
-				// Felder beschreiben
-			}
-        },
-    
-        
-        // Handler for "wechselLagerplatzBarcode"
-        onwechselLagerplatBarcodeSuccess: function (oEvent) {
-			const sScannedValue = oEvent.getParameter("text"); // Gescannter Wert auslesen
-			if (sScannedValue) {
-				// Scannerdaten ins Model schreiben
-				
-
-			}
-
-        },
-       
-        // Handler for "sollLagereinheitBarcode"
-        onsollLagereinheitBarcodeSuccess: function (oEvent) {
-			const sScannedValue = oEvent.getParameter("text"); // Gescannter Wert auslesen
-			if (sScannedValue) {
-				// Scannerdaten ins Model schreiben
-
-
-			}
-        },
-		onBarcodeError: function () {
-			MessageToast.show("Scan fehlgeschlagen. Bitte erneut versuchen.");
-        },
-        onBarcodeLiveupdate: function () {},
-
+		
 	});
 });
