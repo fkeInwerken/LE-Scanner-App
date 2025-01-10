@@ -1,0 +1,86 @@
+<mvc:View
+	controllerName="inw.le_scanner.controller.Main"
+	displayBlock="true"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:core="sap.ui.core"
+	xmlns:ndc="sap.ndc"
+	core:require="{
+		formatter: 'inw/le_scanner/model/formatter'
+	}">
+
+	<Page
+		title="{i18n>appTitle}"
+		id="page">
+		<content>
+			
+		<Label text="Paletten Barcode:" required="true" class="sapUiSmallMarginTop"/>	
+		<ndc:BarcodeScannerButton
+			id="istLagereinheitBarcode"
+			scanSuccess="onistLagereinheitBarcodeSuccess"
+			scanFail="onistLagereinheitBarcodeError"
+			inputLiveUpdate="onBarcodeLiveupdate"
+			width="100%"
+			fieldHelpDisplay="true" 
+			
+		/>
+	
+		  <VBox>
+		   		<!-- "{/TANummer}" -->
+				<Input
+					id="TANummer"
+					value= "testWert1"          	
+					visible="true"
+					editable="false"/>
+				<!-- "{/anzahlPositionen}" -->
+				<Input
+					id="anzahlPositionen"
+					value="testWert2"
+					visible="true"
+					editable="false" />
+				<!-- "{/Lagerplatz}" -->
+				<Input
+					id="Lagerplatz"
+					value="testWert3"
+					visible="true"
+					editable="false" />
+
+    	</VBox>
+
+		<Text text=''/>
+
+		<Label text="Lagerplatz Barcode:" class="sapUiLargeMarginTop"/>	
+		<ndc:BarcodeScannerButton
+			id="wechselLagerplatzBarcode"
+			scanSuccess="onwechselLagerplatBarcodeSuccess"
+			scanFail="onBarcodeError"
+			inputLiveUpdate="onBarcodeLiveupdate"
+			width="100%"
+			
+			
+		/>
+
+		<Label text="Lagereinheit Barcode:" required="true" class="sapUiLargeMarginTop"/>	
+		<ndc:BarcodeScannerButton
+			id="sollLagereinheitBarcode"
+			scanSuccess="onsollLagereinheitBarcodeSuccess"
+			scanFail="onBarcodeError"
+			inputLiveUpdate="onBarcodeLiveupdate"
+			width="100%"
+		/>
+		</content>
+
+		  <footer>
+            <Toolbar>
+                <ToolbarSpacer />
+                <Button
+                    id="buchenButton"
+                    text="Buchen"
+                    type="Emphasized"
+                    press="onBuchenPress"
+					 />
+            </Toolbar>
+        </footer>
+	</Page>
+
+</mvc:View>
