@@ -15,7 +15,7 @@
     "title": "{{appTitle}}",
     "description": "{{appDescription}}",
     "applicationVersion": {
-      "version": "1.0.1"
+      "version": "1.0.4"
     }
   },
 

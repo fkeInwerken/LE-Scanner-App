@@ -11,7 +11,9 @@ sap.ui.define(
 					sollLagereinheitBarcode: "",
 					TANummer: "",
 					anzahlPositionen: "",
-					appVersion: this.getOwnerComponent().getManifestEntry("sap.app").applicationVersion.version
+					appVersion:
+						this.getOwnerComponent().getManifestEntry("sap.app")
+							.applicationVersion.version,
 				});
 				this.setModel(oViewModel, "viewModel");
 
@@ -27,6 +29,10 @@ sap.ui.define(
 						onfocusin: this.onFocus.bind(this),
 					});
 				});
+				// Input Change
+				this.aInputs.forEach((oInput, iIndex) => {
+					oInput.attachLiveChange(() => this._handleInputChange(iIndex));
+				  });
 
 				// for keydown events
 				this.aInputs = [oInputIst, oInputWechsel, oInputSoll];
@@ -94,13 +100,7 @@ sap.ui.define(
 					case "P2":
 						this.onP2();
 						break;
-					default:
-
-						sap.m.MessageToast.show(`Unhandled key: ${sKey}`, {
-							width: "15em",
-							my: "center center",
-							at: "center center",
-						});
+					default:					
 				}
 			},
 
@@ -143,19 +143,16 @@ sap.ui.define(
 			onKeyboardAction: function (oEvent) {
 				const oInput = oEvent.getSource();
 
-				// Activate virtual keyboard
-				// oInput.addEventDelegate({
-				// 	onAfterRendering: function () {
-						const oDomRef = oInput.getDomRef("inner");
-						if (oDomRef) {
-							oDomRef.setAttribute("inputmode", "text");
-						}
-				// 	},
-				// });
-				oInput.focus();
+				const oDomRef = oInput.getDomRef("inner");
+				if (oDomRef) {
+					oDomRef.setAttribute("inputmode", "text");
+					oInput.focus();
+					oDomRef.setAttribute("inputmode", "none");
+				}
 			},
 
 			onBuchenPress: function () {
+				
 				sap.m.MessageToast.show("Erfolgreich gebucht!", {
 					width: "15em",
 					my: "center center",
@@ -183,6 +180,18 @@ sap.ui.define(
 					}
 				}, 0);
 			},
+
+			_handleInputChange: function (iCurrentIndex) {
+
+				const oCurrentInput = this.aInputs[iCurrentIndex];		  
+
+				if (oCurrentInput.getValue()) {
+				  const oNextInput = this.aInputs[iCurrentIndex + 1];
+				  if (oNextInput) {
+					oNextInput.focus();
+				  }
+				}
+			}
 		});
 	}
 );

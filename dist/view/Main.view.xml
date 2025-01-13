@@ -6,24 +6,24 @@
 			<Button text="{viewModel>/appVersion}" enabled="false" type="Transparent" />
 		</headerContent>
 		<content>
-			<Label text="Paletten Barcode:" required="true" class="sapUiSmallMarginTop" />
+			<Label text="{i18n>palletLabel}" required="true" class="sapUiSmallMarginTop" />
 			<Input id="istLagereinheitBarcode" value="{viewModel>/istLagereinheitBarcode}" width="100%" showValueHelp="true" valueHelpIconSrc="sap-icon://keyboard-and-mouse" valueHelpRequest="onKeyboardAction">
 			</Input>
 			<VBox>
-				<Input id="TANummer" value="{viewModel>/TANummer}" visible="true" editable="false" />
-				<Input id="anzahlPositionen" value="{viewModel>/anzahlPositionen}" visible="true" editable="false" />
+				<Input id="TANummer" value="{viewModel>/TANummer}" visible="true" editable="false" placeholder="{i18n>TAPlaceholder}"/>
+				<Input id="anzahlPositionen" value="{viewModel>/anzahlPositionen}" visible="true" editable="false" placeholder="{i18n>PosPlaceholder}"/>
 			</VBox>
-			<Label text="Lagerplatz Barcode:" class="sapUiLargeMarginTop" />
+			<Label text="{i18n>storageLocationLabel}" class="sapUiLargeMarginTop" />
 			<Input id="istLagerplatzBarcode" value="{viewModel>/istLagerplatzBarcode}" width="100%" showValueHelp="true" valueHelpIconSrc="sap-icon://keyboard-and-mouse" valueHelpRequest="onKeyboardAction">
 			</Input>
-			<Label text="Lagereinheit Barcode:" required="true" class="sapUiLargeMarginTop" />
+			<Label text="{i18n>storageUnitLabel}" required="true" class="sapUiLargeMarginTop" />
 			<Input id="sollLagereinheitBarcode" value="{viewModel>/sollLagereinheitBarcode}" width="100%" showValueHelp="true" valueHelpIconSrc="sap-icon://keyboard-and-mouse" valueHelpRequest="onKeyboardAction">
 			</Input>
 		</content>
 		<footer>
 			<Toolbar>
 				<ToolbarSpacer />
-				<Button id="buchenButton" text="Buchen" type="Emphasized" press="onBuchenPress" />
+				<Button id="buchenButton" text="{i18n>postButton}" type="Emphasized" press="onBuchenPress" />
 			</Toolbar>
 		</footer>
 	</Page>
