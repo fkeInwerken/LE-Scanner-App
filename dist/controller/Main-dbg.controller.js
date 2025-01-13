@@ -57,7 +57,7 @@ sap.ui.define(
 				}
 			},
 			onFocusOut: function (oEvent) {
-				const oInput = oEvent.getSource();
+			/*	const oInput = oEvent.getSource();
 
 				// Deactivate virtual keyboard 
 				oInput.addEventDelegate({
@@ -68,7 +68,7 @@ sap.ui.define(
 						}
 					}
 				});
-
+				*/
 			},
 
 			onKeyboardAction: function (oEvent) {
