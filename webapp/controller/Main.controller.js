@@ -106,9 +106,7 @@ sap.ui.define(
 					case "DPAD_RIGHT":
 						this.onArrowRight();
 						break;
-					case "ENTER":
-					case "\r":
-					case "\n":
+					case "Enter":
 						this.onEnter();
 						break;
 					case "TRIGGER":
@@ -147,20 +145,19 @@ sap.ui.define(
 				}
 			},
 
-			// onFocus: function (oEvent) {
-			// 	// Get the source control of the focus event
-			// 	const oInput = oEvent.srcControl;
+			onFocus: function (oEvent) {
+				// Get the source control of the focus event
+				const oInput = oEvent.srcControl;
 
-			// 	// Get the DOM reference of the input field
-			// 	const oDomRef = oInput.getDomRef("inner");
+				// Get the DOM reference of the input field
+				const oDomRef = oInput.getDomRef("inner");
 
-			// 	// Select the text in the input field if the DOM element exists
-			// 	if (oDomRef) {
-			// 		oDomRef.select();
-			// 				oDomRef.setAttribute("inputmode", "text");
-			// 				oDomRef.setAttribute("inputmode", "none");
-			// 	}
-			// },
+				// Select the text in the input field if the DOM element exists
+				if (oDomRef) {
+					oDomRef.select();
+							oDomRef.setAttribute("inputmode", "text");
+				}
+			},
 
 			onKeyboardAction: function (oEvent) {
 				const oButton = oEvent.getSource();
