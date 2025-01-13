@@ -52,19 +52,28 @@ sap.ui.define(
 
 				// Event Listener für Key Events hinzufügen
 				document.addEventListener("keydown", this.onKeyDown.bind(this));
+
+				
+				document.addEventListener("focus", function (event) {
+					if (event.target.tagName === "INPUT") {
+					  event.target.setAttribute("inputmode", "none");
+					}
+				  }, true);
 			},
 
+	
+
 			onKeyDown: function (oEvent) {
-				const barcodeRegex = /^(?:[\x00-\x7F]|([0-9]{2}))*$/;
-				const sFocusedElementId = document.activeElement.id;
-				const sControlId = sFocusedElementId.replace(/-inner$/, "");
+				// const barcodeRegex = /^(?:[\x00-\x7F]|([0-9]{2}))*$/;
+				// const sFocusedElementId = document.activeElement.id;
+				// const sControlId = sFocusedElementId.replace(/-inner$/, "");
 
 				const sKey = oEvent.key;
 
-				if (barcodeRegex.test(sKey)) {
-					const oInput = this.byId(sControlId);
-					oInput.setValue(oInput.getValue() + sKey);
-				}
+				// if (barcodeRegex.test(sKey)) {
+				// 	const oInput = this.byId(sControlId);
+				// 	oInput.setValue(oInput.getValue() + sKey);
+				// }
 
 				// check current Inputfield
 				const iCurrentIndex = this._getFocusedInputIndex();
