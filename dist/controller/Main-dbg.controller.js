@@ -45,7 +45,7 @@ sap.ui.define(
 							const oDomRef = oInput.getDomRef("inner");
 							if (oDomRef) {
 										oDomRef.setAttribute("inputmode", "none");
-										oDomRef.setAttribute("inputmode", "text");
+
 							}
 						},
 					});
@@ -147,29 +147,29 @@ sap.ui.define(
 				}
 			},
 
-			onFocus: function (oEvent) {
-				// Get the source control of the focus event
-				const oInput = oEvent.srcControl;
+			// onFocus: function (oEvent) {
+			// 	// Get the source control of the focus event
+			// 	const oInput = oEvent.srcControl;
 
-				// Get the DOM reference of the input field
-				const oDomRef = oInput.getDomRef("inner");
+			// 	// Get the DOM reference of the input field
+			// 	const oDomRef = oInput.getDomRef("inner");
 
-				// Select the text in the input field if the DOM element exists
-				if (oDomRef) {
-					oDomRef.select();
-							oDomRef.setAttribute("inputmode", "text");
-							oDomRef.setAttribute("inputmode", "none");
-				}
-			},
+			// 	// Select the text in the input field if the DOM element exists
+			// 	if (oDomRef) {
+			// 		oDomRef.select();
+			// 				oDomRef.setAttribute("inputmode", "text");
+			// 				oDomRef.setAttribute("inputmode", "none");
+			// 	}
+			// },
 
 			onKeyboardAction: function (oEvent) {
-				const oInput = oEvent.getSource();
-
+				const oButton = oEvent.getSource();
+				const oInput = this.byId(oButton.data("inputId"));
+			  
 				const oDomRef = oInput.getDomRef("inner");
 				if (oDomRef) {
-						oDomRef.setAttribute("inputmode", "text");
-					oInput.focus();
-						oDomRef.setAttribute("inputmode", "none");
+				  oDomRef.setAttribute("inputmode", "text");
+				  oInput.focus();
 				}
 			},
 
