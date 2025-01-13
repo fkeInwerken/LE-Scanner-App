@@ -35,7 +35,7 @@ sap.ui.define(
 
 				// Input Change
 				// this.aInputs.forEach((oInput, iIndex) => {
-				// 	oInput.attachSubmit(() => this._handleInputChange(iIndex));
+				// 	oInput.attachLiveChange(() => this._handleInputChange(iIndex));
 				// });
 
 				// stop keyboard popup
