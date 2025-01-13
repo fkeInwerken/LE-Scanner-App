@@ -145,7 +145,7 @@ sap.ui.define(
 				}
 			},
 
-			onFocus: function (oEvent) {
+			onFocus: async function (oEvent) {
 				// Get the source control of the focus event
 				const oInput = oEvent.srcControl;
 
@@ -155,18 +155,19 @@ sap.ui.define(
 				// Select the text in the input field if the DOM element exists
 				if (oDomRef) {
 					oDomRef.select();
-							oDomRef.setAttribute("inputmode", "text");
+							await oDomRef.setAttribute("inputmode", "text");
 				}
 			},
 
-			onKeyboardAction: function (oEvent) {
+			onKeyboardAction: async function (oEvent) {
 				const oButton = oEvent.getSource();
 				const oInput = this.byId(oButton.data("inputId"));
 			  
 				const oDomRef = oInput.getDomRef("inner");
 				if (oDomRef) {
 				  oDomRef.setAttribute("inputmode", "text");
-				  oInput.focus();
+				  await oInput.focus();
+				  oDomRef.setAttribute("inputmode", "none");
 				}
 			},
 
