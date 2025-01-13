@@ -145,14 +145,22 @@ sap.ui.define(
 				oInput.focus();
 			},
 
+			onBuchenPress: function (){
+				sap.m.MessageToast.show("Erfolgreich gebucht!", {
+					width: "15em",  
+					my: "center center",
+					at: "center center"
+				});
+			},
+
 			_getFocusedInputIndex: function () {
 				// get Element ID
 				const sFocusedElementId = document.activeElement.id;
 
-				// Check Position of Element in Input Array
-				return this.aInputs.findIndex(
-					(oInput) => oInput.getId() === sFocusedElementId
-				);
+				const sControlId = sFocusedElementId.replace(/-inner$/, "");
+
+				return this.aInputs.findIndex((oInput) => oInput.getId() === sControlId);
+
 			},
 		});
 	}
