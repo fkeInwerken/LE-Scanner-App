@@ -34,9 +34,9 @@ sap.ui.define(
 				this.aInputs = [oInputIst, oInputWechsel, oInputSoll];
 
 				// Input Change
-				this.aInputs.forEach((oInput, iIndex) => {
-					oInput.attachSubmit(() => this._handleInputChange(iIndex));
-				});
+				// this.aInputs.forEach((oInput, iIndex) => {
+				// 	oInput.attachSubmit(() => this._handleInputChange(iIndex));
+				// });
 
 				// stop keyboard popup
 				aInputs.forEach((oInput) => {
@@ -181,16 +181,16 @@ sap.ui.define(
 				}, 0);
 			},
 
-			_handleInputChange: function (iCurrentIndex) {
-				const oCurrentInput = this.aInputs[iCurrentIndex];
+			// _handleInputChange: function (iCurrentIndex) {
+			// 	const oCurrentInput = this.aInputs[iCurrentIndex];
 
-				if (oCurrentInput.getValue()) {
-					const oNextInput = this.aInputs[iCurrentIndex + 1];
-					if (oNextInput) {
-						oNextInput.focus();
-					}
-				}
-			},
+			// 	if (oCurrentInput.getValue()) {
+			// 		const oNextInput = this.aInputs[iCurrentIndex + 1];
+			// 		if (oNextInput) {
+			// 			oNextInput.focus();
+			// 		}
+			// 	}
+			// },
 		});
 	}
 );
