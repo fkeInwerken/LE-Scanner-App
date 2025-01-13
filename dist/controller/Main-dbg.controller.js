@@ -100,20 +100,24 @@ sap.ui.define(
 
 			onArrowUp: function (iCurrentIndex) {
 				if (iCurrentIndex > 0) {
-					this.aInputs[iCurrentIndex - 1].focus();
+					const oPreviousInput = this.aInputs[iCurrentIndex - 1];
+					oPreviousInput.focus();
+					this._selectInputText(oPreviousInput);
 				}
 			},
 
 			onArrowDown: function (iCurrentIndex) {
 				if (iCurrentIndex < this.aInputs.length - 1) {
-					this.aInputs[iCurrentIndex + 1].focus();
+					const oNextInput = this.aInputs[iCurrentIndex + 1];
+					oNextInput.focus();
+					this._selectInputText(oNextInput);
 				}
 			},
 
 			onEnter: function () {
 				const oBuchenButton = this.byId("buchenButton");
 				if (oBuchenButton) {
-					oBuchenButton.firePress();
+					oBuchenButton.onBuchenPress();
 				}
 			},
 
@@ -145,11 +149,11 @@ sap.ui.define(
 				oInput.focus();
 			},
 
-			onBuchenPress: function (){
+			onBuchenPress: function () {
 				sap.m.MessageToast.show("Erfolgreich gebucht!", {
-					width: "15em",  
+					width: "15em",
 					my: "center center",
-					at: "center center"
+					at: "center center",
 				});
 			},
 
@@ -159,9 +163,20 @@ sap.ui.define(
 
 				const sControlId = sFocusedElementId.replace(/-inner$/, "");
 
-				return this.aInputs.findIndex((oInput) => oInput.getId() === sControlId);
-
+				return this.aInputs.findIndex(
+					(oInput) => oInput.getId() === sControlId
+				);
 			},
+
+			_selectInputText: function (oInput) {
+				// wait for Dom-Element
+				setTimeout(() => {
+				  const oDomRef = oInput.getDomRef("inner");
+				  if (oDomRef) {
+					oDomRef.setSelectionRange(0, oDomRef.value.length); 
+				  }
+				}, 0);
+			  }
 		});
 	}
 );
