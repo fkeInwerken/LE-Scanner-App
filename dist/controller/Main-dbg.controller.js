@@ -160,14 +160,13 @@ sap.ui.define(
 			},
 
 			onKeyboardAction: async function (oEvent) {
-				const oButton = oEvent.getSource();
-				const oInput = this.byId(oButton.data("inputId"));
+				const oInput = oEvent.getSource();
 			  
 				const oDomRef = oInput.getDomRef("inner");
 				if (oDomRef) {
 				  oDomRef.setAttribute("inputmode", "text");
 				  await oInput.focus();
-			//	  oDomRef.setAttribute("inputmode", "none");
+				  oDomRef.setAttribute("inputmode", "none");
 				}
 			},
 
