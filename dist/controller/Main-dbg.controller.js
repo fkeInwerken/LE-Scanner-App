@@ -29,13 +29,14 @@ sap.ui.define(
 						onfocusin: this.onFocus.bind(this),
 					});
 				});
-				// Input Change
-				this.aInputs.forEach((oInput, iIndex) => {
-					oInput.attachLiveChange(() => this._handleInputChange(iIndex));
-				  });
 
 				// for keydown events
 				this.aInputs = [oInputIst, oInputWechsel, oInputSoll];
+
+				// Input Change
+				this.aInputs.forEach((oInput, iIndex) => {
+					oInput.attachSubmit(() => this._handleInputChange(iIndex));
+				});
 
 				// stop keyboard popup
 				aInputs.forEach((oInput) => {
@@ -100,7 +101,7 @@ sap.ui.define(
 					case "P2":
 						this.onP2();
 						break;
-					default:					
+					default:
 				}
 			},
 
@@ -152,7 +153,6 @@ sap.ui.define(
 			},
 
 			onBuchenPress: function () {
-				
 				sap.m.MessageToast.show("Erfolgreich gebucht!", {
 					width: "15em",
 					my: "center center",
@@ -182,16 +182,15 @@ sap.ui.define(
 			},
 
 			_handleInputChange: function (iCurrentIndex) {
-
-				const oCurrentInput = this.aInputs[iCurrentIndex];		  
+				const oCurrentInput = this.aInputs[iCurrentIndex];
 
 				if (oCurrentInput.getValue()) {
-				  const oNextInput = this.aInputs[iCurrentIndex + 1];
-				  if (oNextInput) {
-					oNextInput.focus();
-				  }
+					const oNextInput = this.aInputs[iCurrentIndex + 1];
+					if (oNextInput) {
+						oNextInput.focus();
+					}
 				}
-			}
+			},
 		});
 	}
 );
