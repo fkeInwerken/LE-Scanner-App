@@ -44,7 +44,7 @@ sap.ui.define(
 						onAfterRendering: function () {
 							const oDomRef = oInput.getDomRef("inner");
 							if (oDomRef) {
-								oDomRef.setAttribute("inputmode", "none");
+								//		oDomRef.setAttribute("inputmode", "none");
 							}
 						},
 					});
@@ -55,7 +55,16 @@ sap.ui.define(
 			},
 
 			onKeyDown: function (oEvent) {
+				const barcodeRegex = "/^(?:[\x00-\x7F]|([0-9]{2}))*$/";
+				const sFocusedElementId = document.activeElement.id;
+				const sControlId = sFocusedElementId.replace(/-inner$/, "");
+
 				const sKey = oEvent.key;
+
+				if (barcodeRegex.test(sKey)) {
+					const oInput = this.byId(sControlId);
+					oInput.setValue(oInput.getValue() + sKey);
+				}
 
 				// check current Inputfield
 				const iCurrentIndex = this._getFocusedInputIndex();
@@ -138,7 +147,7 @@ sap.ui.define(
 				// Select the text in the input field if the DOM element exists
 				if (oDomRef) {
 					oDomRef.select();
-					oDomRef.setAttribute("inputmode", "text");
+					//		oDomRef.setAttribute("inputmode", "text");
 				}
 			},
 
@@ -147,9 +156,9 @@ sap.ui.define(
 
 				const oDomRef = oInput.getDomRef("inner");
 				if (oDomRef) {
-					oDomRef.setAttribute("inputmode", "text");
+					//	oDomRef.setAttribute("inputmode", "text");
 					oInput.focus();
-					oDomRef.setAttribute("inputmode", "none");
+					//	oDomRef.setAttribute("inputmode", "none");
 				}
 			},
 

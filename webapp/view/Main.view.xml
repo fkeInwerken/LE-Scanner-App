@@ -10,7 +10,7 @@
 			<Input id="istLagereinheitBarcode" value="{viewModel>/istLagereinheitBarcode}" width="100%" showValueHelp="true" valueHelpIconSrc="sap-icon://keyboard-and-mouse" valueHelpRequest="onKeyboardAction">
 			</Input>
 			<VBox>
-				<Input id="TANummer" value="{viewModel>/TANummer}" visible="true" editable="false" placeholder="{i18n>TAPlaceholder}" width="100%"/>
+				<Text text="{i18n>TAPlaceholder}"></Text><Input id="TANummer" value="{viewModel>/TANummer}" visible="true" editable="false" width="100%"/>
 				<Input id="anzahlPositionen" value="{viewModel>/anzahlPositionen}" visible="true" editable="false" placeholder="{i18n>PosPlaceholder}" width="100%"/>
 			</VBox>
 			<Label text="{i18n>storageLocationLabel}" class="sapUiLargeMarginTop" />
