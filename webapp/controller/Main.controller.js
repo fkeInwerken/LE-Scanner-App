@@ -144,14 +144,14 @@ sap.ui.define(
 				const oInput = oEvent.getSource();
 
 				// Activate virtual keyboard
-				oInput.addEventDelegate({
-					onAfterRendering: function () {
+				// oInput.addEventDelegate({
+				// 	onAfterRendering: function () {
 						const oDomRef = oInput.getDomRef("inner");
 						if (oDomRef) {
 							oDomRef.setAttribute("inputmode", "text");
 						}
-					},
-				});
+				// 	},
+				// });
 				oInput.focus();
 			},
 
