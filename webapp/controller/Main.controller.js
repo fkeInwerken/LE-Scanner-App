@@ -24,7 +24,7 @@ sap.ui.define(
 				aInputs.forEach((oInput) => {
 					oInput.addEventDelegate({
 						onfocusin: this.onFocus.bind(this),
-						onfocusout: this.onFocusOut.bind(this),
+						//onfocusout: this.onFocusOut.bind(this),
 					});
 				});
 
