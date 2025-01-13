@@ -148,7 +148,7 @@ sap.ui.define(
 				if (oDomRef) {
 					oDomRef.setAttribute("inputmode", "text");
 					oInput.focus();
-					oDomRef.setAttribute("inputmode", "none");
+				//	oDomRef.setAttribute("inputmode", "none");
 				}
 			},
 
