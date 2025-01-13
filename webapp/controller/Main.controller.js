@@ -34,7 +34,7 @@ sap.ui.define(
 				aInputs.forEach((oInput) => {
 					oInput.addEventDelegate({
 						onAfterRendering: function () {
-							const oDomRef = oInput.getDomRef();
+							const oDomRef = oInput.getDomRef("inner");
 							if (oDomRef) {
 								oDomRef.setAttribute("inputmode", "none");
 							}
@@ -80,7 +80,6 @@ sap.ui.define(
 						this.onArrowRight();
 						break;
 					case "ENTER":
-					case "Enter":
 					case "\r":
 					case "\n":
 						this.onEnter();
