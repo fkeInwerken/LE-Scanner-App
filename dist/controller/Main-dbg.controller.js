@@ -24,11 +24,11 @@ sap.ui.define(
 
 				const aInputs = [oInputIst, oInputWechsel, oInputSoll];
 
-				aInputs.forEach((oInput) => {
-					oInput.addEventDelegate({
-						onfocusin: this.onFocus.bind(this),
-					});
-				});
+				// aInputs.forEach((oInput) => {
+				// 	oInput.addEventDelegate({
+				// 		onfocusin: this.onFocus.bind(this),
+				// 	});
+				// });
 
 				// for keydown events
 				this.aInputs = [oInputIst, oInputWechsel, oInputSoll];
