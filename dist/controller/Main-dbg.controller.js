@@ -45,6 +45,7 @@ sap.ui.define(
 							const oDomRef = oInput.getDomRef("inner");
 							if (oDomRef) {
 										oDomRef.setAttribute("inputmode", "none");
+										oDomRef.setAttribute("inputmode", "text");
 							}
 						},
 					});
@@ -157,6 +158,7 @@ sap.ui.define(
 				if (oDomRef) {
 					oDomRef.select();
 							oDomRef.setAttribute("inputmode", "text");
+							oDomRef.setAttribute("inputmode", "none");
 				}
 			},
 
