@@ -36,13 +36,49 @@ sap.ui.define(
 							if (oDomRef) {
 								oDomRef.setAttribute("inputmode", "none");
 							}
-						}
+						},
 					});
 				});
 
+				// Event Listener für Key Events hinzufügen
+				document.addEventListener("keydown", this.onKeyDown.bind(this));
 			},
 
 			onAfterRendering: function () {},
+
+			onKeyDown: function (oEvent) { 
+				const sKey = oEvent.key;
+
+				switch (sKey) {
+					case "ArrowUp":
+					  console.log("Arrow Up pressed");
+					  this.handleArrowUp();
+					  break;
+			
+					case "ArrowDown":
+					  console.log("Arrow Down pressed");
+					  this.handleArrowDown();
+					  break;
+			
+					case "ArrowLeft":
+					  console.log("Arrow Left pressed");
+					  this.handleArrowLeft();
+					  break;
+			
+					case "ArrowRight":
+					  console.log("Arrow Right pressed");
+					  this.handleArrowRight();
+					  break;
+			
+					case "Enter": // Der Button wird oft als "Enter" registriert
+					  console.log("Enter pressed");
+					  this.handleEnter();
+					  break;
+					  
+					  default:
+						console.log(`Unhandled key: ${sKey}`);
+					}
+			},
 
 			onFocus: function (oEvent) {
 				// Get the source control of the focus event
@@ -57,7 +93,7 @@ sap.ui.define(
 				}
 			},
 			onFocusOut: function (oEvent) {
-			/*	const oInput = oEvent.getSource();
+				/*	const oInput = oEvent.getSource();
 
 				// Deactivate virtual keyboard 
 				oInput.addEventDelegate({
@@ -74,20 +110,17 @@ sap.ui.define(
 			onKeyboardAction: function (oEvent) {
 				const oInput = oEvent.getSource();
 
-				// Activate virtual keyboard 
+				// Activate virtual keyboard
 				oInput.addEventDelegate({
 					onAfterRendering: function () {
 						const oDomRef = oInput.getDomRef();
 						if (oDomRef) {
 							oDomRef.setAttribute("inputmode", "text");
 						}
-					}
+					},
 				});
 				oInput.focus();
-			
 			},
-
-			
 		});
 	}
 );
