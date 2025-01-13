@@ -94,7 +94,12 @@ sap.ui.define(
 						this.onP2();
 						break;
 					default:
-						console.log(`Unhandled key: ${sKey}`);
+
+						sap.m.MessageToast.show(`Unhandled key: ${sKey}`, {
+							width: "15em",
+							my: "center center",
+							at: "center center",
+						});
 				}
 			},
 
@@ -140,7 +145,7 @@ sap.ui.define(
 				// Activate virtual keyboard
 				oInput.addEventDelegate({
 					onAfterRendering: function () {
-						const oDomRef = oInput.getDomRef();
+						const oDomRef = oInput.getDomRef("inner");
 						if (oDomRef) {
 							oDomRef.setAttribute("inputmode", "text");
 						}
