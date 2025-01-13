@@ -156,7 +156,7 @@ sap.ui.define(
 				// Select the text in the input field if the DOM element exists
 				if (oDomRef) {
 					oDomRef.select();
-					//		oDomRef.setAttribute("inputmode", "text");
+							oDomRef.setAttribute("inputmode", "text");
 				}
 			},
 
