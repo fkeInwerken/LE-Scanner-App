@@ -56,48 +56,35 @@ sap.ui.define(
 				const iCurrentIndex = this._getFocusedInputIndex();
 
 				switch (sKey) {
-					case "DPAD_UP": // Hoch-Taste
-						console.log("Arrow Up pressed (DPAD_UP)");
+					case "DPAD_UP":
 						this.onArrowUp(iCurrentIndex);
 						break;
-
-					case "DPAD_DOWN": // Runter-Taste
-						console.log("Arrow Down pressed (DPAD_DOWN)");
+					case "DPAD_DOWN":
+						if (iCurrentIndex === -1) {
+							this.aInputs[0].focus();
+							return;
+						}
 						this.onArrowDown(iCurrentIndex);
 						break;
-
-					case "DPAD_LEFT": // Links-Taste
-						console.log("Arrow Left pressed (DPAD_LEFT)");
+					case "DPAD_LEFT":
 						this.onArrowLeft();
 						break;
-
-					case "DPAD_RIGHT": // Rechts-Taste
-						console.log("Arrow Right pressed (DPAD_RIGHT)");
+					case "DPAD_RIGHT":
 						this.onArrowRight();
 						break;
-
-					case "ENTER": // Enter-Taste
-						console.log("Enter pressed (ENTER)");
+					case "ENTER":
 						this.onEnter();
 						break;
-
-					case "TRIGGER": // Trigger-Taste
-						console.log("Trigger button pressed (TRIGGER)");
+					case "TRIGGER":
 						this.onTrigger();
 						break;
-
-					case "P1": // Anpassungstaste P1
-						console.log("P1 button pressed (P1)");
+					case "P1":
 						this.onP1();
 						break;
-
-					case "P2": // Anpassungstaste P2
-						console.log("P2 button pressed (P2)");
+					case "P2":
 						this.onP2();
 						break;
-
 					default:
-						console.log(`Unhandled key: ${sKey}`);
 				}
 			},
 
@@ -132,7 +119,7 @@ sap.ui.define(
 					oDomRef.select();
 				}
 			},
-		/*	onFocusOut: function (oEvent) {
+			/*	onFocusOut: function (oEvent) {
 					const oInput = oEvent.getSource();
 
 				// Deactivate virtual keyboard 
