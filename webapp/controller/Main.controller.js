@@ -165,7 +165,7 @@ sap.ui.define(
 			  
 				const oDomRef = oInput.getDomRef("inner");
 				if (oDomRef) {
-			//	  oDomRef.setAttribute("inputmode", "text");
+				  oDomRef.setAttribute("inputmode", "text");
 				  await oInput.focus();
 			//	  oDomRef.setAttribute("inputmode", "none");
 				}
