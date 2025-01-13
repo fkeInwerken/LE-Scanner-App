@@ -4,24 +4,17 @@
 	<Page title="{i18n>appTitle}" id="page" class="sapUiContentPadding">
 		<content>
 			<Label text="Paletten Barcode:" required="true" class="sapUiSmallMarginTop" />
-			<Input id="istLagereinheitBarcode" value="{viewModel>/istLagereinheitBarcode}" width="100%">
-				<customData>
-					<core:CustomData key="inputmode" value="none" writeToDom="true" />
-				</customData>
+			<Input id="istLagereinheitBarcode" value="{viewModel>/istLagereinheitBarcode}" width="100%" showValueHelp="true" valueHelpIconSrc="sap-icon://keyboard-and-mouse" valueHelpRequest="onKeyboardAction">
 			</Input>
 			<VBox>
 				<Input id="TANummer" value="{viewModel>/TANummer}" visible="true" editable="false" />
 				<Input id="anzahlPositionen" value="{viewModel>/anzahlPositionen}" visible="true" editable="false" />
-				<Input id="Lagerplatz" value="{viewModel>/Lagerplatz}" visible="true" editable="false" />
 			</VBox>
-			<Text text="" />
 			<Label text="Lagerplatz Barcode:" class="sapUiLargeMarginTop" />
-			<Input id="wechselLagerplatzBarcode" value="{viewModel>/wechselLagerplatzBarcode}" width="100%">
-
+			<Input id="istLagerplatzBarcode" value="{viewModel>/istLagerplatzBarcode}" width="100%" showValueHelp="true" valueHelpIconSrc="sap-icon://keyboard-and-mouse" valueHelpRequest="onKeyboardAction">
 			</Input>
 			<Label text="Lagereinheit Barcode:" required="true" class="sapUiLargeMarginTop" />
-			<Input id="sollLagereinheitBarcode" value="{viewModel>/sollLagereinheitBarcode}" width="100%">
-
+			<Input id="sollLagereinheitBarcode" value="{viewModel>/sollLagereinheitBarcode}" width="100%" showValueHelp="true" valueHelpIconSrc="sap-icon://keyboard-and-mouse" valueHelpRequest="onKeyboardAction">
 			</Input>
 		</content>
 		<footer>
