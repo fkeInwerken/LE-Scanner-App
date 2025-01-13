@@ -44,7 +44,7 @@ sap.ui.define(
 						onAfterRendering: function () {
 							const oDomRef = oInput.getDomRef("inner");
 							if (oDomRef) {
-							//			oDomRef.setAttribute("inputmode", "none");
+										oDomRef.setAttribute("inputmode", "none");
 							}
 						},
 					});
@@ -54,11 +54,11 @@ sap.ui.define(
 				document.addEventListener("keydown", this.onKeyDown.bind(this));
 
 				
-				document.addEventListener("focus", function (event) {
-					if (event.target.tagName === "INPUT") {
-					  event.target.setAttribute("inputmode", "none");
-					}
-				  }, true);
+				// document.addEventListener("focus", function (event) {
+				// 	if (event.target.tagName === "INPUT") {
+				// 	  event.target.setAttribute("inputmode", "none");
+				// 	}
+				//   }, true);
 			},
 
 	
@@ -165,9 +165,9 @@ sap.ui.define(
 
 				const oDomRef = oInput.getDomRef("inner");
 				if (oDomRef) {
-					//	oDomRef.setAttribute("inputmode", "text");
+						oDomRef.setAttribute("inputmode", "text");
 					oInput.focus();
-					//	oDomRef.setAttribute("inputmode", "none");
+						oDomRef.setAttribute("inputmode", "none");
 				}
 			},
 
