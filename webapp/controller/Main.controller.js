@@ -44,7 +44,7 @@ sap.ui.define(
 						onAfterRendering: function () {
 							const oDomRef = oInput.getDomRef("inner");
 							if (oDomRef) {
-								//		oDomRef.setAttribute("inputmode", "none");
+										oDomRef.setAttribute("inputmode", "none");
 							}
 						},
 					});
