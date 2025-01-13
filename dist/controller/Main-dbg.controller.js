@@ -46,8 +46,6 @@ sap.ui.define(
 				document.addEventListener("keydown", this.onKeyDown.bind(this));
 			},
 
-			onAfterRendering: function () {},
-
 			onKeyDown: function (oEvent) {
 				const sKey = oEvent.key;
 
@@ -82,6 +80,9 @@ sap.ui.define(
 						this.onArrowRight();
 						break;
 					case "ENTER":
+					case "Enter":
+					case "\r":
+					case "\n":
 						this.onEnter();
 						break;
 					case "TRIGGER":
@@ -117,7 +118,7 @@ sap.ui.define(
 			onEnter: function () {
 				const oBuchenButton = this.byId("buchenButton");
 				if (oBuchenButton) {
-					oBuchenButton.onBuchenPress();
+					oBuchenButton.firePress();
 				}
 			},
 
@@ -171,12 +172,12 @@ sap.ui.define(
 			_selectInputText: function (oInput) {
 				// wait for Dom-Element
 				setTimeout(() => {
-				  const oDomRef = oInput.getDomRef("inner");
-				  if (oDomRef) {
-					oDomRef.setSelectionRange(0, oDomRef.value.length); 
-				  }
+					const oDomRef = oInput.getDomRef("inner");
+					if (oDomRef) {
+						oDomRef.setSelectionRange(0, oDomRef.value.length);
+					}
 				}, 0);
-			  }
+			},
 		});
 	}
 );
