@@ -24,7 +24,6 @@ sap.ui.define(
 				aInputs.forEach((oInput) => {
 					oInput.addEventDelegate({
 						onfocusin: this.onFocus.bind(this),
-						//onfocusout: this.onFocusOut.bind(this),
 					});
 				});
 
@@ -85,6 +84,7 @@ sap.ui.define(
 						this.onP2();
 						break;
 					default:
+						console.log(`Unhandled key: ${sKey}`);
 				}
 			},
 
@@ -119,21 +119,7 @@ sap.ui.define(
 					oDomRef.select();
 				}
 			},
-			/*	onFocusOut: function (oEvent) {
-					const oInput = oEvent.getSource();
-
-				// Deactivate virtual keyboard 
-				oInput.addEventDelegate({
-					onAfterRendering: function () {
-						const oDomRef = oInput.getDomRef();
-						if (oDomRef) {
-							oDomRef.setAttribute("inputmode", "none");
-						}
-					}
-				});
-			
-			},	*/
-
+		
 			onKeyboardAction: function (oEvent) {
 				const oInput = oEvent.getSource();
 
