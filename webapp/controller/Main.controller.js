@@ -44,7 +44,7 @@ sap.ui.define(
 						onAfterRendering: function () {
 							const oDomRef = oInput.getDomRef("inner");
 							if (oDomRef) {
-										oDomRef.setAttribute("inputmode", "none");
+							//			oDomRef.setAttribute("inputmode", "none");
 							}
 						},
 					});
@@ -55,7 +55,7 @@ sap.ui.define(
 			},
 
 			onKeyDown: function (oEvent) {
-				const barcodeRegex = "/^(?:[\x00-\x7F]|([0-9]{2}))*$/";
+				const barcodeRegex = /^(?:[\x00-\x7F]|([0-9]{2}))*$/;
 				const sFocusedElementId = document.activeElement.id;
 				const sControlId = sFocusedElementId.replace(/-inner$/, "");
 

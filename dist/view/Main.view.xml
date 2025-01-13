@@ -7,18 +7,23 @@
 		</headerContent>
 		<content>
 			<Label text="{i18n>palletLabel}" required="true" class="sapUiSmallMarginTop" />
-			<Input id="istLagereinheitBarcode" value="{viewModel>/istLagereinheitBarcode}" width="100%" showValueHelp="true" valueHelpIconSrc="sap-icon://keyboard-and-mouse" valueHelpRequest="onKeyboardAction">
+			<Input id="istLagereinheitBarcode" value="{viewModel>/istLagereinheitBarcode}" width="89%">
 			</Input>
-			<VBox>
-				<Text text="{i18n>TAPlaceholder}"></Text><Input id="TANummer" value="{viewModel>/TANummer}" visible="true" editable="false" width="100%"/>
-				<Input id="anzahlPositionen" value="{viewModel>/anzahlPositionen}" visible="true" editable="false" placeholder="{i18n>PosPlaceholder}" width="100%"/>
-			</VBox>
+			<Button id="palletButton" type="Default" icon="sap-icon://keyboard-and-mouse" press="onKeyboardAction" />
+			<Text id="taPlaceholder" text="{i18n>TAPlaceholder}" width="20%">
+			</Text>
+			<Input id="TANummer" value="{viewModel>/TANummer}" visible="true" editable="false" width="80%" />
+			<Text id="posPlaceholder" text="{i18n>PosPlaceholder}" width="20%">
+			</Text>
+			<Input id="anzahlPositionen" value="{viewModel>/anzahlPositionen}" visible="true" editable="false" width="80%" />
 			<Label text="{i18n>storageLocationLabel}" class="sapUiLargeMarginTop" />
-			<Input id="istLagerplatzBarcode" value="{viewModel>/istLagerplatzBarcode}" width="100%" showValueHelp="true" valueHelpIconSrc="sap-icon://keyboard-and-mouse" valueHelpRequest="onKeyboardAction">
+			<Input id="istLagerplatzBarcode" value="{viewModel>/istLagerplatzBarcode}" width="89%">
 			</Input>
+			<Button id="lagerButton" type="Default" icon="sap-icon://keyboard-and-mouse" press="onKeyboardAction" />
 			<Label text="{i18n>storageUnitLabel}" required="true" class="sapUiLargeMarginTop" />
-			<Input id="sollLagereinheitBarcode" value="{viewModel>/sollLagereinheitBarcode}" width="100%" showValueHelp="true" valueHelpIconSrc="sap-icon://keyboard-and-mouse" valueHelpRequest="onKeyboardAction">
+			<Input id="sollLagereinheitBarcode" value="{viewModel>/sollLagereinheitBarcode}" width="89%">
 			</Input>
+			<Button id="einheitButton" type="Default" icon="sap-icon://keyboard-and-mouse" press="onKeyboardAction" />
 		</content>
 		<footer>
 			<Toolbar>
