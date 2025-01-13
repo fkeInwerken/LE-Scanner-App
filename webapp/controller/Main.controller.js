@@ -58,7 +58,17 @@ sap.ui.define(
 					case "DPAD_UP":
 						this.onArrowUp(iCurrentIndex);
 						break;
+					case "ArrowUp":
+						this.onArrowUp(iCurrentIndex);
+						break;
 					case "DPAD_DOWN":
+						if (iCurrentIndex === -1) {
+							this.aInputs[0].focus();
+							return;
+						}
+						this.onArrowDown(iCurrentIndex);
+						break;
+					case "ArrowDown":
 						if (iCurrentIndex === -1) {
 							this.aInputs[0].focus();
 							return;
@@ -119,7 +129,7 @@ sap.ui.define(
 					oDomRef.select();
 				}
 			},
-		
+
 			onKeyboardAction: function (oEvent) {
 				const oInput = oEvent.getSource();
 
