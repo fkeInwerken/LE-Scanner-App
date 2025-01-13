@@ -2,6 +2,9 @@
 		formatter: 'inw/le_scanner/model/formatter'
 	}">
 	<Page title="{i18n>appTitle}" id="page" class="sapUiContentPadding">
+		<headerContent>
+			<Button text="{viewModel>/appVersion}" enabled="false" type="Transparent" />
+		</headerContent>
 		<content>
 			<Label text="Paletten Barcode:" required="true" class="sapUiSmallMarginTop" />
 			<Input id="istLagereinheitBarcode" value="{viewModel>/istLagereinheitBarcode}" width="100%" showValueHelp="true" valueHelpIconSrc="sap-icon://keyboard-and-mouse" valueHelpRequest="onKeyboardAction">

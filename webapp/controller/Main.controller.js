@@ -11,6 +11,7 @@ sap.ui.define(
 					sollLagereinheitBarcode: "",
 					TANummer: "",
 					anzahlPositionen: "",
+					appVersion: this.getOwnerComponent().getManifestEntry("sap.app").applicationVersion.version
 				});
 				this.setModel(oViewModel, "viewModel");
 
