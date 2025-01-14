@@ -7,11 +7,48 @@
 		</headerContent>
 		<content>
 			<Label text="{i18n>palletLabel}" required="true" class="sapUiSmallMarginTop" />
-			<HBox width="89%" id="overlayIstLagereinheitBarcode" >
-				<Input id="istLagereinheitBarcode" value="{viewModel>/istLagereinheitBarcode}" editable="false">
-				</Input>
-				<Button id="palletButton" type="Default" icon="sap-icon://keyboard-and-mouse" press="onKeyboardAction" />
-			</HBox>
+
+
+<HBox class="container" width="100%" alignItems="Center">
+    <!-- VBox for Input and Overlay -->
+    <VBox class="input-container" width="89%">
+        <!-- Input Field -->
+        <Input
+            id="istLagereinheitBarcode"
+            value="{viewModel>/istLagereinheitBarcode}"
+            width="100%"
+            class="input-field" />
+        
+        <!-- Overlay -->
+        <VBox
+            id="inputOverlay"
+            width="100%"
+            height="3rem"
+            alignItems="Stretch"
+            justifyContent="Center"
+            class="input-overlay">
+            <!-- Button for Event Handling -->
+            <Button
+                text=""
+                type="Transparent"
+                press=".onOverlayPress"
+                class="overlay-button" />
+        </VBox>
+    </VBox>
+
+    <!-- Keyboard Button -->
+    <Button
+        id="palletButton"
+        type="Default"
+        icon="sap-icon://keyboard-and-mouse"
+        press="onKeyboardAction"
+        class="keyboard-button"
+        width="11%" />
+</HBox>
+	
+
+
+			
 			<Text id="taPlaceholder" text="{i18n>TAPlaceholder}" width="20%" class="sapUiSmallMarginTop" textAlign="Center">
 			</Text>
 			<Input id="TANummer" value="{viewModel>/TANummer}" visible="true" editable="false" width="80%" />
@@ -19,17 +56,13 @@
 			</Text>
 			<Input id="anzahlPositionen" value="{viewModel>/anzahlPositionen}" visible="true" editable="false" width="80%" />
 			<Label text="{i18n>storageLocationLabel}" class="sapUiLargeMarginTop" />
-			<HBox width="89%" id="overlayIstLagerplatzBarcode">
-				<Input id="istLagerplatzBarcode" value="{viewModel>/istLagerplatzBarcode}" width="89%" editable="false">
-				</Input>
-				<Button id="lagerButton" type="Default" icon="sap-icon://keyboard-and-mouse" press="onKeyboardAction" />
-			</HBox>
+			<Input id="istLagerplatzBarcode" value="{viewModel>/istLagerplatzBarcode}" width="89%">
+			</Input>
+			<Button id="lagerButton" type="Default" icon="sap-icon://keyboard-and-mouse" press="onKeyboardAction" />
 			<Label text="{i18n>storageUnitLabel}" required="true" class="sapUiLargeMarginTop" />
-			<HBox width="89%" id="overlaySollLagereinheitBarcode">
-				<Input id="sollLagereinheitBarcode" value="{viewModel>/sollLagereinheitBarcode}" width="89%" editable="false">
-				</Input>
-				<Button id="einheitButton" type="Default" icon="sap-icon://keyboard-and-mouse" press="onKeyboardAction" />
-			</HBox>
+			<Input id="sollLagereinheitBarcode" value="{viewModel>/sollLagereinheitBarcode}" width="89%">
+			</Input>
+			<Button id="einheitButton" type="Default" icon="sap-icon://keyboard-and-mouse" press="onKeyboardAction" />
 		</content>
 		<footer>
 			<Toolbar>
