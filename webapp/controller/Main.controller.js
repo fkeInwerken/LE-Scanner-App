@@ -18,68 +18,47 @@ sap.ui.define(
 				this.setModel(oViewModel, "viewModel");
 
 				//focus select
-				// const oInputIst = this.byId("istLagereinheitBarcode");
-				// const oInputWechsel = this.byId("istLagerplatzBarcode");
-				// const oInputSoll = this.byId("sollLagereinheitBarcode");
+				const oInputIst = this.byId("istLagereinheitBarcode");
+				const oInputWechsel = this.byId("istLagerplatzBarcode");
+				const oInputSoll = this.byId("sollLagereinheitBarcode");
 
-				// const aInputs = [oInputIst, oInputWechsel, oInputSoll];
-				// // for keydown events
-				// this.aInputs = [oInputIst, oInputWechsel, oInputSoll];
-
-				// aInputs.forEach((oInput) => {
-				// 	oInput.addEventDelegate({
-				// 		onfocusin: this.onFocus.bind(this),
-				// 	});
-				// });
-
-				const oInputIst = this.byId("inputOverlayIstLagereinheit");
-				const oInputWechsel = this.byId("inputOverlayLagerplatz");
-				const oInputSoll = this.byId("inputOverlaySollLagereinheit");
+				const aInputs = [oInputIst, oInputWechsel, oInputSoll];
 
 				// for keydown events
 				this.aInputs = [oInputIst, oInputWechsel, oInputSoll];
 
-				// Input Change
-				// this.aInputs.forEach((oInput, iIndex) => {
-				// 	oInput.attachLiveChange(() => this._handleInputChange(iIndex));
-				// });
+				// // for keydown events
+				this.aInputs = [oInputIst, oInputWechsel, oInputSoll];
 
-				//const aInputs = [oInputIst, oInputWechsel, oInputSoll];
-				// stop keyboard popup
-				// aInputs.forEach((oInput) => {
-				// 	oInput.addEventDelegate({
-				// 		onAfterRendering: function () {
-				// 			const oDomRef = oInput.getDomRef("inner");
-				// 			if (oDomRef) {
-				// 		//		oDomRef.setAttribute("inputmode", "none");
-				// 			}
-				// 		},
-				// 	});
-				// });
+				aInputs.forEach((oInput) => {
+					oInput.addEventDelegate({
+						onfocusin: this.onFocus.bind(this),
+					});
+				});
+
+				// Input Change
+				this.aInputs.forEach((oInput, iIndex) => {
+					oInput.attachLiveChange(() => this._handleInputChange(iIndex));
+				});
+
+				//stop keyboard popup
+				aInputs.forEach((oInput) => {
+					oInput.addEventDelegate({
+						onAfterRendering: function () {
+							const oDomRef = oInput.getDomRef("inner");
+							if (oDomRef) {
+								//		oDomRef.setAttribute("inputmode", "none");
+							}
+						},
+					});
+				});
 
 				// Event Listener für Key Events hinzufügen
 				document.addEventListener("keydown", this.onKeyDown.bind(this));
-
-				// document.addEventListener("focus", function (event) {
-				// 	if (event.target.tagName === "INPUT") {
-				// 	  event.target.setAttribute("inputmode", "none");
-				// 	}
-				//   }, true);
 			},
 
 			onKeyDown: function (oEvent) {
 				const sKey = oEvent.key;
-
-				//Barcode
-				if (sKey.length > 1) {
-					const iCurrentIndex = this._getFocusedInputIndex();
-
-					// Wenn ein Overlay im Fokus ist, handle Barcode
-					if (iCurrentIndex !== -1) {
-						this._handleBarcodeInput(iCurrentIndex, sKey);
-					}
-					return;
-				}
 
 				// check current Inputfield
 				const iCurrentIndex = this._getFocusedInputIndex();
@@ -215,18 +194,6 @@ sap.ui.define(
 					}
 				}
 			},
-			_handleBarcodeInput: function (iCurrentIndex, sBarcode) {
-
-				const sInputId = this.aInputs(iCurrentIndex);
-			  
-				if (!sInputId) {
-				  console.error("Kein zugeordnetes Input-Feld für den aktuellen Index.");
-				  return;
-				}
-
-				const oViewModel = this.getModel("viewModel");
-				oViewModel.setProperty(`/` + sInputId, sBarcode);
-			  },
 		});
 	}
 );
