@@ -18,17 +18,23 @@ sap.ui.define(
 				this.setModel(oViewModel, "viewModel");
 
 				//focus select
-				const oInputIst = this.byId("istLagereinheitBarcode");
-				const oInputWechsel = this.byId("istLagerplatzBarcode");
-				const oInputSoll = this.byId("sollLagereinheitBarcode");
+				// const oInputIst = this.byId("istLagereinheitBarcode");
+				// const oInputWechsel = this.byId("istLagerplatzBarcode");
+				// const oInputSoll = this.byId("sollLagereinheitBarcode");
 
-				const aInputs = [oInputIst, oInputWechsel, oInputSoll];
+				// const aInputs = [oInputIst, oInputWechsel, oInputSoll];
+				// // for keydown events
+				// this.aInputs = [oInputIst, oInputWechsel, oInputSoll];
 
 				// aInputs.forEach((oInput) => {
 				// 	oInput.addEventDelegate({
 				// 		onfocusin: this.onFocus.bind(this),
 				// 	});
 				// });
+
+				const oInputIst = this.byId("inputOverlayIstLagereinheit");
+				const oInputWechsel = this.byId("inputOverlayLagerplatz");
+				const oInputSoll = this.byId("inputOverlaySollLagereinheit");
 
 				// for keydown events
 				this.aInputs = [oInputIst, oInputWechsel, oInputSoll];
@@ -38,6 +44,7 @@ sap.ui.define(
 				// 	oInput.attachLiveChange(() => this._handleInputChange(iIndex));
 				// });
 
+				//const aInputs = [oInputIst, oInputWechsel, oInputSoll];
 				// stop keyboard popup
 				// aInputs.forEach((oInput) => {
 				// 	oInput.addEventDelegate({
@@ -61,16 +68,18 @@ sap.ui.define(
 			},
 
 			onKeyDown: function (oEvent) {
-				// const barcodeRegex = /^(?:[\x00-\x7F]|([0-9]{2}))*$/;
-				// const sFocusedElementId = document.activeElement.id;
-				// const sControlId = sFocusedElementId.replace(/-inner$/, "");
-
 				const sKey = oEvent.key;
 
-				// if (barcodeRegex.test(sKey)) {
-				// 	const oInput = this.byId(sControlId);
-				// 	oInput.setValue(oInput.getValue() + sKey);
-				// }
+				//Barcode
+				if (sKey.length > 1) {
+					const iCurrentIndex = this._getFocusedInputIndex();
+
+					// Wenn ein Overlay im Fokus ist, handle Barcode
+					if (iCurrentIndex !== -1) {
+						this._handleBarcodeInput(iCurrentIndex, sKey);
+					}
+					return;
+				}
 
 				// check current Inputfield
 				const iCurrentIndex = this._getFocusedInputIndex();
@@ -105,10 +114,10 @@ sap.ui.define(
 					case "DPAD_RIGHT":
 						this.onArrowRight();
 						break;
-					// case "TRIGGER":
-					// 	case "ArrowLeft":
-					// 	this.onTrigger();
-					// 	break;
+					case "TRIGGER":
+					case "ArrowLeft":
+						this.onTrigger();
+						break;
 					case "P1":
 						this.onP1();
 						break;
@@ -141,13 +150,6 @@ sap.ui.define(
 				if (oBuchenButton) {
 					oBuchenButton.firePress();
 				}
-			},
-			onTrigger: function () {
-				sap.m.MessageToast.show("Das hier ist der Barcode auslöser", {
-					width: "15em",
-					my: "center center",
-					at: "center center",
-				});
 			},
 
 			onFocus: async function (oEvent) {
@@ -213,6 +215,18 @@ sap.ui.define(
 					}
 				}
 			},
+			_handleBarcodeInput: function (iCurrentIndex, sBarcode) {
+
+				const sInputId = this.aInputs(iCurrentIndex);
+			  
+				if (!sInputId) {
+				  console.error("Kein zugeordnetes Input-Feld für den aktuellen Index.");
+				  return;
+				}
+
+				const oViewModel = this.getModel("viewModel");
+				oViewModel.setProperty(`/` + sInputId, sBarcode);
+			  },
 		});
 	}
 );
