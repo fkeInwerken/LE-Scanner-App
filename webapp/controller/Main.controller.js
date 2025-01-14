@@ -1,4 +1,4 @@
-sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel'], function (BaseController, JSONModel) {
+sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/MessageToast'], function (BaseController, JSONModel, MessageToast) {
   'use strict';
 
   return BaseController.extend('inw.le_scanner.controller.Main', {
@@ -48,11 +48,33 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel'], function (Bas
             let sInputMode = this.getView().getModel('viewModel').getProperty('/istLagereinheitBarcodeInputMode');
             oDomRef.setAttribute('inputmode', sInputMode);
 
+            // oDomRef.addEventListener('keydown', (oEvent) => {
+            //   sInputMode = this.getView().getModel('viewModel').getProperty('/istLagereinheitBarcodeInputMode');
+            //   if (sInputMode !== 'none') return;
+            //   const sKey = oEvent.key;
+            //   MessageToast.show(oEvent)
+            //   const sText = this.getView().getModel('viewModel').getProperty('/istLagereinheitBarcode');
+            //   this.getView()
+            //     .getModel('viewModel')
+            //     .setProperty('/istLagereinheitBarcode', sText + sKey);
+            // });
             oDomRef.addEventListener('keydown', (oEvent) => {
               sInputMode = this.getView().getModel('viewModel').getProperty('/istLagereinheitBarcodeInputMode');
               if (sInputMode !== 'none') return;
+
               const sKey = oEvent.key;
+
+              // Verhindere, dass Sondertasten wie Enter oder Tab die Eingabe stören
+              if (oEvent.key === 'Enter' || oEvent.key === 'Tab') {
+                return;
+              }
+
+              // Ausgabe von Debugging-Informationen
+              MessageToast.show('Gedrückte Taste: ' + sKey);
+
               const sText = this.getView().getModel('viewModel').getProperty('/istLagereinheitBarcode');
+
+              // Text aktualisieren, indem das neue Zeichen hinzugefügt wird
               this.getView()
                 .getModel('viewModel')
                 .setProperty('/istLagereinheitBarcode', sText + sKey);
