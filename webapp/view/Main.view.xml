@@ -12,10 +12,10 @@
 			<Button id="palletButton" type="Default" icon="sap-icon://keyboard-and-mouse" press="onKeyboardAction" />
 			<Text id="taPlaceholder" text="{i18n>TAPlaceholder}" width="20%" class="sapUiSmallMarginTop" textAlign="Left">
 			</Text>
-			<Input id="TANummer" value="{viewModel>/TANummer}" visible="true" editable="false" width="80%" />
+			<Label id="TANummer" text="{viewModel>/TANummer}" visible="true"  width="80%" />
 			<Text id="posPlaceholder" text="{i18n>PosPlaceholder}" width="20%" class="sapUiSmallMarginTop" textAlign="Left">
 			</Text>
-			<Input id="anzahlPositionen" value="{viewModel>/anzahlPositionen}" visible="true" editable="false" width="80%" />
+			<Label id="anzahlPositionen" text="{viewModel>/anzahlPositionen}" visible="true" width="80%" />
 			<Label text="{i18n>storageLocationLabel}" class="sapUiLargeMarginTop" />
 			<Input id="istLagerplatzBarcode" value="{viewModel>/istLagerplatzBarcode}" width="89%">
 			</Input>

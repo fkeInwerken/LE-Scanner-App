@@ -34,9 +34,9 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       // });
 
       // Input Change
-      // this.aInputs.forEach((oInput, iIndex) => {
-      // 	oInput.attachLiveChange(() => this._handleInputChange(iIndex));
-      // });
+      this.aInputs.forEach((oInput, iIndex) => {
+        oInput.attachLiveChange(() => this._handleInputChange(iIndex));
+      });
 
       //stop keyboard popup
       aInputs.forEach((oInput) => {
@@ -169,7 +169,7 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       if (oDomRef) {
         oDomRef.setAttribute('inputmode', 'text');
         setTimeout(() => {
-          oInput.focus(true);
+          oInput.focus();
           oDomRef.select();
         }, 100);
       }
