@@ -162,21 +162,15 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
 
     onKeyboardAction: function (oEvent) {
       const oButton = oEvent.getSource();
-      let inputId;
+	  const buttonId = oButton.getId().split('--').pop();
 
-      switch (oButton.getId()) {
-        case '__component0---main--palletButton':
-          inputId = 'istLagereinheitBarcode';
-          break;
-        case '__component0---main--lagerButton':
-          inputId = 'istLagerplatzBarcode';
-          break;
-        case '__component0---main--einheitButton':
-          inputId = 'sollLagereinheitBarcode';
-          break;
-        default:
-          return;
-      }
+      const inputMap = {
+		'palletButton': 'istLagereinheitBarcode',
+		'lagerButton': 'istLagerplatzBarcode',
+		'einheitButton': 'sollLagereinheitBarcode'
+	  };
+	
+	  const inputId = inputMap[buttonId];
 
       const oInput = this.byId(inputId);
       // Get the DOM reference of the input field
