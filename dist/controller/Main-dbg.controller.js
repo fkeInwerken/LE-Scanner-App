@@ -30,11 +30,11 @@ sap.ui.define(
 				// // for keydown events
 				this.aInputs = [oInputIst, oInputWechsel, oInputSoll];
 
-				aInputs.forEach((oInput) => {
-					oInput.addEventDelegate({
-						onfocusin: this.onFocus.bind(this),
-					});
-				});
+				// aInputs.forEach((oInput) => {
+				// 	oInput.addEventDelegate({
+				// 		onfocusin: this.onFocus.bind(this),
+				// 	});
+				// });
 
 				// Input Change
 				this.aInputs.forEach((oInput, iIndex) => {
@@ -47,7 +47,7 @@ sap.ui.define(
 						onAfterRendering: function () {
 							const oDomRef = oInput.getDomRef("inner");
 							if (oDomRef) {
-				//				oDomRef.setAttribute("inputmode", "none");
+								oDomRef.setAttribute("inputmode", "none");
 							}
 						},
 					});
