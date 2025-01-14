@@ -105,9 +105,10 @@ sap.ui.define(
 					case "DPAD_RIGHT":
 						this.onArrowRight();
 						break;
-					case "TRIGGER":
-						this.onTrigger();
-						break;
+					// case "TRIGGER":
+					// 	case "ArrowLeft":
+					// 	this.onTrigger();
+					// 	break;
 					case "P1":
 						this.onP1();
 						break;
