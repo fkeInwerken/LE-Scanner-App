@@ -10,10 +10,10 @@
 			<Input id="istLagereinheitBarcode" value="{viewModel>/istLagereinheitBarcode}" width="89%">
 			</Input>
 			<Button id="palletButton" type="Default" icon="sap-icon://keyboard-and-mouse" press="onKeyboardAction" />
-			<Text id="taPlaceholder" text="{i18n>TAPlaceholder}" width="20%" class="sapUiSmallMarginTop" textAlign="Center">
+			<Text id="taPlaceholder" text="{i18n>TAPlaceholder}" width="20%" class="sapUiSmallMarginTop" textAlign="Left">
 			</Text>
 			<Input id="TANummer" value="{viewModel>/TANummer}" visible="true" editable="false" width="80%" />
-			<Text id="posPlaceholder" text="{i18n>PosPlaceholder}" width="20%" class="sapUiSmallMarginTop" textAlign="Center">
+			<Text id="posPlaceholder" text="{i18n>PosPlaceholder}" width="20%" class="sapUiSmallMarginTop" textAlign="Left">
 			</Text>
 			<Input id="anzahlPositionen" value="{viewModel>/anzahlPositionen}" visible="true" editable="false" width="80%" />
 			<Label text="{i18n>storageLocationLabel}" class="sapUiLargeMarginTop" />
@@ -24,6 +24,14 @@
 			<Input id="sollLagereinheitBarcode" value="{viewModel>/sollLagereinheitBarcode}" width="89%">
 			</Input>
 			<Button id="einheitButton" type="Default" icon="sap-icon://keyboard-and-mouse" press="onKeyboardAction" />
+			<Dialog id="inputDialog" title="Input Dialog" afterClose="onDialogClose">
+				<VBox>
+					<Input id="inputDialogField" placeholder="Geben Sie etwas ein..." />
+				</VBox>
+				<endButton>
+					<Button text="OK" press="onDialogOk" />
+				</endButton>
+			</Dialog>
 		</content>
 		<footer>
 			<Toolbar>

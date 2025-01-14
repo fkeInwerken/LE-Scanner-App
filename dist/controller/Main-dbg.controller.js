@@ -1,201 +1,207 @@
-sap.ui.define(
-	["./BaseController", "sap/ui/model/json/JSONModel"],
-	function (BaseController, JSONModel) {
-		"use strict";
+sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel'], function (BaseController, JSONModel) {
+  'use strict';
 
-		return BaseController.extend("inw.le_scanner.controller.Main", {
-			onInit: function () {
-				const oViewModel = new JSONModel({
-					istLagereinheitBarcode: "",
-					istLagerplatzBarcode: "",
-					sollLagereinheitBarcode: "",
-					TANummer: "",
-					anzahlPositionen: "",
-					appVersion:
-						this.getOwnerComponent().getManifestEntry("sap.app")
-							.applicationVersion.version,
-				});
-				this.setModel(oViewModel, "viewModel");
+  return BaseController.extend('inw.le_scanner.controller.Main', {
+    onInit: function () {
+      const oViewModel = new JSONModel({
+        istLagereinheitBarcode: '',
+        istLagereinheitBarcodeInputMode: 'none',
+        istLagerplatzBarcode: '',
+        sollLagereinheitBarcode: '',
+        TANummer: '',
+        anzahlPositionen: '',
+        appVersion: this.getOwnerComponent().getManifestEntry('sap.app').applicationVersion.version,
+      });
+      this.setModel(oViewModel, 'viewModel');
 
-				//focus select
-				const oInputIst = this.byId("istLagereinheitBarcode");
-				const oInputWechsel = this.byId("istLagerplatzBarcode");
-				const oInputSoll = this.byId("sollLagereinheitBarcode");
+      //focus select
+      const oInputIst = this.byId('istLagereinheitBarcode');
+      const oInputWechsel = this.byId('istLagerplatzBarcode');
+      const oInputSoll = this.byId('sollLagereinheitBarcode');
 
-				const aInputs = [oInputIst, oInputWechsel, oInputSoll];
+      const aInputs = [oInputIst, oInputWechsel, oInputSoll];
 
-				// for keydown events
-				this.aInputs = [oInputIst, oInputWechsel, oInputSoll];
+      // for keydown events
+      this.aInputs = [oInputIst, oInputWechsel, oInputSoll];
 
-				// // for keydown events
-				this.aInputs = [oInputIst, oInputWechsel, oInputSoll];
+      // // for keydown events
+      this.aInputs = [oInputIst, oInputWechsel, oInputSoll];
 
-				// aInputs.forEach((oInput) => {
-				// 	oInput.addEventDelegate({
-				// 		onfocusin: this.onFocus.bind(this),
-				// 	});
-				// });
+      // aInputs.forEach((oInput) => {
+      // 	oInput.addEventDelegate({
+      // 		onfocusin: this.onFocus.bind(this),
+      // 	});
+      // });
 
-				// Input Change
-				// this.aInputs.forEach((oInput, iIndex) => {
-				// 	oInput.attachLiveChange(() => this._handleInputChange(iIndex));
-				// });
+      // Input Change
+      // this.aInputs.forEach((oInput, iIndex) => {
+      // 	oInput.attachLiveChange(() => this._handleInputChange(iIndex));
+      // });
 
-				//stop keyboard popup
-				aInputs.forEach((oInput) => {
-					oInput.addEventDelegate({
-						onAfterRendering: function () {
-							const oDomRef = oInput.getDomRef("inner");
-							if (oDomRef) {
-				//				oDomRef.setAttribute("inputmode", "none");
-							}
-						},
-					});
-					
-				});
+      //stop keyboard popup
+      aInputs.forEach((oInput) => {
+        oInput.addEventDelegate({
+          onAfterRendering: () => {
+            const oDomRef = oInput.getDomRef('inner');
+            if (!oDomRef) return;
 
-				// Event Listener für Key Events hinzufügen
-				document.addEventListener("keydown", this.onKeyDown.bind(this));
-			},
+            let sInputMode = this.getView().getModel('viewModel').getProperty('/istLagereinheitBarcodeInputMode');
+            oDomRef.setAttribute('inputmode', sInputMode);
 
-			onKeyDown: function (oEvent) {
-				const sKey = oEvent.key;
+            oDomRef.addEventListener('keydown', (oEvent) => {
+              sInputMode = this.getView().getModel('viewModel').getProperty('/istLagereinheitBarcodeInputMode');
+              if (sInputMode !== 'none') return;
+              const sKey = oEvent.key;
+              const sText = this.getView().getModel('viewModel').getProperty('/istLagereinheitBarcode');
+              this.getView()
+                .getModel('viewModel')
+                .setProperty('/istLagereinheitBarcode', sText + sKey);
+            });
+          },
+        });
+      });
 
-				// check current Inputfield
-				const iCurrentIndex = this._getFocusedInputIndex();
+      // Event Listener für Key Events hinzufügen
+      document.addEventListener('keydown', this.onKeyDown.bind(this));
+    },
 
-				switch (sKey) {
-					case "DPAD_UP":
-						this.onArrowUp(iCurrentIndex);
-						break;
-					case "ArrowUp":
-						this.onArrowUp(iCurrentIndex);
-						break;
-					case "DPAD_DOWN":
-						if (iCurrentIndex === -1) {
-							this.aInputs[0].focus();
-							return;
-						}
-						this.onArrowDown(iCurrentIndex);
-						break;
-					case "ArrowDown":
-						if (iCurrentIndex === -1) {
-							this.aInputs[0].focus();
-							return;
-						}
-						this.onArrowDown(iCurrentIndex);
-						break;
-					case "Enter":
-						this.onEnter();
-						break;
-					case "DPAD_LEFT":
-						this.onArrowLeft();
-						break;
-					case "DPAD_RIGHT":
-						this.onArrowRight();
-						break;
-					case "TRIGGER":
-					case "ArrowLeft":
-						this.onTrigger();
-						break;
-					case "P1":
-						this.onP1();
-						break;
-					case "P2":
-						this.onP2();
-						break;
-					default:
-						// console.log(`Unhandled key: ${sKey}`);
-				}
-			},
+    onKeyDown: function (oEvent) {
+      const sKey = oEvent.key;
 
-			onArrowUp: function (iCurrentIndex) {
-				if (iCurrentIndex > 0) {
-					const oPreviousInput = this.aInputs[iCurrentIndex - 1];
-					oPreviousInput.focus();
-					this._selectInputText(oPreviousInput);
-				}
-			},
+      // check current Inputfield
+      const iCurrentIndex = this._getFocusedInputIndex();
 
-			onArrowDown: function (iCurrentIndex) {
-				if (iCurrentIndex < this.aInputs.length - 1) {
-					const oNextInput = this.aInputs[iCurrentIndex + 1];
-					oNextInput.focus();
-					this._selectInputText(oNextInput);
-				}
-			},
+      switch (sKey) {
+        case 'DPAD_UP':
+          this.onArrowUp(iCurrentIndex);
+          break;
+        case 'ArrowUp':
+          this.onArrowUp(iCurrentIndex);
+          break;
+        case 'DPAD_DOWN':
+          if (iCurrentIndex === -1) {
+            this.aInputs[0].focus();
+            return;
+          }
+          this.onArrowDown(iCurrentIndex);
+          break;
+        case 'ArrowDown':
+          if (iCurrentIndex === -1) {
+            this.aInputs[0].focus();
+            return;
+          }
+          this.onArrowDown(iCurrentIndex);
+          break;
+        case 'Enter':
+          this.onEnter();
+          break;
+        case 'DPAD_LEFT':
+          this.onArrowLeft();
+          break;
+        case 'DPAD_RIGHT':
+          this.onArrowRight();
+          break;
+        case 'TRIGGER':
+        case 'ArrowLeft':
+          this.onTrigger();
+          break;
+        case 'P1':
+          this.onP1();
+          break;
+        case 'P2':
+          this.onP2();
+          break;
+        default:
+        // console.log(`Unhandled key: ${sKey}`);
+      }
+    },
 
-			onEnter: function () {
-				const oBuchenButton = this.byId("buchenButton");
-				if (oBuchenButton) {
-					oBuchenButton.firePress();
-				}
-			},
+    onArrowUp: function (iCurrentIndex) {
+      if (iCurrentIndex > 0) {
+        const oPreviousInput = this.aInputs[iCurrentIndex - 1];
+        oPreviousInput.focus();
+        this._selectInputText(oPreviousInput);
+      }
+    },
 
-			onFocus: async function (oEvent) {
-				// Get the source control of the focus event
-				const oInput = oEvent.srcControl;
+    onArrowDown: function (iCurrentIndex) {
+      if (iCurrentIndex < this.aInputs.length - 1) {
+        const oNextInput = this.aInputs[iCurrentIndex + 1];
+        oNextInput.focus();
+        this._selectInputText(oNextInput);
+      }
+    },
 
-				// Get the DOM reference of the input field
-				const oDomRef = oInput.getDomRef("inner");
+    onEnter: function () {
+      const oBuchenButton = this.byId('buchenButton');
+      if (oBuchenButton) {
+        oBuchenButton.firePress();
+      }
+    },
 
-				// Select the text in the input field if the DOM element exists
-				if (oDomRef) {
-					oDomRef.select();
-			//					await oDomRef.setAttribute("inputmode", "text");
-			//					oDomRef.setAttribute("inputmode", "none");
-				}
-			},
+    onFocus: async function (oEvent) {
+      // Get the source control of the focus event
+      const oInput = oEvent.srcControl;
 
-			onKeyboardAction: async function (oEvent) {
-				const oInput = oEvent.getSource();
+      // Get the DOM reference of the input field
+      const oDomRef = oInput.getDomRef('inner');
 
-				const oDomRef = oInput.getDomRef("inner");
-				if (oDomRef) {
-			//	  oDomRef.setAttribute("inputmode", "text");
-			//	  await oInput.focus();
-			//	  oDomRef.setAttribute("inputmode", "none");
-				}
-			},
+      // Select the text in the input field if the DOM element exists
+      if (oDomRef) {
+        oDomRef.select();
+        //					await oDomRef.setAttribute("inputmode", "text");
+        //					oDomRef.setAttribute("inputmode", "none");
+      }
+    },
 
-			onBuchenPress: function () {
-				sap.m.MessageToast.show("Erfolgreich gebucht!", {
-					width: "15em",
-					my: "center center",
-					at: "center center",
-				});
-			},
+    onKeyboardAction: function (oEvent) {
+      const oInput = oEvent.getSource();
 
-			_getFocusedInputIndex: function () {
-				// get Element ID
-				const sFocusedElementId = document.activeElement.id;
+      const oDomRef = oInput.getDomRef('inner');
+      if (oDomRef) {
+        const sInputMode = this.getView().getModel('viewModel').getProperty('/istLagereinheitBarcodeInputMode');
+        if (sInputMode === 'none') this.getView().getModel('viewModel').setProperty('/istLagereinheitBarcodeInputMode', 'text');
+        if (sInputMode === 'text') this.getView().getModel('viewModel').setProperty('/istLagereinheitBarcodeInputMode', 'none');
+        oDomRef.setAttribute('inputmode', this.getView().getModel('viewModel').getProperty('/istLagereinheitBarcodeInputMode'));
 
-				return this.aInputs.findIndex(
-					(oInput) =>
-						oInput.getId() === sFocusedElementId.replace(/-inner$/, "")
-				);
-			},
+        oInput.focus();
+      }
+    },
 
-			_selectInputText: function (oInput) {
-				// wait for Dom-Element
-				setTimeout(() => {
-					const oDomRef = oInput.getDomRef("inner");
-					if (oDomRef) {
-						oDomRef.setSelectionRange(0, oDomRef.value.length);
-					}
-				}, 0);
-			},
+    onBuchenPress: function () {
+      sap.m.MessageToast.show('Erfolgreich gebucht!', {
+        width: '15em',
+        my: 'center center',
+        at: 'center center',
+      });
+    },
 
-			_handleInputChange: function (iCurrentIndex) {
-				const oCurrentInput = this.aInputs[iCurrentIndex];
+    _getFocusedInputIndex: function () {
+      // get Element ID
+      const sFocusedElementId = document.activeElement.id;
 
-				if (oCurrentInput.getValue()) {
-					const oNextInput = this.aInputs[iCurrentIndex + 1];
-					if (oNextInput) {
-						oNextInput.focus();
-					}
-				}
-			},
-		});
-	}
-);
+      return this.aInputs.findIndex((oInput) => oInput.getId() === sFocusedElementId.replace(/-inner$/, ''));
+    },
+
+    _selectInputText: function (oInput) {
+      // wait for Dom-Element
+      setTimeout(() => {
+        const oDomRef = oInput.getDomRef('inner');
+        if (oDomRef) {
+          oDomRef.setSelectionRange(0, oDomRef.value.length);
+        }
+      }, 0);
+    },
+
+    _handleInputChange: function (iCurrentIndex) {
+      const oCurrentInput = this.aInputs[iCurrentIndex];
+
+      if (oCurrentInput.getValue()) {
+        const oNextInput = this.aInputs[iCurrentIndex + 1];
+        if (oNextInput) {
+          oNextInput.focus();
+        }
+      }
+    },
+  });
+});
