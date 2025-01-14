@@ -165,13 +165,13 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       let inputId;
 
       switch (oButton.getId()) {
-        case 'palletButton':
+        case '__component0---main--palletButton':
           inputId = 'istLagereinheitBarcode';
           break;
-        case 'lagerButton':
+        case '__component0---main--lagerButton':
           inputId = 'istLagerplatzBarcode';
           break;
-        case 'einheitButton':
+        case '__component0---main--einheitButton':
           inputId = 'sollLagereinheitBarcode';
           break;
         default:
