@@ -45,27 +45,27 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
             const oDomRef = oInput.getDomRef('inner');
             if (!oDomRef) return;
 			oDomRef.setAttribute("inputmode", "none");
-            oDomRef.addEventListener('keydown', (oEvent) => {
-              if (this.getView().getModel('viewModel').getProperty('/istLagereinheitBarcodeEnabled')) return;
+        //     oDomRef.addEventListener('keydown', (oEvent) => {
+        //       if (this.getView().getModel('viewModel').getProperty('/istLagereinheitBarcodeEnabled')) return;
 
-              const sKey = oEvent.key;
+        //       const sKey = oEvent.key;
 
-              // Verhindere, dass Sondertasten wie Enter oder Tab die Eingabe stören
-              if (oEvent.key === 'Enter' || oEvent.key === 'Tab') {
-                return;
-              }
+        //       // Verhindere, dass Sondertasten wie Enter oder Tab die Eingabe stören
+        //       if (oEvent.key === 'Enter' || oEvent.key === 'Tab') {
+        //         return;
+        //       }
 
-              // Ausgabe von Debugging-Informationen
-              MessageToast.show('Gedrückte Taste: ' + sKey);
+        //       // Ausgabe von Debugging-Informationen
+        //       MessageToast.show('Gedrückte Taste: ' + sKey);
 
-              const sText = this.getView().getModel('viewModel').getProperty('/istLagereinheitBarcode');
+        //       const sText = this.getView().getModel('viewModel').getProperty('/istLagereinheitBarcode');
 
-              // Text aktualisieren, indem das neue Zeichen hinzugefügt wird
-              this.getView()
-                .getModel('viewModel')
-                .setProperty('/istLagereinheitBarcode', sText + sKey);
-            });
-          },
+        //       // Text aktualisieren, indem das neue Zeichen hinzugefügt wird
+        //       this.getView()
+        //         .getModel('viewModel')
+        //         .setProperty('/istLagereinheitBarcode', sText + sKey);
+        //     });
+           },
         });
       });
 
