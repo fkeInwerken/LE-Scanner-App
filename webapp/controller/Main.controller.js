@@ -5,7 +5,7 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
     onInit: function () {
       const oViewModel = new JSONModel({
         istLagereinheitBarcode: '',
-        istLagereinheitBarcodeInputMode: 'none',
+        istLagereinheitBarcodeEnabled: false,
         istLagerplatzBarcode: '',
         sollLagereinheitBarcode: '',
         TANummer: '',
@@ -45,22 +45,8 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
             const oDomRef = oInput.getDomRef('inner');
             if (!oDomRef) return;
 
-            let sInputMode = this.getView().getModel('viewModel').getProperty('/istLagereinheitBarcodeInputMode');
-            oDomRef.setAttribute('inputmode', sInputMode);
-
-            // oDomRef.addEventListener('keydown', (oEvent) => {
-            //   sInputMode = this.getView().getModel('viewModel').getProperty('/istLagereinheitBarcodeInputMode');
-            //   if (sInputMode !== 'none') return;
-            //   const sKey = oEvent.key;
-            //   MessageToast.show(oEvent)
-            //   const sText = this.getView().getModel('viewModel').getProperty('/istLagereinheitBarcode');
-            //   this.getView()
-            //     .getModel('viewModel')
-            //     .setProperty('/istLagereinheitBarcode', sText + sKey);
-            // });
             oDomRef.addEventListener('keydown', (oEvent) => {
-              sInputMode = this.getView().getModel('viewModel').getProperty('/istLagereinheitBarcodeInputMode');
-              if (sInputMode !== 'none') return;
+              if (this.getView().getModel('viewModel').getProperty('/istLagereinheitBarcodeEnabled')) return;
 
               const sKey = oEvent.key;
 
@@ -161,33 +147,34 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       }
     },
 
-    onFocus: async function (oEvent) {
-      // Get the source control of the focus event
-      const oInput = oEvent.srcControl;
+    // onFocus: async function (oEvent) {
+    //   // Get the source control of the focus event
+    //   const oInput = oEvent.srcControl;
 
-      // Get the DOM reference of the input field
-      const oDomRef = oInput.getDomRef('inner');
+    //   // Get the DOM reference of the input field
+    //   const oDomRef = oInput.getDomRef('inner');
 
-      // Select the text in the input field if the DOM element exists
-      if (oDomRef) {
-        oDomRef.select();
-        //					await oDomRef.setAttribute("inputmode", "text");
-        //					oDomRef.setAttribute("inputmode", "none");
-      }
-    },
+    //   // Select the text in the input field if the DOM element exists
+    //   if (oDomRef) {
+    //     oDomRef.select();
+    //   }
+    // },
 
-    onKeyboardAction: function (oEvent) {
-      const oInput = oEvent.getSource();
+    onKeyboardAction: function () {
+      const oInput = this.byId('istLagereinheitBarcode');
 
-      const oDomRef = oInput.getDomRef('inner');
-      if (oDomRef) {
-        const sInputMode = this.getView().getModel('viewModel').getProperty('/istLagereinheitBarcodeInputMode');
-        if (sInputMode === 'none') this.getView().getModel('viewModel').setProperty('/istLagereinheitBarcodeInputMode', 'text');
-        if (sInputMode === 'text') this.getView().getModel('viewModel').setProperty('/istLagereinheitBarcodeInputMode', 'none');
-        oDomRef.setAttribute('inputmode', this.getView().getModel('viewModel').getProperty('/istLagereinheitBarcodeInputMode'));
-
+      const sInputEnabled = this.getView().getModel('viewModel').getProperty('/istLagereinheitBarcodeEnabled');
+      this.getView().getModel('viewModel').setProperty('/istLagereinheitBarcodeEnabled', !sInputEnabled);
+      setTimeout(() => {
         oInput.focus();
-      }
+        // Get the DOM reference of the input field
+        const oDomRef = oInput.getDomRef('inner');
+
+        // Select the text in the input field if the DOM element exists
+        if (oDomRef) {
+          oDomRef.select();
+        }
+      }, 100);
     },
 
     onBuchenPress: function () {
