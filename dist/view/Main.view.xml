@@ -8,7 +8,7 @@
 		<content>
 			<Label text="{i18n>palletLabel}" required="true" class="sapUiSmallMarginTop" />
 			<Input id="istLagereinheitBarcode" value="{viewModel>/istLagereinheitBarcode}" width="89%">
-			<customData> <core:CustomData key="inputmode" value="string" writeToDom="true"/> </customData></Input>
+			</Input>
 			<Button id="palletButton" type="Default" icon="sap-icon://keyboard-and-mouse" press="onKeyboardAction" />
 			<Text id="taPlaceholder" text="{i18n>TAPlaceholder}" width="20%" class="sapUiSmallMarginTop" textAlign="Center">
 			</Text>
