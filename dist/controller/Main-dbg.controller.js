@@ -44,8 +44,7 @@ sap.ui.define(
 						onAfterRendering: function () {
 							const oDomRef = oInput.getDomRef("inner");
 							if (oDomRef) {
-					//					oDomRef.setAttribute("inputmode", "none");
-
+						//		oDomRef.setAttribute("inputmode", "none");
 							}
 						},
 					});
@@ -54,15 +53,12 @@ sap.ui.define(
 				// Event Listener für Key Events hinzufügen
 				document.addEventListener("keydown", this.onKeyDown.bind(this));
 
-				
 				// document.addEventListener("focus", function (event) {
 				// 	if (event.target.tagName === "INPUT") {
 				// 	  event.target.setAttribute("inputmode", "none");
 				// 	}
 				//   }, true);
 			},
-
-	
 
 			onKeyDown: function (oEvent) {
 				// const barcodeRegex = /^(?:[\x00-\x7F]|([0-9]{2}))*$/;
@@ -100,14 +96,14 @@ sap.ui.define(
 						}
 						this.onArrowDown(iCurrentIndex);
 						break;
+					case "Enter":
+						this.onEnter();
+						break;
 					case "DPAD_LEFT":
 						this.onArrowLeft();
 						break;
 					case "DPAD_RIGHT":
 						this.onArrowRight();
-						break;
-					case "Enter":
-						this.onEnter();
 						break;
 					case "TRIGGER":
 						this.onTrigger();
@@ -155,19 +151,19 @@ sap.ui.define(
 				// Select the text in the input field if the DOM element exists
 				if (oDomRef) {
 					oDomRef.select();
-				//			await oDomRef.setAttribute("inputmode", "text");
+					//			await oDomRef.setAttribute("inputmode", "text");
 				}
 			},
 
 			onKeyboardAction: async function (oEvent) {
 				const oInput = oEvent.getSource();
-			  
-				const oDomRef = oInput.getDomRef("inner");
-				if (oDomRef) {
-				  oDomRef.setAttribute("inputmode", "text");
-				  await oInput.focus();
-				  oDomRef.setAttribute("inputmode", "none");
-				}
+
+				// const oDomRef = oInput.getDomRef("inner");
+				// if (oDomRef) {
+				//   oDomRef.setAttribute("inputmode", "text");
+				//   await oInput.focus();
+				//   oDomRef.setAttribute("inputmode", "none");
+				// }
 			},
 
 			onBuchenPress: function () {
@@ -182,10 +178,9 @@ sap.ui.define(
 				// get Element ID
 				const sFocusedElementId = document.activeElement.id;
 
-				const sControlId = sFocusedElementId.replace(/-inner$/, "");
-
 				return this.aInputs.findIndex(
-					(oInput) => oInput.getId() === sControlId
+					(oInput) =>
+						oInput.getId() === sFocusedElementId.replace(/-inner$/, "")
 				);
 			},
 

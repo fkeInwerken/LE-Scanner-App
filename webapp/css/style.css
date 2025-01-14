@@ -1,8 +1,18 @@
-/*.sapMBtn:focus, .ndcBarcodeScannerButton:focus {
-    outline: none; /* Entfernt den Standard-Outline */
-  /*  border: 1px solid #5c9eff; /* Umrandung bei Fokus */
-  /*  border-radius: 5px; /* Runde Ecken für den Fokus */
-   /* box-shadow: 0 0 8px rgba(92, 158, 255, 0.7); /* Sanfter Schatten für den Fokus */
-/*}
-/*
+.overlayContainer .sapMInput {
+  pointer-events: none; /* Deaktiviert direkte Interaktion mit dem Input */
+}
 
+.overlayContainer .sapMInputWrapper {
+  position: relative;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0); /* Komplett transparent */
+  z-index: 1;
+  cursor: default; /* Zeigt an, dass kein direkter Fokus möglich ist */
+}
