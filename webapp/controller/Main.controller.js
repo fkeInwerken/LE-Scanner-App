@@ -34,21 +34,21 @@ sap.ui.define(
 				this.aInputs = [oInputIst, oInputWechsel, oInputSoll];
 
 				// Input Change
-				this.aInputs.forEach((oInput, iIndex) => {
-					oInput.attachLiveChange(() => this._handleInputChange(iIndex));
-				});
+				// this.aInputs.forEach((oInput, iIndex) => {
+				// 	oInput.attachLiveChange(() => this._handleInputChange(iIndex));
+				// });
 
 				// stop keyboard popup
-				aInputs.forEach((oInput) => {
-					oInput.addEventDelegate({
-						onAfterRendering: function () {
-							const oDomRef = oInput.getDomRef("inner");
-							if (oDomRef) {
-						//		oDomRef.setAttribute("inputmode", "none");
-							}
-						},
-					});
-				});
+				// aInputs.forEach((oInput) => {
+				// 	oInput.addEventDelegate({
+				// 		onAfterRendering: function () {
+				// 			const oDomRef = oInput.getDomRef("inner");
+				// 			if (oDomRef) {
+				// 		//		oDomRef.setAttribute("inputmode", "none");
+				// 			}
+				// 		},
+				// 	});
+				// });
 
 				// Event Listener für Key Events hinzufügen
 				document.addEventListener("keydown", this.onKeyDown.bind(this));
@@ -139,6 +139,13 @@ sap.ui.define(
 				if (oBuchenButton) {
 					oBuchenButton.firePress();
 				}
+			},
+			onTrigger: function () {
+				sap.m.MessageToast.show("Das hier ist der Barcode auslöser", {
+					width: "15em",
+					my: "center center",
+					at: "center center",
+				});
 			},
 
 			onFocus: async function (oEvent) {
