@@ -115,6 +115,7 @@ sap.ui.define(
 						this.onP2();
 						break;
 					default:
+						console.log(`Unhandled key: ${sKey}`);
 				}
 			},
 
