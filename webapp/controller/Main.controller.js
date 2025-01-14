@@ -5,7 +5,7 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
     onInit: function () {
       const oViewModel = new JSONModel({
         istLagereinheitBarcode: '',
-        istLagereinheitBarcodeEnabled: false,
+        //  istLagereinheitBarcodeEnabled: false,
         istLagerplatzBarcode: '',
         sollLagereinheitBarcode: '',
         TANummer: '',
@@ -34,9 +34,9 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       // });
 
       // Input Change
-      this.aInputs.forEach((oInput, iIndex) => {
-        oInput.attachLiveChange(() => this._handleInputChange(iIndex));
-      });
+      //   this.aInputs.forEach((oInput, iIndex) => {
+      //     oInput.attachLiveChange(() => this._handleInputChange(iIndex));
+      //   });
 
       //stop keyboard popup
       aInputs.forEach((oInput) => {
@@ -160,8 +160,25 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
     //   }
     // },
 
-    onKeyboardAction: function () {
-      const oInput = this.byId('istLagereinheitBarcode');
+    onKeyboardAction: function (oEvent) {
+      const oButton = oEvent.getSource();
+      let inputId;
+
+      switch (oButton.getId()) {
+        case 'palletButton':
+          inputId = 'istLagereinheitBarcode';
+          break;
+        case 'lagerButton':
+          inputId = 'istLagerplatzBarcode';
+          break;
+        case 'einheitButton':
+          inputId = 'sollLagereinheitBarcode';
+          break;
+        default:
+          return;
+      }
+
+      const oInput = this.byId(inputId);
       // Get the DOM reference of the input field
       const oDomRef = oInput.getDomRef('inner');
 
@@ -176,11 +193,7 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
     },
 
     onBuchenPress: function () {
-      sap.m.MessageToast.show('Erfolgreich gebucht!', {
-        width: '15em',
-        my: 'center center',
-        at: 'center center',
-      });
+		MessageToast.show('Erfolgreich gebucht!');
     },
 
     _getFocusedInputIndex: function () {
