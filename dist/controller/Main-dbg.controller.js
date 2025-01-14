@@ -44,28 +44,28 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
           onAfterRendering: () => {
             const oDomRef = oInput.getDomRef('inner');
             if (!oDomRef) return;
-			oDomRef.setAttribute("inputmode", "none");
-        //     oDomRef.addEventListener('keydown', (oEvent) => {
-        //       if (this.getView().getModel('viewModel').getProperty('/istLagereinheitBarcodeEnabled')) return;
+            oDomRef.setAttribute('inputmode', 'none');
+            //     oDomRef.addEventListener('keydown', (oEvent) => {
+            //       if (this.getView().getModel('viewModel').getProperty('/istLagereinheitBarcodeEnabled')) return;
 
-        //       const sKey = oEvent.key;
+            //       const sKey = oEvent.key;
 
-        //       // Verhindere, dass Sondertasten wie Enter oder Tab die Eingabe stören
-        //       if (oEvent.key === 'Enter' || oEvent.key === 'Tab') {
-        //         return;
-        //       }
+            //       // Verhindere, dass Sondertasten wie Enter oder Tab die Eingabe stören
+            //       if (oEvent.key === 'Enter' || oEvent.key === 'Tab') {
+            //         return;
+            //       }
 
-        //       // Ausgabe von Debugging-Informationen
-        //       MessageToast.show('Gedrückte Taste: ' + sKey);
+            //       // Ausgabe von Debugging-Informationen
+            //       MessageToast.show('Gedrückte Taste: ' + sKey);
 
-        //       const sText = this.getView().getModel('viewModel').getProperty('/istLagereinheitBarcode');
+            //       const sText = this.getView().getModel('viewModel').getProperty('/istLagereinheitBarcode');
 
-        //       // Text aktualisieren, indem das neue Zeichen hinzugefügt wird
-        //       this.getView()
-        //         .getModel('viewModel')
-        //         .setProperty('/istLagereinheitBarcode', sText + sKey);
-        //     });
-           },
+            //       // Text aktualisieren, indem das neue Zeichen hinzugefügt wird
+            //       this.getView()
+            //         .getModel('viewModel')
+            //         .setProperty('/istLagereinheitBarcode', sText + sKey);
+            //     });
+          },
         });
       });
 
@@ -162,19 +162,17 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
 
     onKeyboardAction: function () {
       const oInput = this.byId('istLagereinheitBarcode');
+      // Get the DOM reference of the input field
+      const oDomRef = oInput.getDomRef('inner');
 
-      const sInputEnabled = this.getView().getModel('viewModel').getProperty('/istLagereinheitBarcodeEnabled');
-      this.getView().getModel('viewModel').setProperty('/istLagereinheitBarcodeEnabled', !sInputEnabled);
-      setTimeout(() => {
-        oInput.focus();
-        // Get the DOM reference of the input field
-        const oDomRef = oInput.getDomRef('inner');
-
-        // Select the text in the input field if the DOM element exists
-        if (oDomRef) {
+      // Select the text in the input field if the DOM element exists
+      if (oDomRef) {
+        oDomRef.setAttribute('inputmode', 'text');
+        setTimeout(() => {
+          oInput.focus();
           oDomRef.select();
-        }
-      }, 100);
+        }, 100);
+      }
     },
 
     onBuchenPress: function () {
