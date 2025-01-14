@@ -51,19 +51,7 @@ sap.ui.define(
 							}
 						},
 					});
-					oInput.attachBrowserEvent("focus", function () {
-						const oDomRef = oInput.getDomRef("inner");
-						if (oDomRef) {
-							oDomRef.setAttribute("inputmode", "text"); // Aktiviert die Tastatur
-						}
-					});
-
-					oInput.attachBrowserEvent("blur", function () {
-						const oDomRef = oInput.getDomRef("inner");
-						if (oDomRef) {
-							oDomRef.setAttribute("inputmode", "none"); // Deaktiviert die Tastatur
-						}
-					});
+					
 				});
 
 				// Event Listener für Key Events hinzufügen
@@ -117,7 +105,7 @@ sap.ui.define(
 						this.onP2();
 						break;
 					default:
-						console.log(`Unhandled key: ${sKey}`);
+						// console.log(`Unhandled key: ${sKey}`);
 				}
 			},
 
@@ -161,12 +149,12 @@ sap.ui.define(
 			onKeyboardAction: async function (oEvent) {
 				const oInput = oEvent.getSource();
 
-		
-				const oDomRef = oInput.getDomRef("inner");
-				if (oDomRef) {
-				  oDomRef.setAttribute("inputmode", "text"); 
-				  oInput.focus(); 
-				}
+				// const oDomRef = oInput.getDomRef("inner");
+				// if (oDomRef) {
+				//   oDomRef.setAttribute("inputmode", "text");
+				//   await oInput.focus();
+				//   oDomRef.setAttribute("inputmode", "none");
+				// }
 			},
 
 			onBuchenPress: function () {
