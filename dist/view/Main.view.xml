@@ -24,14 +24,6 @@
 			<Input id="sollLagereinheitBarcode" value="{viewModel>/sollLagereinheitBarcode}" width="89%">
 			</Input>
 			<Button id="einheitButton" type="Default" icon="sap-icon://keyboard-and-mouse" press="onKeyboardAction" />
-			<Dialog id="inputDialog" title="Input Dialog" afterClose="onDialogClose">
-				<VBox>
-					<Input id="inputDialogField" placeholder="Geben Sie etwas ein..." />
-				</VBox>
-				<endButton>
-					<Button text="OK" press="onDialogOk" />
-				</endButton>
-			</Dialog>
 		</content>
 		<footer>
 			<Toolbar>
