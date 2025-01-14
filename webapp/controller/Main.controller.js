@@ -20,6 +20,8 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
 
       const aInputs = [oInputIst, oInputWechsel, oInputSoll];
 
+	  this.aInputs = [oInputIst, oInputWechsel, oInputSoll];
+
       //stop keyboard popup
       aInputs.forEach((oInput) => {
         oInput.addEventDelegate({
