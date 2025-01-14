@@ -5,7 +5,6 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
     onInit: function () {
       const oViewModel = new JSONModel({
         istLagereinheitBarcode: '',
-        //  istLagereinheitBarcodeEnabled: false,
         istLagerplatzBarcode: '',
         sollLagereinheitBarcode: '',
         TANummer: '',
@@ -21,23 +20,6 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
 
       const aInputs = [oInputIst, oInputWechsel, oInputSoll];
 
-      // for keydown events
-      this.aInputs = [oInputIst, oInputWechsel, oInputSoll];
-
-      // // for keydown events
-      this.aInputs = [oInputIst, oInputWechsel, oInputSoll];
-
-      // aInputs.forEach((oInput) => {
-      // 	oInput.addEventDelegate({
-      // 		onfocusin: this.onFocus.bind(this),
-      // 	});
-      // });
-
-      // Input Change
-      //   this.aInputs.forEach((oInput, iIndex) => {
-      //     oInput.attachLiveChange(() => this._handleInputChange(iIndex));
-      //   });
-
       //stop keyboard popup
       aInputs.forEach((oInput) => {
         oInput.addEventDelegate({
@@ -45,26 +27,6 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
             const oDomRef = oInput.getDomRef('inner');
             if (!oDomRef) return;
             oDomRef.setAttribute('inputmode', 'none');
-            //     oDomRef.addEventListener('keydown', (oEvent) => {
-            //       if (this.getView().getModel('viewModel').getProperty('/istLagereinheitBarcodeEnabled')) return;
-
-            //       const sKey = oEvent.key;
-
-            //       // Verhindere, dass Sondertasten wie Enter oder Tab die Eingabe stören
-            //       if (oEvent.key === 'Enter' || oEvent.key === 'Tab') {
-            //         return;
-            //       }
-
-            //       // Ausgabe von Debugging-Informationen
-            //       MessageToast.show('Gedrückte Taste: ' + sKey);
-
-            //       const sText = this.getView().getModel('viewModel').getProperty('/istLagereinheitBarcode');
-
-            //       // Text aktualisieren, indem das neue Zeichen hinzugefügt wird
-            //       this.getView()
-            //         .getModel('viewModel')
-            //         .setProperty('/istLagereinheitBarcode', sText + sKey);
-            //     });
           },
         });
       });
@@ -146,19 +108,6 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
         oBuchenButton.firePress();
       }
     },
-
-    // onFocus: async function (oEvent) {
-    //   // Get the source control of the focus event
-    //   const oInput = oEvent.srcControl;
-
-    //   // Get the DOM reference of the input field
-    //   const oDomRef = oInput.getDomRef('inner');
-
-    //   // Select the text in the input field if the DOM element exists
-    //   if (oDomRef) {
-    //     oDomRef.select();
-    //   }
-    // },
 
     onKeyboardAction: function (oEvent) {
       const oButton = oEvent.getSource();
