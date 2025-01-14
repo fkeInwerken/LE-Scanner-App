@@ -16,20 +16,12 @@ exec('git add .', (addError, addStdout, addStderr) => {
       console.error(`Git Commit-Fehler: ${commitError.message}`);
       return;
     }
-    if (commitStderr) {
-      console.error(`Git Commit-Fehler (stderr): ${commitStderr}`);
-      return;
-    }
     console.log(`Git Commit-Ausgabe:\n${commitStdout}`);
 
     // Schritt 4: Git push ausführen
     exec('git push origin le_scanner', (pushError, pushStdout, pushStderr) => {
       if (pushError) {
         console.error(`Git Push-Fehler: ${pushError.message}`);
-        return;
-      }
-      if (pushStderr) {
-        console.error(`Git Push-Fehler (stderr): ${pushStderr}`);
         return;
       }
       console.log(`Git Push-Ausgabe:\n${pushStdout}`);
