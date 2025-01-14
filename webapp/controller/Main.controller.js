@@ -47,9 +47,22 @@ sap.ui.define(
 						onAfterRendering: function () {
 							const oDomRef = oInput.getDomRef("inner");
 							if (oDomRef) {
-								//		oDomRef.setAttribute("inputmode", "none");
+								oDomRef.setAttribute("inputmode", "none");
 							}
 						},
+					});
+					oInput.attachBrowserEvent("focus", function () {
+						const oDomRef = oInput.getDomRef("inner");
+						if (oDomRef) {
+							oDomRef.setAttribute("inputmode", "text"); // Aktiviert die Tastatur
+						}
+					});
+
+					oInput.attachBrowserEvent("blur", function () {
+						const oDomRef = oInput.getDomRef("inner");
+						if (oDomRef) {
+							oDomRef.setAttribute("inputmode", "none"); // Deaktiviert die Tastatur
+						}
 					});
 				});
 
@@ -148,12 +161,12 @@ sap.ui.define(
 			onKeyboardAction: async function (oEvent) {
 				const oInput = oEvent.getSource();
 
-				// const oDomRef = oInput.getDomRef("inner");
-				// if (oDomRef) {
-				//   oDomRef.setAttribute("inputmode", "text");
-				//   await oInput.focus();
-				//   oDomRef.setAttribute("inputmode", "none");
-				// }
+		
+				const oDomRef = oInput.getDomRef("inner");
+				if (oDomRef) {
+				  oDomRef.setAttribute("inputmode", "text"); 
+				  oInput.focus(); 
+				}
 			},
 
 			onBuchenPress: function () {
