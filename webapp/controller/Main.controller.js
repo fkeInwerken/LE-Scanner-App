@@ -169,7 +169,7 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       if (oDomRef) {
         oDomRef.setAttribute('inputmode', 'text');
         setTimeout(() => {
-          oInput.focus();
+          oInput.focus(true);
           oDomRef.select();
         }, 100);
       }
