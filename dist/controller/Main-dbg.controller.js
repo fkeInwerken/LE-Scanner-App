@@ -184,7 +184,9 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
 
       // Select the text in the input field if the DOM element exists
       if (oDomRef) {
-        oDomRef.setAttribute('inputmode', 'text');
+        const currentInputMode = oDomRef.getAttribute('inputmode');
+        const newInputMode = currentInputMode === 'text' ? 'none' : 'text';
+        oDomRef.setAttribute('inputmode', newInputMode);
         setTimeout(() => {
           oInput.focus();
           oDomRef.select();
@@ -193,7 +195,7 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
     },
 
     onBuchenPress: function () {
-		MessageToast.show('Erfolgreich gebucht!');
+      MessageToast.show('Erfolgreich gebucht!');
     },
 
     _getFocusedInputIndex: function () {
