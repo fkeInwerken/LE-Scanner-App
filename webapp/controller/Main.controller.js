@@ -142,19 +142,20 @@ sap.ui.define(
 				// Select the text in the input field if the DOM element exists
 				if (oDomRef) {
 					oDomRef.select();
-					//			await oDomRef.setAttribute("inputmode", "text");
+								await oDomRef.setAttribute("inputmode", "text");
+								oDomRef.setAttribute("inputmode", "none");
 				}
 			},
 
 			onKeyboardAction: async function (oEvent) {
 				const oInput = oEvent.getSource();
 
-				// const oDomRef = oInput.getDomRef("inner");
-				// if (oDomRef) {
-				//   oDomRef.setAttribute("inputmode", "text");
-				//   await oInput.focus();
-				//   oDomRef.setAttribute("inputmode", "none");
-				// }
+				const oDomRef = oInput.getDomRef("inner");
+				if (oDomRef) {
+				  oDomRef.setAttribute("inputmode", "text");
+			//	  await oInput.focus();
+			//	  oDomRef.setAttribute("inputmode", "none");
+				}
 			},
 
 			onBuchenPress: function () {
