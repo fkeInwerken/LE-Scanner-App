@@ -121,6 +121,7 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
 
     onInputFocus: function (oEvent) {
       const oInput = oEvent.getSource();
+      oInput.focus();
       this._selectInputText(oInput);
     },
 
@@ -187,6 +188,8 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
 
     onBuchenPress: function () {
       MessageToast.show('Erfolgreich gebucht!');
+
+      // hier wird die Lagereinheit und Lagerplatz ins Backend geschickt
     },
 
     _getFocusedInputIndex: function () {
