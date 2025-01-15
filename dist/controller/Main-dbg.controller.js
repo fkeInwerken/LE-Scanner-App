@@ -22,9 +22,9 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
 
       this.aInputs = [oInputIst, oInputWechsel, oInputSoll];
 
-      this.aInputs.forEach((oInput) => {
-        oInput.focus(this.onInputFocus.bind(this));
-      });
+      // this.aInputs.forEach((oInput) => {
+      //   oInput.focus(this.onInputFocus.bind(this));
+      // });
 
       //stop keyboard popup
       aInputs.forEach((oInput) => {
@@ -110,23 +110,20 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
 
     onEnter: function (iCurrentInput) {
       const oBuchenButton = this.byId('buchenButton');
-      if (iCurrentInput === -1) {
+      if (oBuchenButton) {
         oBuchenButton.firePress();
-      } else {
-        const oInput = this.aInputs[iCurrentInput]; 
-        this.onKeyboardAction({ getSource: () => oInput });
-      }
+      } 
     },
 
     onInputSubmit: function (oEvent) {
       // this.onKeyboardAction(oEvent);
     },
 
-    onInputFocus: function (oEvent) {
-      const oInput = oEvent.getSource();
-      oInput.focus();
-      this._selectInputText(oInput);
-    },
+    // onInputFocus: function (oEvent) {
+    //   const oInput = oEvent.getSource();
+    //   oInput.focus();
+    //   this._selectInputText(oInput);
+    // },
 
     onInputLiveChange: function (oEvent) {
       const DELAY = 500;
