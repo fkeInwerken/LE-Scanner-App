@@ -22,9 +22,9 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
 
       this.aInputs = [oInputIst, oInputWechsel, oInputSoll];
 
-      this.aInputs.forEach(oInput => {
-        oInput.attachEvent('focus', this.onInputFocus, this); 
-    });
+      this.aInputs.forEach((oInput) => {
+        oInput.focus(this.onInputFocus.bind(this));
+      });
 
       //stop keyboard popup
       aInputs.forEach((oInput) => {
@@ -69,7 +69,7 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
           this.onArrowDown(iCurrentIndex);
           break;
         case 'Enter':
-          this.onEnter();
+          this.onEnter(iCurrentIndex);
           break;
         case 'DPAD_LEFT':
           this.onArrowLeft();
@@ -108,7 +108,7 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       }
     },
 
-    onEnter: function () {
+    onEnter: function (iCurrentInput) {
       const oBuchenButton = this.byId('buchenButton');
       if (oBuchenButton) {
         oBuchenButton.firePress();
@@ -116,15 +116,12 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
     },
 
     onInputSubmit: function (oEvent) {
-      this.onKeyboardAction(oEvent);
+      // this.onKeyboardAction(oEvent);
     },
 
     onInputFocus: function (oEvent) {
       const oInput = oEvent.getSource();
-      const oDomRef = oInput.getDomRef('inner');
-      if (oDomRef){
-        oDomRef._selectInputText(oInput);
-      }
+      this._selectInputText(oInput);
     },
 
     onInputLiveChange: function (oEvent) {
@@ -151,13 +148,13 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
     },
     requestBackendData: function () {
       const exampleData = {
-        TANummer: '806187', 
-        anzahlPositionen: 50, 
-        istLagerplatzBarcode: 'B', 
+        TANummer: '806187',
+        anzahlPositionen: 50,
+        istLagerplatzBarcode: 'B',
       };
-      this.getView().getModel('viewModel').setProperty('/TANummer', exampleData.TANummer); 
-      this.getView().getModel('viewModel').setProperty('/anzahlPositionen', exampleData.anzahlPositionen); 
-      this.getView().getModel('viewModel').setProperty('/istLagerplatzBarcode', exampleData.istLagerplatzBarcode); 
+      this.getView().getModel('viewModel').setProperty('/TANummer', exampleData.TANummer);
+      this.getView().getModel('viewModel').setProperty('/anzahlPositionen', exampleData.anzahlPositionen);
+      this.getView().getModel('viewModel').setProperty('/istLagerplatzBarcode', exampleData.istLagerplatzBarcode);
     },
 
     onKeyboardAction: function (oEvent) {
