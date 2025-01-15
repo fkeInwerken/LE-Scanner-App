@@ -22,12 +22,12 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
 
       this.aInputs = [oInputIst, oInputWechsel, oInputSoll];
 
-      aInputs.forEach(oInput => {
+      aInputs.forEach((oInput) => {
         oInput.attachBrowserEvent('focus', function () {
-            // Wenn das Input-Feld fokussiert wird, wird der Inhalt markiert
-            this._selectInputText(oInput); 
+          // Wenn das Input-Feld fokussiert wird, wird der Inhalt markiert
+          this._selectInputText(oInput);
         });
-    });
+      });
 
       //stop keyboard popup
       aInputs.forEach((oInput) => {
@@ -118,8 +118,25 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       }
     },
 
-    onInputSubmit: function () {
-      this.onKeyboardAction();
+    onInputSubmit: function (oEvent) {
+      this.onKeyboardAction(oEvent);
+    },
+
+    onInputLiveChange: function (oEvent) {
+      const DELAY = 100;
+      let inputTimeout;
+      const oInput = oEvent.getSource();
+      const currentIndex = this.aInputs.indexOf(oInput);
+
+      if (oInput.getInputMode() === 'None') {
+        clearTimeout(inputTimeout);
+        inputTimeout = setTimeout(() => {
+          if (this.aInputs[currentIndex + 1]) {
+            this.aInputs[currentIndex + 1].focus();
+          }
+          this.requestBackendData();
+        }, DELAY);
+      }
     },
 
     onKeyboardAction: function (oEvent) {

@@ -7,7 +7,7 @@
 		</headerContent>
 		<content>
 			<Label text="{i18n>palletLabel}" required="true" class="sapUiSmallMarginTop" />
-			<Input id="istLagereinheitBarcode" value="{viewModel>/istLagereinheitBarcode}" width="89%" submit="onInputSubmit">
+			<Input id="istLagereinheitBarcode" value="{viewModel>/istLagereinheitBarcode}" width="89%" submit="onInputSubmit" liveChange="onInputLiveChange">
 			</Input>
 			<Button id="palletButton" type="Default" icon="sap-icon://keyboard-and-mouse" press="onKeyboardAction" />
 			<Text id="taPlaceholder" text="{i18n>TAPlaceholder}" width="20%" class="sapUiSmallMarginTop" textAlign="Left">
@@ -17,11 +17,11 @@
 			</Text>
 			<Label id="anzahlPositionen" text="{viewModel>/anzahlPositionen}" visible="true" width="80%" />
 			<Label text="{i18n>storageLocationLabel}" class="sapUiLargeMarginTop" />
-			<Input id="istLagerplatzBarcode" value="{viewModel>/istLagerplatzBarcode}" width="89%" submit="onInputSubmit">
+			<Input id="istLagerplatzBarcode" value="{viewModel>/istLagerplatzBarcode}" width="89%" submit="onInputSubmit" liveChange="onInputLiveChange">
 			</Input>
 			<Button id="lagerButton" type="Default" icon="sap-icon://keyboard-and-mouse" press="onKeyboardAction" />
 			<Label text="{i18n>storageUnitLabel}" required="true" class="sapUiLargeMarginTop" />
-			<Input id="sollLagereinheitBarcode" value="{viewModel>/sollLagereinheitBarcode}" width="89%" submit="onInputSubmit">
+			<Input id="sollLagereinheitBarcode" value="{viewModel>/sollLagereinheitBarcode}" width="89%" submit="onInputSubmit" liveChange="onInputLiveChange">
 			</Input>
 			<Button id="einheitButton" type="Default" icon="sap-icon://keyboard-and-mouse" press="onKeyboardAction" />
 		</content>
