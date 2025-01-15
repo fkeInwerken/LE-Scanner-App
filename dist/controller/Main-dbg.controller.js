@@ -100,8 +100,7 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       this.requestBackendData();
       
       if (currentInputMode === 'text'){
-        const oButton = this.byId("palletButton");
-        this.onKeyboardAction(oButton);
+        this.triggerInputMode("istLagereinheitBarcode");
       }
      
     },
@@ -114,8 +113,7 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       this.aInputs[currentIndex + 1].focus();
       
       if (currentInputMode === 'text'){
-        const oButton = this.byId("lagerButton");
-        this.onKeyboardAction(oButton);
+        this.triggerInputMode("istLagerplatzBarcode");
       }
     },
     onSollLagereinheitSubmit: function (oEvent) {
@@ -125,8 +123,7 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       const currentInputMode = oDomRef.getAttribute('inputmode');
 
       if (currentInputMode === 'text'){
-        const oButton = this.byId("einheitButton");
-        this.onKeyboardAction(oButton);
+        this.triggerInputMode("sollLagereinheitBarcode");
       }
 
       oBuchenButton.firePress();
@@ -194,20 +191,18 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
         }, DELAY);
       }
     },
-   
-    onKeyboardAction: function (oEvent) {
-      const oButton = oEvent.getSource();
-      const buttonId = oButton.getId().split('--').pop();
+    onIstLEKeyboardAction: function () {
+      this.triggerInputMode("istLagereinheitBarcode");
+    },
+    onLPKeyboardAction: function () {
+      this.triggerInputMode("istLagerplatzBarcode");
+    },
+    onSollLEKeyboardAction: function () {
+      this.triggerInputMode("sollLagereinheitBarcode");
+    },
 
-      const inputMap = {
-        palletButton: 'istLagereinheitBarcode',
-        lagerButton: 'istLagerplatzBarcode',
-        einheitButton: 'sollLagereinheitBarcode',
-      };
-
-      const inputId = inputMap[buttonId];
-
-      const oInput = this.byId(inputId);
+    triggerInputMode: function (sInputId) {
+        const oInput = this.byId(sInputId);
       // Get the DOM reference of the input field
       const oDomRef = oInput.getDomRef('inner');
 
