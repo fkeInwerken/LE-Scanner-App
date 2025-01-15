@@ -22,12 +22,12 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
 
       this.aInputs = [oInputIst, oInputWechsel, oInputSoll];
 
-      aInputs.forEach((oInput) => {
-        oInput.attachFocus(function () {
-          // Wenn das Input-Feld fokussiert wird, wird der Inhalt markiert
-          oInput.select();
+      aInputs.forEach(oInput => {
+        oInput.attachBrowserEvent('focus', function () {
+            // Wenn das Input-Feld fokussiert wird, wird der Inhalt markiert
+            this.select(); 
         });
-      });
+    });
 
       //stop keyboard popup
       aInputs.forEach((oInput) => {
