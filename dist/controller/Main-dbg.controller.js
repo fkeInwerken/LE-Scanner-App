@@ -110,8 +110,11 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
 
     onEnter: function (iCurrentInput) {
       const oBuchenButton = this.byId('buchenButton');
-      if (oBuchenButton) {
+      if (iCurrentInput === -1) {
         oBuchenButton.firePress();
+      } else {
+        const oInput = this.aInputs[iCurrentInput]; 
+        this.onKeyboardAction({ getSource: () => oInput });
       }
     },
 
