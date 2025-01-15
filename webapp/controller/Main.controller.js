@@ -22,13 +22,6 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
 
       this.aInputs = [oInputIst, oInputWechsel, oInputSoll];
 
-      aInputs.forEach((oInput) => {
-        oInput.attachBrowserEvent('focus', function () {
-          // Wenn das Input-Feld fokussiert wird, wird der Inhalt markiert
-          this._selectInputText(oInput);
-        });
-      });
-
       //stop keyboard popup
       aInputs.forEach((oInput) => {
         oInput.addEventDelegate({
@@ -140,20 +133,19 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
           }
           if (currentIndex === 0 && this.aInputs[currentIndex + 1]) {
             this.requestBackendData();
-        }
+          }
         }, DELAY);
       }
     },
     requestBackendData: function () {
       const exampleData = {
-        TANummer: '806187',           // Beispiel TANummer
-        anzahlPositionen: 50,            // Beispiel Anzahl Positionen
-        istLagerplatzBarcode: 'B',  // Beispiel Lagerplatz Barcode
-    };
-    this.getView().getModel("viewModel").setProperty('/TANummer', exampleData.TANummer);  // Setze TANummer
-    this.getView().getModel("viewModel").setProperty('/anzahlPositionen', exampleData.anzahlPositionen);  // Setze Anzahl Positionen
-    this.getView().getModel("viewModel").setProperty('/istLagerplatzBarcode', exampleData.istLagerplatzBarcode);  // Setze Lagerplatz Barcode
-
+        TANummer: '806187', 
+        anzahlPositionen: 50, 
+        istLagerplatzBarcode: 'B', 
+      };
+      this.getView().getModel('viewModel').setProperty('/TANummer', exampleData.TANummer); 
+      this.getView().getModel('viewModel').setProperty('/anzahlPositionen', exampleData.anzahlPositionen); 
+      this.getView().getModel('viewModel').setProperty('/istLagerplatzBarcode', exampleData.istLagerplatzBarcode); 
     },
 
     onKeyboardAction: function (oEvent) {
