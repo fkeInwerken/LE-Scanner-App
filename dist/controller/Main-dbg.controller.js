@@ -20,7 +20,14 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
 
       const aInputs = [oInputIst, oInputWechsel, oInputSoll];
 
-	  this.aInputs = [oInputIst, oInputWechsel, oInputSoll];
+      this.aInputs = [oInputIst, oInputWechsel, oInputSoll];
+
+      aInputs.forEach((oInput) => {
+        oInput.attachFocus(function () {
+          // Wenn das Input-Feld fokussiert wird, wird der Inhalt markiert
+          oInput.select();
+        });
+      });
 
       //stop keyboard popup
       aInputs.forEach((oInput) => {
@@ -84,7 +91,7 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
           this.onP2();
           break;
         default:
-         console.log(`Unhandled key: ${sKey}`);
+          console.log(`Unhandled key: ${sKey}`);
       }
     },
 
@@ -111,17 +118,19 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       }
     },
 
+    onInputSubmit: function () {},
+
     onKeyboardAction: function (oEvent) {
       const oButton = oEvent.getSource();
-	  const buttonId = oButton.getId().split('--').pop();
+      const buttonId = oButton.getId().split('--').pop();
 
       const inputMap = {
-		'palletButton': 'istLagereinheitBarcode',
-		'lagerButton': 'istLagerplatzBarcode',
-		'einheitButton': 'sollLagereinheitBarcode'
-	  };
-	
-	  const inputId = inputMap[buttonId];
+        palletButton: 'istLagereinheitBarcode',
+        lagerButton: 'istLagerplatzBarcode',
+        einheitButton: 'sollLagereinheitBarcode',
+      };
+
+      const inputId = inputMap[buttonId];
 
       const oInput = this.byId(inputId);
       // Get the DOM reference of the input field
