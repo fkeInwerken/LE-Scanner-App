@@ -39,7 +39,6 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
 
       // Event Listener für Key Events hinzufügen
       document.addEventListener('keydown', this.onKeyDown.bind(this));
-
     },
 
     onKeyDown: function (oEvent) {
@@ -94,15 +93,14 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       const currentIndex = this.aInputs.indexOf(oInput);
       const oDomRef = oInput.getDomRef('inner');
       const currentInputMode = oDomRef.getAttribute('inputmode');
-      
+
       this.aInputs[currentIndex + 1].focus();
-      
+
       this.requestBackendData();
-      
-      if (currentInputMode === 'text'){
-        this.triggerInputMode("istLagereinheitBarcode");
+
+      if (currentInputMode === 'text') {
+        this.triggerInputMode('istLagereinheitBarcode');
       }
-     
     },
     onIstLagerplatzSubmit: function (oEvent) {
       const oInput = oEvent.getSource();
@@ -111,9 +109,9 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       const currentInputMode = oDomRef.getAttribute('inputmode');
 
       this.aInputs[currentIndex + 1].focus();
-      
-      if (currentInputMode === 'text'){
-        this.triggerInputMode("istLagerplatzBarcode");
+
+      if (currentInputMode === 'text') {
+        this.triggerInputMode('istLagerplatzBarcode');
       }
     },
     onSollLagereinheitSubmit: function (oEvent) {
@@ -122,8 +120,8 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       const oDomRef = oInput.getDomRef('inner');
       const currentInputMode = oDomRef.getAttribute('inputmode');
 
-      if (currentInputMode === 'text'){
-        this.triggerInputMode("sollLagereinheitBarcode");
+      if (currentInputMode === 'text') {
+        this.triggerInputMode('sollLagereinheitBarcode');
       }
 
       oBuchenButton.firePress();
@@ -151,8 +149,6 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
 
       // hier wird die Lagereinheit und Lagerplatz ins Backend geschickt
 
-
-
       // Model leeren und wieder ins erste Feld springen
       const oViewModel = this.getModel('viewModel');
       oViewModel.setProperty('/istLagereinheitBarcode', '');
@@ -161,7 +157,6 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       oViewModel.setProperty('/sollLagereinheitBarcode', '');
       oViewModel.setProperty('/TANummer', '');
       oViewModel.setProperty('/anzahlPositionen', '');
-
     },
 
     onInputFocus: function (oEvent) {
@@ -192,17 +187,17 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
     //   }
     // },
     onIstLEKeyboardAction: function () {
-      this.triggerInputMode("istLagereinheitBarcode");
+      this.triggerInputMode('istLagereinheitBarcode');
     },
     onLPKeyboardAction: function () {
-      this.triggerInputMode("istLagerplatzBarcode");
+      this.triggerInputMode('istLagerplatzBarcode');
     },
     onSollLEKeyboardAction: function () {
-      this.triggerInputMode("sollLagereinheitBarcode");
+      this.triggerInputMode('sollLagereinheitBarcode');
     },
 
     triggerInputMode: function (sInputId) {
-        const oInput = this.byId(sInputId);
+      const oInput = this.byId(sInputId);
       // Get the DOM reference of the input field
       const oDomRef = oInput.getDomRef('inner');
 
@@ -233,6 +228,10 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
           oDomRef.setSelectionRange(0, oDomRef.value.length);
         }
       }, 0);
-    }
+    },
+    onResetApp: function () {
+      // Simuliere F5-ähnliches Verhalten durch Laden der Seite neu
+      location.reload();
+    },
   });
 });
