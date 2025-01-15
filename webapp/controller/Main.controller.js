@@ -84,7 +84,7 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
           this.onP2();
           break;
         default:
-        // console.log(`Unhandled key: ${sKey}`);
+         console.log(`Unhandled key: ${sKey}`);
       }
     },
 
