@@ -22,9 +22,9 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
 
       this.aInputs = [oInputIst, oInputWechsel, oInputSoll];
 
-      this.aInputs.forEach((oInput) => {
-        oInput.focus(this.onInputFocus.bind(this));
-      });
+      // this.aInputs.forEach((oInput) => {
+      //   oInput.addEventListener("focus", (event) => {this.onInputFocus(event)});
+      // });
 
       //stop keyboard popup
       aInputs.forEach((oInput) => {
@@ -33,6 +33,9 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
             const oDomRef = oInput.getDomRef('inner');
             if (!oDomRef) return;
             oDomRef.setAttribute('inputmode', 'none');
+            oDomRef.addEventListener('focus', (event) => {
+              this.onInputFocus(event);
+            });
           },
         });
       });
@@ -99,7 +102,6 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       if (iCurrentIndex > 0) {
         const oPreviousInput = this.aInputs[iCurrentIndex - 1];
         oPreviousInput.focus();
-        this._selectInputText(oPreviousInput);
       }
     },
 
@@ -107,7 +109,6 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       if (iCurrentIndex < this.aInputs.length - 1) {
         const oNextInput = this.aInputs[iCurrentIndex + 1];
         oNextInput.focus();
-        this._selectInputText(oNextInput);
       }
     },
 
@@ -115,7 +116,7 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       const oBuchenButton = this.byId('buchenButton');
       if (oBuchenButton) {
         oBuchenButton.firePress();
-      } 
+      }
     },
 
     onInputSubmit: function (oEvent) {
@@ -123,11 +124,8 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
     },
 
     onInputFocus: function (oEvent) {
-      const oInput = oEvent.getSource();
-      setTimeout(() => {
-        this._selectInputText(oInput);
-      }, 500)
-     
+      const oDomRef = oEvent.srcElement;
+      oDomRef.setSelectionRange(0, oDomRef.value.length);
     },
 
     onInputLiveChange: function (oEvent) {
@@ -202,16 +200,6 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       const sFocusedElementId = document.activeElement.id;
 
       return this.aInputs.findIndex((oInput) => oInput.getId() === sFocusedElementId.replace(/-inner$/, ''));
-    },
-
-    _selectInputText: function (oInput) {
-      // wait for Dom-Element
-      setTimeout(() => {
-        const oDomRef = oInput.getDomRef('inner');
-        if (oDomRef) {
-          oDomRef.setSelectionRange(0, oDomRef.value.length);
-        }
-      }, 0);
     },
 
     _handleInputChange: function (iCurrentIndex) {
