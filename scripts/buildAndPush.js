@@ -50,7 +50,7 @@ exec('git add .', (addError, addStdout, addStderr) => {
     console.log(`Git Commit-Ausgabe:\n${commitStdout}`);
 
     // Schritt 4: Git push ausführen
-    exec('git push origin le_scanner', (pushError, pushStdout, pushStderr) => {
+    exec('git push origin le_scan_sap', (pushError, pushStdout, pushStderr) => {
       if (pushError) {
         console.error(`Git Push-Fehler: ${pushError.message}`);
         return;
