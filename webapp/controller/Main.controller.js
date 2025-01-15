@@ -23,10 +23,6 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
 
       this.aInputs = [oInputIst, oInputWechsel, oInputSoll];
 
-      // this.aInputs.forEach((oInput) => {
-      //   oInput.addEventListener("focus", (event) => {this.onInputFocus(event)});
-      // });
-
       //stop keyboard popup
       aInputs.forEach((oInput) => {
         oInput.addEventDelegate({
@@ -44,8 +40,6 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       // Event Listener für Key Events hinzufügen
       document.addEventListener('keydown', this.onKeyDown.bind(this));
 
-      // Timeout für Barcodescanner
-      this.inputTimeout;
     },
 
     onKeyDown: function (oEvent) {
@@ -95,13 +89,6 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       }
     },
 
-    // onEnter: function (iCurrentInput) {
-    //   const oBuchenButton = this.byId('buchenButton');
-    //   if (oBuchenButton) {
-    //     oBuchenButton.firePress();
-    //   }
-    // },
-
     onIstLagereinheitSubmit: function (oEvent) {
       const oInput = oEvent.getSource();
       const currentIndex = this.aInputs.indexOf(oInput);
@@ -116,6 +103,18 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
     onSollLagereinheitSubmit: function () {
       const oBuchenButton = this.byId('buchenButton');
       oBuchenButton.firePress();
+    },
+
+    requestBackendData: function () {
+      // hier getProperty viewModel istLagereinheitBarcode
+      const exampleData = {
+        TANummer: '390',
+        anzahlPositionen: 3,
+        sollLagerplatzBarcode: '101-02-B-1',
+      };
+      this.getView().getModel('viewModel').setProperty('/TANummer', exampleData.TANummer);
+      this.getView().getModel('viewModel').setProperty('/anzahlPositionen', exampleData.anzahlPositionen);
+      this.getView().getModel('viewModel').setProperty('/sollLagerplatzBarcode', exampleData.sollLagerplatzBarcode);
     },
 
     onBuchenPress: function () {
@@ -153,17 +152,7 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
         }, DELAY);
       }
     },
-    requestBackendData: function () {
-      // hier getProperty viewModel istLagereinheitBarcode
-      const exampleData = {
-        TANummer: '390',
-        anzahlPositionen: 3,
-        sollLagerplatzBarcode: '101-02-B-1',
-      };
-      this.getView().getModel('viewModel').setProperty('/TANummer', exampleData.TANummer);
-      this.getView().getModel('viewModel').setProperty('/anzahlPositionen', exampleData.anzahlPositionen);
-      this.getView().getModel('viewModel').setProperty('/sollLagerplatzBarcode', exampleData.sollLagerplatzBarcode);
-    },
+   
 
     onKeyboardAction: function (oEvent) {
       const oButton = oEvent.getSource();
