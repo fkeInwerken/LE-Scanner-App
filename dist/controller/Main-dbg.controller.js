@@ -92,17 +92,42 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
     onIstLagereinheitSubmit: function (oEvent) {
       const oInput = oEvent.getSource();
       const currentIndex = this.aInputs.indexOf(oInput);
+      const oDomRef = oInput.getDomRef('inner');
+      const currentInputMode = oDomRef.getAttribute('inputmode');
+      
       this.aInputs[currentIndex + 1].focus();
+      
       this.requestBackendData();
+      
+      if (currentInputMode === 'text'){
+        this.byId("palletButton").press();
+      }
+     
     },
     onIstLagerplatzSubmit: function (oEvent) {
       const oInput = oEvent.getSource();
       const currentIndex = this.aInputs.indexOf(oInput);
+      const oDomRef = oInput.getDomRef('inner');
+      const currentInputMode = oDomRef.getAttribute('inputmode');
+
       this.aInputs[currentIndex + 1].focus();
+      
+      if (currentInputMode === 'text'){
+      this.byId("lagerButton").press();
+      }
     },
-    onSollLagereinheitSubmit: function () {
+    onSollLagereinheitSubmit: function (oEvent) {
+      const oInput = oEvent.getSource();
       const oBuchenButton = this.byId('buchenButton');
+      const oDomRef = oInput.getDomRef('inner');
+      const currentInputMode = oDomRef.getAttribute('inputmode');
+
+      if (currentInputMode === 'text'){
+      this.byId("einheitButton").press();
+      }
+
       oBuchenButton.firePress();
+      this.aInputs[0].focus();
     },
 
     requestBackendData: function () {
@@ -112,9 +137,11 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
         anzahlPositionen: 3,
         sollLagerplatzBarcode: '101-02-B-1',
       };
-      this.getView().getModel('viewModel').setProperty('/TANummer', exampleData.TANummer);
-      this.getView().getModel('viewModel').setProperty('/anzahlPositionen', exampleData.anzahlPositionen);
-      this.getView().getModel('viewModel').setProperty('/sollLagerplatzBarcode', exampleData.sollLagerplatzBarcode);
+
+      const oViewModel = this.getModel('viewModel');
+      oViewModel.setProperty('/TANummer', exampleData.TANummer);
+      oViewModel.setProperty('/anzahlPositionen', exampleData.anzahlPositionen);
+      oViewModel.setProperty('/sollLagerplatzBarcode', exampleData.sollLagerplatzBarcode);
     },
 
     onBuchenPress: function () {
@@ -123,6 +150,18 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       MessageToast.show('Erfolgreich gebucht!');
 
       // hier wird die Lagereinheit und Lagerplatz ins Backend geschickt
+
+
+
+      // Model leeren und wieder ins erste Feld springen
+      const oViewModel = this.getModel('viewModel');
+      oViewModel.setProperty('/istLagereinheitBarcode', '');
+      oViewModel.setProperty('/sollLagerplatzBarcode', '');
+      oViewModel.setProperty('/istLagerplatzBarcode', '');
+      oViewModel.setProperty('/sollLagereinheitBarcode', '');
+      oViewModel.setProperty('/TANummer', '');
+      oViewModel.setProperty('/anzahlPositionen', '');
+
     },
 
     onInputFocus: function (oEvent) {
