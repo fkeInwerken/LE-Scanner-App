@@ -140,6 +140,7 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
         inputTimeout = setTimeout(() => {
           if (this.aInputs[currentIndex + 1]) {
             this.aInputs[currentIndex + 1].focus();
+            oDomRef.select();
           }
           if (currentIndex === 0 && this.aInputs[currentIndex + 1]) {
             this.requestBackendData();
