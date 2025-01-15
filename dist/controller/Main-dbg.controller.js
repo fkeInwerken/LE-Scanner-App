@@ -22,9 +22,9 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
 
       this.aInputs = [oInputIst, oInputWechsel, oInputSoll];
 
-      // this.aInputs.forEach((oInput) => {
-      //   oInput.focus(this.onInputFocus.bind(this));
-      // });
+      this.aInputs.forEach((oInput) => {
+        oInput.focus(this.onInputFocus.bind(this));
+      });
 
       //stop keyboard popup
       aInputs.forEach((oInput) => {
@@ -39,6 +39,9 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
 
       // Event Listener für Key Events hinzufügen
       document.addEventListener('keydown', this.onKeyDown.bind(this));
+
+      // Timeout für Barcodescanner
+      this.inputTimeout;
     },
 
     onKeyDown: function (oEvent) {
@@ -119,11 +122,13 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       // this.onKeyboardAction(oEvent);
     },
 
-    // onInputFocus: function (oEvent) {
-    //   const oInput = oEvent.getSource();
-    //   oInput.focus();
-    //   this._selectInputText(oInput);
-    // },
+    onInputFocus: function (oEvent) {
+      const oInput = oEvent.getSource();
+      setTimeout(() => {
+        this._selectInputText(oInput);
+      }, 500)
+     
+    },
 
     onInputLiveChange: function (oEvent) {
       const DELAY = 500;
