@@ -123,6 +123,7 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       const oInput = oEvent.getSource();
       const oDomRef = oInput.getDomRef('inner');
       if (oDomRef){
+        oInput.focus();
         oDomRef.select();
       }
     },
