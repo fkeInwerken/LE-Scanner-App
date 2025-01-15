@@ -164,28 +164,28 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       oDomRef.setSelectionRange(0, oDomRef.value.length);
     },
 
-    // onInputLiveChange: function (oEvent) {
-    //   const DELAY = 500;
-    //   let inputTimeout;
-    //   const oInput = oEvent.getSource();
-    //   const currentIndex = this.aInputs.indexOf(oInput);
+    onInputLiveChange: function (oEvent) {
+      const DELAY = 500;
+      let inputTimeout;
+      const oInput = oEvent.getSource();
+      const currentIndex = this.aInputs.indexOf(oInput);
 
-    //   const oDomRef = oInput.getDomRef('inner');
+      const oDomRef = oInput.getDomRef('inner');
 
-    //   const currentInputMode = oDomRef.getAttribute('inputmode');
+      const currentInputMode = oDomRef.getAttribute('inputmode');
 
-    //   if (currentInputMode === 'none') {
-    //     clearTimeout(inputTimeout);
-    //     inputTimeout = setTimeout(() => {
-    //       if (this.aInputs[currentIndex + 1]) {
-    //         this.aInputs[currentIndex + 1].focus();
-    //       }
-    //       if (currentIndex === 0 && this.aInputs[currentIndex + 1]) {
-    //         this.requestBackendData();
-    //       }
-    //     }, DELAY);
-    //   }
-    // },
+      if (currentInputMode === 'none') {
+        clearTimeout(inputTimeout);
+        inputTimeout = setTimeout(() => {
+          if (this.aInputs[currentIndex + 1]) {
+            this.aInputs[currentIndex + 1].focus();
+          }
+          if (currentIndex === 0 && this.aInputs[currentIndex + 1]) {
+            this.requestBackendData();
+          }
+        }, DELAY);
+      }
+    },
     onIstLEKeyboardAction: function () {
       this.triggerInputMode('istLagereinheitBarcode');
     },
