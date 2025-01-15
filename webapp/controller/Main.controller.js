@@ -100,7 +100,8 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       this.requestBackendData();
       
       if (currentInputMode === 'text'){
-        this.byId("palletButton").press();
+        const oButton = this.byId("palletButton");
+        this.onKeyboardAction(oButton);
       }
      
     },
@@ -113,7 +114,8 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       this.aInputs[currentIndex + 1].focus();
       
       if (currentInputMode === 'text'){
-      this.byId("lagerButton").press();
+        const oButton = this.byId("lagerButton");
+        this.onKeyboardAction(oButton);
       }
     },
     onSollLagereinheitSubmit: function (oEvent) {
@@ -123,7 +125,8 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       const currentInputMode = oDomRef.getAttribute('inputmode');
 
       if (currentInputMode === 'text'){
-      this.byId("einheitButton").press();
+        const oButton = this.byId("einheitButton");
+        this.onKeyboardAction(oButton);
       }
 
       oBuchenButton.firePress();
