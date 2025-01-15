@@ -23,7 +23,7 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       this.aInputs = [oInputIst, oInputWechsel, oInputSoll];
 
       this.aInputs.forEach(oInput => {
-        oInput.attachFocus(this.onInputFocus.bind(this));
+        oInput.focus(this.onInputFocus.bind(this));
     });
 
       //stop keyboard popup
@@ -121,7 +121,7 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
 
     onInputFocus: function (oEvent) {
       const oInput = oEvent.getSource();
-      oInput.select();
+      oInput.selectText();
     },
 
     onInputLiveChange: function (oEvent) {
