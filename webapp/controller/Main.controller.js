@@ -128,15 +128,32 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       const oInput = oEvent.getSource();
       const currentIndex = this.aInputs.indexOf(oInput);
 
-      if (oInput.getInputMode() === 'None') {
+      const oDomRef = oInput.getDomRef('inner');
+
+      const currentInputMode = oDomRef.getAttribute('inputmode');
+
+      if (currentInputMode === 'none') {
         clearTimeout(inputTimeout);
         inputTimeout = setTimeout(() => {
           if (this.aInputs[currentIndex + 1]) {
             this.aInputs[currentIndex + 1].focus();
           }
-          this.requestBackendData();
+          if (currentIndex === 0 && this.aInputs[currentIndex + 1]) {
+            this.requestBackendData();
+        }
         }, DELAY);
       }
+    },
+    requestBackendData: function () {
+      const exampleData = {
+        TANummer: '806187',           // Beispiel TANummer
+        anzahlPositionen: 50,            // Beispiel Anzahl Positionen
+        istLagerplatzBarcode: 'B',  // Beispiel Lagerplatz Barcode
+    };
+    this.getView().getModel("viewModel").setProperty('/TANummer', exampleData.TANummer);  // Setze TANummer
+    this.getView().getModel("viewModel").setProperty('/anzahlPositionen', exampleData.anzahlPositionen);  // Setze Anzahl Positionen
+    this.getView().getModel("viewModel").setProperty('/istLagerplatzBarcode', exampleData.istLagerplatzBarcode);  // Setze Lagerplatz Barcode
+
     },
 
     onKeyboardAction: function (oEvent) {
