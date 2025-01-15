@@ -103,7 +103,7 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       if (iCurrentIndex > 0) {
         const oPreviousInput = this.aInputs[iCurrentIndex - 1];
         oPreviousInput.focus();
-           this._selectInputText(oPreviousInput);
+        this._selectInputText(oPreviousInput);
       }
     },
 
@@ -111,7 +111,7 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       if (iCurrentIndex < this.aInputs.length - 1) {
         const oNextInput = this.aInputs[iCurrentIndex + 1];
         oNextInput.focus();
-            this._selectInputText(oNextInput);
+        this._selectInputText(oNextInput);
       }
     },
 
@@ -128,8 +128,8 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
     onIstLagerplatzSubmit: function (oEvent) {
 
     },
-    onSollLagereinheitSubmit:function (oEvent) {
-      
+    onSollLagereinheitSubmit: function (oEvent) {
+
     },
 
     onInputFocus: function (oEvent) {
@@ -167,7 +167,7 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       };
       this.getView().getModel('viewModel').setProperty('/TANummer', exampleData.TANummer);
       this.getView().getModel('viewModel').setProperty('/anzahlPositionen', exampleData.anzahlPositionen);
-      this.getView().getModel('viewModel').setProperty('/istLagerplatzBarcode', exampleData.istLagerplatzBarcode);
+      this.getView().getModel('viewModel').setProperty('/sollLagerplatzBarcode', exampleData.istLagerplatzBarcode);
     },
 
     onKeyboardAction: function (oEvent) {
