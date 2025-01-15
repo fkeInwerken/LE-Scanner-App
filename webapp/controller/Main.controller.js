@@ -128,7 +128,7 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
         this.triggerInputMode('sollLagereinheitBarcode');
       }
 
-     // oBuchenButton.firePress();
+      // oBuchenButton.firePress();
       this.aInputs[0].focus();
     },
 
@@ -209,8 +209,8 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       const istLagerplatzBarcode = oViewModel.getProperty('/istLagerplatzBarcode');
       const sollLagerplatzBarcode = oViewModel.getProperty('/sollLagerplatzBarcode');
 
-      const successSound = new Audio('sounds/success.mp3'); 
-      const warningSound = new Audio('sounds/warning.mp3'); 
+      const successSound = document.getElementById('successSound');
+      const warningSound = document.getElementById('warningSound');
 
       if (istLagerplatzBarcode === sollLagerplatzBarcode) {
         oViewModel.setProperty('/istLagerplatzBarcodeState', 'Success');
@@ -228,8 +228,8 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       const istLagereinheitBarcode = oViewModel.getProperty('/istLagereinheitBarcode');
       const sollLagereinheitBarcode = oViewModel.getProperty('/sollLagereinheitBarcode');
 
-      const successSound = new Audio('sounds/success.mp3'); 
-      const warningSound = new Audio('sounds/warning.mp3'); 
+      const successSound = document.getElementById('successSound');
+      const warningSound = document.getElementById('warningSound');
 
       if (istLagereinheitBarcode === sollLagereinheitBarcode) {
         oViewModel.setProperty('/sollLagereinheitBarcodeState', 'Success');
