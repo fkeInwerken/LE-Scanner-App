@@ -5,6 +5,7 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
     onInit: function () {
       const oViewModel = new JSONModel({
         istLagereinheitBarcode: '',
+        sollLagerplatzBarcode: '',
         istLagerplatzBarcode: '',
         sollLagereinheitBarcode: '',
         TANummer: '',
@@ -102,6 +103,7 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       if (iCurrentIndex > 0) {
         const oPreviousInput = this.aInputs[iCurrentIndex - 1];
         oPreviousInput.focus();
+           this._selectInputText(oPreviousInput);
       }
     },
 
@@ -109,18 +111,25 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       if (iCurrentIndex < this.aInputs.length - 1) {
         const oNextInput = this.aInputs[iCurrentIndex + 1];
         oNextInput.focus();
+            this._selectInputText(oNextInput);
       }
     },
 
-    onEnter: function (iCurrentInput) {
-      const oBuchenButton = this.byId('buchenButton');
-      if (oBuchenButton) {
-        oBuchenButton.firePress();
-      }
-    },
+    // onEnter: function (iCurrentInput) {
+    //   const oBuchenButton = this.byId('buchenButton');
+    //   if (oBuchenButton) {
+    //     oBuchenButton.firePress();
+    //   }
+    // },
 
-    onInputSubmit: function (oEvent) {
-      // this.onKeyboardAction(oEvent);
+    onIstLagereinheitSubmit: function (oEvent) {
+
+    },
+    onIstLagerplatzSubmit: function (oEvent) {
+
+    },
+    onSollLagereinheitSubmit:function (oEvent) {
+      
     },
 
     onInputFocus: function (oEvent) {
@@ -200,6 +209,16 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       const sFocusedElementId = document.activeElement.id;
 
       return this.aInputs.findIndex((oInput) => oInput.getId() === sFocusedElementId.replace(/-inner$/, ''));
+    },
+
+    _selectInputText: function (oInput) {
+      // wait for Dom-Element
+      setTimeout(() => {
+        const oDomRef = oInput.getDomRef('inner');
+        if (oDomRef) {
+          oDomRef.setSelectionRange(0, oDomRef.value.length);
+        }
+      }, 0);
     },
 
     _handleInputChange: function (iCurrentIndex) {
