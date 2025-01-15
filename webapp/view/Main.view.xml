@@ -10,10 +10,10 @@
 			<Input id="istLagereinheitBarcode" value="{viewModel>/istLagereinheitBarcode}" width="89%" submit="onInputSubmit" liveChange="onInputLiveChange">
 			</Input>
 			<Button id="palletButton" type="Default" icon="sap-icon://keyboard-and-mouse" press="onKeyboardAction" />
-			<Text id="taPlaceholder" text="{i18n>TAPlaceholder}" width="20%" class="sapUiSmallMarginTop" textAlign="Left">
+			<Text id="taPlaceholder" text="{i18n>TAPlaceholder}" width="20%" textAlign="Left">
 			</Text>
 			<Label id="TANummer" text="{viewModel>/TANummer}" visible="true"  width="80%" />
-			<Text id="posPlaceholder" text="{i18n>PosPlaceholder}" width="20%" class="sapUiSmallMarginTop" textAlign="Left">
+			<Text id="posPlaceholder" text="{i18n>PosPlaceholder}" width="20%" textAlign="Left">
 			</Text>
 			<Label id="anzahlPositionen" text="{viewModel>/anzahlPositionen}" visible="true" width="80%" />
 			<Label text="{i18n>storageLocationLabel}" class="sapUiLargeMarginTop" />
