@@ -7,9 +7,8 @@
 		</headerContent>
 		<content>
 			<Label text="{i18n>palletLabel}" required="true" class="sapUiSmallMarginTop" />
-			<Input id="istLagereinheitBarcode" value="{viewModel>/istLagereinheitBarcode}" width="89%" submit="onIstLagereinheitSubmit" liveChange="onInputLiveChange">
-			</Input>
-			<Button id="palletButton" type="Default" icon="sap-icon://keyboard-and-mouse" press="onKeyboardAction" />
+			<Input id="istLagereinheitBarcode" value="{viewModel>/istLagereinheitBarcode}" width="89%" submit="onIstLagereinheitSubmit" liveChange="onIstLagereinheitLiveChange">
+			</Input>		
 			<Text id="taPlaceholder" text="{i18n>TAPlaceholder}" width="50%" textAlign="Left" class="sapUiSmallMarginTop">
 			</Text>
 			<Input id="TANummer" value="{viewModel>/TANummer}" visible="true" width="50%" editable="false" />
@@ -21,17 +20,17 @@
 			<Text text="{i18n>shouldstorageLocationLabel}" class="sapUiSmallMarginTop" width="50%" />
 			<Input id="sollLagerplatz" value="{viewModel>/sollLagerplatzBarcode}" visible="true" width="50%" editable="false" />
 			<Label text="{i18n>isstorageLocationLabel}" />
-			<Input id="istLagerplatzBarcode" value="{viewModel>/istLagerplatzBarcode}" width="89%" submit="onIstLagerplatzSubmit" liveChange="onInputLiveChange" editable="{= ${viewModel>/TANummer}.length &gt; 0 }">
+			<Input id="istLagerplatzBarcode" valueState="{viewModel>/istLagerplatzBarcodeState}" valueStateText="{viewModel>/istLagerplatzBarcodeStateText}" value="{viewModel>/istLagerplatzBarcode}" width="89%" submit="onIstLagerplatzSubmit" change="onIstLagerplatzChange" liveChange="onIstLagerplatzLiveChange" editable="{= ${viewModel>/TANummer}.length &gt; 0 }">
 			</Input>
-			<Button id="lagerButton" type="Default" icon="sap-icon://keyboard-and-mouse" press="onKeyboardAction" />
 			<Label text="{i18n>storageUnitLabel}" required="true" class="sapUiLargeMarginTop" />
-			<Input id="sollLagereinheitBarcode" value="{viewModel>/sollLagereinheitBarcode}" width="89%" submit="onSollLagereinheitSubmit" liveChange="onInputLiveChange" editable="{= ${viewModel>/istLagerplatzBarcode}.length &gt; 0 }">
+			<Input id="sollLagereinheitBarcode"  valueState="{viewModel>/sollLagereinheitBarcodeState}" valueStateText="{viewModel>/sollLagereinheitBarcodeStateText}" value="{viewModel>/sollLagereinheitBarcode}" width="89%" submit="onSollLagereinheitSubmit" change="onSollLagereinheitChange" liveChange="onSollLagereinheitLiveChange" editable="{= ${viewModel>/istLagerplatzBarcode}.length &gt; 0 }">
 			</Input>
-			<Button id="einheitButton" type="Default" icon="sap-icon://keyboard-and-mouse" press="onKeyboardAction" />
 		</content>
 		<footer>
 			<Toolbar>
 				<Button id="resetButton" press="onResetApp" type="Reject" icon="sap-icon://refresh" />
+				<ToolbarSpacer />
+				<Button id="keyBoardButton" type="Default" icon="sap-icon://keyboard-and-mouse" press="onIstLEKeyboardAction" />
 				<ToolbarSpacer />
 				<Button id="buchenButton" text="{i18n>postButton}" type="Emphasized" press="onBuchenPress" />
 			</Toolbar>

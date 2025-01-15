@@ -10,6 +10,10 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
         sollLagereinheitBarcode: '',
         TANummer: '',
         anzahlPositionen: '',
+        istLagerplatzBarcodeState: 'None',
+        istLagerplatzBarcodeStateText: '',
+        sollLagereinheitBarcodeState: 'None',
+        sollLagereinheitBarcodeStateText: '',
         appVersion: this.getOwnerComponent().getManifestEntry('sap.app').applicationVersion.version,
       });
       this.setModel(oViewModel, 'viewModel');
@@ -124,7 +128,7 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
         this.triggerInputMode('sollLagereinheitBarcode');
       }
 
-      oBuchenButton.firePress();
+     // oBuchenButton.firePress();
       this.aInputs[0].focus();
     },
 
@@ -157,35 +161,87 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       oViewModel.setProperty('/sollLagereinheitBarcode', '');
       oViewModel.setProperty('/TANummer', '');
       oViewModel.setProperty('/anzahlPositionen', '');
+      oViewModel.setProperty('/istLagerplatzBarcodeState', 'None');
+      oViewModel.setProperty('/istLagerplatzBarcodeStateText', '');
+      oViewModel.setProperty('/sollLagereinheitBarcodeState', 'None');
+      oViewModel.setProperty('/sollLagereinheitBarcodeStateText', '');
     },
 
     onInputFocus: function (oEvent) {
       const oDomRef = oEvent.srcElement;
       oDomRef.setSelectionRange(0, oDomRef.value.length);
     },
+    // onIstLagereinheitLiveChange: function () {
+    //   this.switchInput("istLagereinheitBarcode");
+    // },
 
-    onInputLiveChange: function (oEvent) {
-      const DELAY = 500;
-      let inputTimeout;
-      const oInput = oEvent.getSource();
-      const currentIndex = this.aInputs.indexOf(oInput);
+    // onIstLagerplatzLiveChange: function () {
+    //   this.switchInput("istLagerplatzBarcode");
+    // },
+    // onSollLagereinheitLiveChange: function () {
+    //   this.switchInput("sollLagereinheitBarcode");
+    // },
 
-      const oDomRef = oInput.getDomRef('inner');
+    // switchInput: function (sInputId) {
 
-      const currentInputMode = oDomRef.getAttribute('inputmode');
+    //   const oInput = this.byId(sInputId);
+    //   const oDomRef = oInput.getDomRef('inner');
+    //   const DELAY = 500;
+    //   let inputTimeout;
 
-      if (currentInputMode === 'none') {
-        clearTimeout(inputTimeout);
-        inputTimeout = setTimeout(() => {
-          if (this.aInputs[currentIndex + 1]) {
-            this.aInputs[currentIndex + 1].focus();
-          }
-          if (currentIndex === 0 && this.aInputs[currentIndex + 1]) {
-            this.requestBackendData();
-          }
-        }, DELAY);
+    //   const currentIndex = this.aInputs.indexOf(oInput);
+    //   const currentInputMode = oDomRef.getAttribute('inputmode');
+
+    //   if (currentInputMode === 'none') {
+    //     clearTimeout(inputTimeout);
+    //     inputTimeout = setTimeout(() => {
+    //       if (this.aInputs[currentIndex + 1]) {
+    //         this.aInputs[currentIndex + 1].focus();
+    //       }
+    //       if (currentIndex === 0 && this.aInputs[currentIndex + 1]) {
+    //         this.requestBackendData();
+    //       }
+    //     }, DELAY);
+    //   }
+    // },
+    onIstLagerplatzChange: function () {
+      const oViewModel = this.getView().getModel('viewModel');
+      const istLagerplatzBarcode = oViewModel.getProperty('/istLagerplatzBarcode');
+      const sollLagerplatzBarcode = oViewModel.getProperty('/sollLagerplatzBarcode');
+
+      const successSound = new Audio('sounds/success.mp3'); 
+      const warningSound = new Audio('sounds/warning.mp3'); 
+
+      if (istLagerplatzBarcode === sollLagerplatzBarcode) {
+        oViewModel.setProperty('/istLagerplatzBarcodeState', 'Success');
+        oViewModel.setProperty('/istLagerplatzBarcodeStateText', 'Soll = Ist Nachlagerplatz');
+        oViewModel.setProperty('/sollLagereinheitBarcodeStateText', 'Soll = Ist Lagereinheit');
+        successSound.play();
+      } else {
+        oViewModel.setProperty('/istLagerplatzBarcodeState', 'Warning');
+        oViewModel.setProperty('/istLagerplatzBarcodeStateText', 'Soll ≠ Ist Nachlagerplatz');
+        warningSound.play();
       }
     },
+    onSollLagereinheitChange: function () {
+      const oViewModel = this.getModel('viewModel');
+      const istLagereinheitBarcode = oViewModel.getProperty('/istLagereinheitBarcode');
+      const sollLagereinheitBarcode = oViewModel.getProperty('/sollLagereinheitBarcode');
+
+      const successSound = new Audio('sounds/success.mp3'); 
+      const warningSound = new Audio('sounds/warning.mp3'); 
+
+      if (istLagereinheitBarcode === sollLagereinheitBarcode) {
+        oViewModel.setProperty('/sollLagereinheitBarcodeState', 'Success');
+        oViewModel.setProperty('/sollLagereinheitBarcodeStateText', 'Soll = Ist Lagereinheit');
+        successSound.play();
+      } else {
+        oViewModel.setProperty('/sollLagereinheitBarcodeState', 'Warning');
+        oViewModel.setProperty('/sollLagereinheitBarcodeStateText', 'Soll ≠ Ist Lagereinheit');
+        warningSound.play();
+      }
+    },
+
     onIstLEKeyboardAction: function () {
       this.triggerInputMode('istLagereinheitBarcode');
     },
