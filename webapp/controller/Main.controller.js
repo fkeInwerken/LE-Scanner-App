@@ -125,7 +125,7 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
     },
 
     onInputLiveChange: function (oEvent) {
-      const DELAY = 300;
+      const DELAY = 1000;
       let inputTimeout;
       const oInput = oEvent.getSource();
       const currentIndex = this.aInputs.indexOf(oInput);
