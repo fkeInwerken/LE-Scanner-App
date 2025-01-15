@@ -153,7 +153,6 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       }
     },
    
-
     onKeyboardAction: function (oEvent) {
       const oButton = oEvent.getSource();
       const buttonId = oButton.getId().split('--').pop();
@@ -197,17 +196,6 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
           oDomRef.setSelectionRange(0, oDomRef.value.length);
         }
       }, 0);
-    },
-
-    _handleInputChange: function (iCurrentIndex) {
-      const oCurrentInput = this.aInputs[iCurrentIndex];
-
-      if (oCurrentInput.getValue()) {
-        const oNextInput = this.aInputs[iCurrentIndex + 1];
-        if (oNextInput) {
-          oNextInput.focus();
-        }
-      }
-    },
+    }
   });
 });
