@@ -75,27 +75,7 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
           }
           this.onArrowDown(iCurrentIndex);
           break;
-        case 'Enter':
-          this.onEnter(iCurrentIndex);
-          break;
-        case 'DPAD_LEFT':
-          this.onArrowLeft();
-          break;
-        case 'DPAD_RIGHT':
-          this.onArrowRight();
-          break;
-        case 'TRIGGER':
-        case 'ArrowLeft':
-          this.onTrigger();
-          break;
-        case 'P1':
-          this.onP1();
-          break;
-        case 'P2':
-          this.onP2();
-          break;
         default:
-          console.log(`Unhandled key: ${sKey}`);
       }
     },
 
@@ -123,13 +103,27 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
     // },
 
     onIstLagereinheitSubmit: function (oEvent) {
-
+      const oInput = oEvent.getSource();
+      const currentIndex = this.aInputs.indexOf(oInput);
+      this.aInputs[currentIndex + 1].focus();
+      this.requestBackendData();
     },
     onIstLagerplatzSubmit: function (oEvent) {
-
+      const oInput = oEvent.getSource();
+      const currentIndex = this.aInputs.indexOf(oInput);
+      this.aInputs[currentIndex + 1].focus();
     },
-    onSollLagereinheitSubmit: function (oEvent) {
+    onSollLagereinheitSubmit: function () {
+      const oBuchenButton = this.byId('buchenButton');
+      oBuchenButton.firePress();
+    },
 
+    onBuchenPress: function () {
+      // Validierung
+
+      MessageToast.show('Erfolgreich gebucht!');
+
+      // hier wird die Lagereinheit und Lagerplatz ins Backend geschickt
     },
 
     onInputFocus: function (oEvent) {
@@ -138,7 +132,7 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
     },
 
     onInputLiveChange: function (oEvent) {
-      const DELAY = 500;
+      const DELAY = 1000;
       let inputTimeout;
       const oInput = oEvent.getSource();
       const currentIndex = this.aInputs.indexOf(oInput);
@@ -160,14 +154,15 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       }
     },
     requestBackendData: function () {
+      // hier getProperty viewModel istLagereinheitBarcode
       const exampleData = {
-        TANummer: '806187',
-        anzahlPositionen: 50,
-        istLagerplatzBarcode: 'B',
+        TANummer: '390',
+        anzahlPositionen: 3,
+        sollLagerplatzBarcode: '101-02-B-1',
       };
       this.getView().getModel('viewModel').setProperty('/TANummer', exampleData.TANummer);
       this.getView().getModel('viewModel').setProperty('/anzahlPositionen', exampleData.anzahlPositionen);
-      this.getView().getModel('viewModel').setProperty('/sollLagerplatzBarcode', exampleData.istLagerplatzBarcode);
+      this.getView().getModel('viewModel').setProperty('/sollLagerplatzBarcode', exampleData.sollLagerplatzBarcode);
     },
 
     onKeyboardAction: function (oEvent) {
@@ -196,12 +191,6 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
           oDomRef.select();
         }, 100);
       }
-    },
-
-    onBuchenPress: function () {
-      MessageToast.show('Erfolgreich gebucht!');
-
-      // hier wird die Lagereinheit und Lagerplatz ins Backend geschickt
     },
 
     _getFocusedInputIndex: function () {
