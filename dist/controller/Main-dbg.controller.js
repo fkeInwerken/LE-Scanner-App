@@ -118,7 +118,9 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       }
     },
 
-    onInputSubmit: function () {},
+    onInputSubmit: function () {
+      this.onKeyboardAction();
+    },
 
     onKeyboardAction: function (oEvent) {
       const oButton = oEvent.getSource();
