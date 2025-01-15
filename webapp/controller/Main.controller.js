@@ -25,7 +25,7 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       aInputs.forEach(oInput => {
         oInput.attachBrowserEvent('focus', function () {
             // Wenn das Input-Feld fokussiert wird, wird der Inhalt markiert
-            this.select(); 
+            this._selectInputText(oInput); 
         });
     });
 
