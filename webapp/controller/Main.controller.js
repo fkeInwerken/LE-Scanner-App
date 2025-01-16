@@ -76,7 +76,7 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
         //   this.onP2();
         //   break;
         default:
-          console.log(`Unhandled key: ${sKey}`);
+          MessageToast.show(`Unhandled key: ${sKey}`);
       }
     },
 
@@ -215,22 +215,21 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       const istLagerplatzBarcode = oViewModel.getProperty('/istLagerplatzBarcode');
       const sollLagerplatzBarcode = oViewModel.getProperty('/sollLagerplatzBarcode');
 
-      const successSound = new Audio('inw.le_scanner/resources/sounds/success.mp3');
-      const warningSound = new Audio('inw.le_scanner/resources/sounds/warning.mp3');
+      const warningAudio = document.getElementById('warningSound');
+      const successAudio = document.getElementById('successSound');
+
+      const successSound = new Audio(successAudio);
+      const warningSound = new Audio(warningAudio);
 
       if (istLagerplatzBarcode === sollLagerplatzBarcode) {
         oViewModel.setProperty('/istLagerplatzBarcodeState', 'Success');
         oViewModel.setProperty('/istLagerplatzBarcodeStateText', 'Soll = Ist Nachlagerplatz');
         oViewModel.setProperty('/sollLagereinheitBarcodeStateText', 'Soll = Ist Lagereinheit');
-        successSound.addEventListener('canplaythrough', function () {
-          successSound.play();
-        });
+        successAudio.play();
       } else {
         oViewModel.setProperty('/istLagerplatzBarcodeState', 'Warning');
         oViewModel.setProperty('/istLagerplatzBarcodeStateText', 'Soll ≠ Ist Nachlagerplatz');
-        warningSound.addEventListener('canplaythrough', function () {
-          warningSound.play();
-        });
+        warningAudio.play();
       }
     },
     onSollLagereinheitChange: function () {
