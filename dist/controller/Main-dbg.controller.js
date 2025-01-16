@@ -77,9 +77,6 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
           }
           this.onArrowDown(iCurrentIndex);
           break;
-        case 'Escape':
-          this.onP2();
-          break;
         default:
         //   MessageToast.show("Key pressed: " + oEvent.key + " | KeyCode: " + oEvent.keyCode, {
         //     duration: 3000, // Optional: Wie lange der Toast angezeigt wird (in Millisekunden)
@@ -106,11 +103,6 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
         this._selectInputText(oNextInput);
       }
     },
-    onP2: function () {
-      const oBuchenButton = this.byId('buchenButton');
-      oBuchenButton.firePress();
-      this.aInputs[0].focus();
-    },
 
     onIstLagereinheitSubmit: function (oEvent) {
       const oInput = oEvent.getSource();
@@ -118,25 +110,25 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       const oDomRef = oInput.getDomRef('inner');
       const currentInputMode = oDomRef.getAttribute('inputmode');
 
+      if (currentInputMode === 'text') {
+        this.onKeyboardAction("istLagereinheitBarcode");
+      }
+
       this.aInputs[currentIndex + 1].focus();
 
       this.requestBackendData();
-
-      if (currentInputMode === 'text') {
-        this.onCallKeyboardAction();
-      }
     },
     onIstLagerplatzSubmit: function (oEvent) {
       const oInput = oEvent.getSource();
       const currentIndex = this.aInputs.indexOf(oInput);
       const oDomRef = oInput.getDomRef('inner');
-      const currentInputMode = oDomRef.getAttribute('inputmode');
-
-      this.aInputs[currentIndex + 1].focus();
+      const currentInputMode = oDomRef.getAttribute('inputmode');   
 
       if (currentInputMode === 'text') {
-        this.onCallKeyboardAction();
+        this.onKeyboardAction("istLagerplatzBarcode");
       }
+
+      this.aInputs[currentIndex + 1].focus();
     },
     onSollLagereinheitSubmit: function (oEvent) {
       const oInput = oEvent.getSource();
@@ -145,14 +137,18 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       const currentInputMode = oDomRef.getAttribute('inputmode');
 
       if (currentInputMode === 'text') {
-        this.onCallKeyboardAction();
+        this.onKeyboardAction("sollLagereinheitBarcode");
       }
+
+      const sValueState = oInput.getValueState();
+      if (sValueState !== "None"){
+        const oBuchenButton = this.byId('buchenButton');
+        oBuchenButton.firePress();
+        this.aInputs[0].focus();
+      }
+    
     },
-    onCallKeyboardAction: function () {
-      const currentIndex = this.aInputs.findIndex((input) => input.getId() === this._lastFocusedInputId);
-      const previousInput = this.aInputs[currentIndex - 1].getId();
-      this.onKeyboardAction(previousInput);
-    },
+   
 
     requestBackendData: function () {
       // hier getProperty viewModel istLagereinheitBarcode
@@ -289,11 +285,8 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       let focusedInputId = null;
 
       // Überprüfen, ob `inputId` gültig ist und zu einem Input-Feld gehört
-      if (typeof inputId === 'string') {
-        const oControl = this.byId(inputId);
-        if (oControl && oControl.isA('sap.m.Input')) {
-          focusedInputId = inputId;
-        }
+      if (typeof inputId === 'string') {      
+          focusedInputId = this.byId(inputId);
       }
 
       // Fallback zu `_lastFocusedInputId`, falls keine gültige ID übergeben wurde
@@ -303,8 +296,6 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
 
       const oInput = this.byId(focusedInputId);
       const oDomRef = oInput.getDomRef('inner');
-      const oFocusInput = this.byId(this._lastFocusedInputId);
-      const oFocusDomRef = oInput.getDomRef('inner');
 
       if (oDomRef) {
         // `inputmode` wechseln
@@ -314,8 +305,8 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
 
         // Fokus und Textauswahl
         setTimeout(() => {
-          oFocusInput.focus();
-          oFocusDomRef.select();
+          oInput.focus();
+          oDomRef.select();
         }, 100);
       }
     },
