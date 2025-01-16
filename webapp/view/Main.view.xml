@@ -1,40 +1,195 @@
-<mvc:View controllerName="inw.le_scanner.controller.Main" displayBlock="true" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" xmlns:ndc="sap.ndc" core:require="{
+<mvc:View
+    controllerName="inw.le_scanner.controller.Main"
+    displayBlock="true"
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns:ndc="sap.ndc"
+    core:require="{
 		formatter: 'inw/le_scanner/model/formatter'
-	}">
-	<Page title="{i18n>appTitle}" id="page" class="sapUiContentPadding">
-		<headerContent>
-			<Button text="{viewModel>/appVersion}" enabled="false" type="Transparent" />
-		</headerContent>
-		<content>
-			<Label text="{i18n>palletLabel}" required="true" class="sapUiSmallMarginTop" />
-			<Input id="istLagereinheitBarcode" value="{viewModel>/istLagereinheitBarcode}" width="89%" submit="onIstLagereinheitSubmit" liveChange="onInputLiveChange">
-			</Input>
-			<Button id="palletButton" type="Default" icon="sap-icon://keyboard-and-mouse" press="onKeyboardAction" />
-			<Text id="taPlaceholder" text="{i18n>TAPlaceholder}" width="50%" textAlign="Left" class="sapUiSmallMarginTop">
-			</Text>
-			<Input id="TANummer" value="{viewModel>/TANummer}" visible="true" width="50%" editable="false" />
-			<Text id="posPlaceholder" text="{i18n>PosPlaceholder}" width="50%" textAlign="Left" class="sapUiSmallMarginTop">
-			</Text>
-			<Input id="anzahlPositionen" value="{viewModel>/anzahlPositionen}" visible="true" width="50%" editable="false" />
-			<Text id="placeholder" class="sapUiLargeMarginTop" width="100%">
-			</Text>
-			<Text text="{i18n>shouldstorageLocationLabel}" class="sapUiSmallMarginTop" width="50%" />
-			<Input id="sollLagerplatz" value="{viewModel>/sollLagerplatzBarcode}" visible="true" width="50%" editable="false" />
-			<Label text="{i18n>isstorageLocationLabel}" />
-			<Input id="istLagerplatzBarcode" value="{viewModel>/istLagerplatzBarcode}" width="89%" submit="onIstLagerplatzSubmit" liveChange="onInputLiveChange" editable="{= ${viewModel>/TANummer}.length &gt; 0 }">
-			</Input>
-			<Button id="lagerButton" type="Default" icon="sap-icon://keyboard-and-mouse" press="onKeyboardAction" />
-			<Label text="{i18n>storageUnitLabel}" required="true" class="sapUiLargeMarginTop" />
-			<Input id="sollLagereinheitBarcode" value="{viewModel>/sollLagereinheitBarcode}" width="89%" submit="onSollLagereinheitSubmit" liveChange="onInputLiveChange" editable="{= ${viewModel>/istLagerplatzBarcode}.length &gt; 0 }">
-			</Input>
-			<Button id="einheitButton" type="Default" icon="sap-icon://keyboard-and-mouse" press="onKeyboardAction" />
-		</content>
-		<footer>
-			<Toolbar>
-				<Button id="resetButton" press="onResetApp" type="Reject" icon="sap-icon://refresh" />
-				<ToolbarSpacer />
-				<Button id="buchenButton" text="{i18n>postButton}" type="Emphasized" press="onBuchenPress" />
-			</Toolbar>
-		</footer>
-	</Page>
+	}"
+>
+    <Page
+        title="{i18n>appTitle}"
+        id="page"
+        class="sapUiContentPadding"
+    >
+        <headerContent>
+            <Button
+                text="{viewModel>/appVersion}"
+                enabled="false"
+                type="Transparent"
+            />
+        </headerContent>
+        <content>
+            <FlexBox
+                direction="Row"
+                alignItems="Center"
+                alignContent="Center"
+                justifyContent="SpaceBetween"
+            >
+                <core:Icon
+                    src="sap-icon://shipping-status"
+                    size="2.8rem"
+                    class="sapUiTinyMarginEnd"
+                    color="black"
+                />
+
+                <FlexBox
+                    direction="Column"
+                    width="85%"
+                >
+                    <Label
+                        text="{i18n>palletLabel}"
+                        required="true"
+                        width="100%"
+                    />
+                    <Input
+                        id="istLagereinheitBarcode"
+                        value="{viewModel>/istLagereinheitBarcode}"
+                        width="100%"
+                        submit="onIstLagereinheitSubmit"
+                        liveChange="onIstLagereinheitLiveChange"
+                    />
+                </FlexBox>
+            </FlexBox>
+            <Text
+                id="taPlaceholder"
+                text="{i18n>TAPlaceholder}"
+                width="50%"
+                textAlign="Left"
+                class="sapUiSmallMarginTop"
+            />
+            <Input
+                id="TANummer"
+                value="{viewModel>/TANummer}"
+                visible="true"
+                width="50%"
+                editable="false"
+            />
+            <Text
+                id="posPlaceholder"
+                text="{i18n>PosPlaceholder}"
+                width="50%"
+                textAlign="Left"
+                class="sapUiSmallMarginTop"
+            />
+            <Input
+                id="anzahlPositionen"
+                value="{viewModel>/anzahlPositionen}"
+                visible="true"
+                width="50%"
+                editable="false"
+            />
+            <Text
+                id="placeholder"
+                class="sapUiLargeMarginTop"
+                width="100%"
+            />
+            <Text
+                text="{i18n>shouldstorageLocationLabel}"
+                class="sapUiSmallMarginTop"
+                width="50%"
+            />
+            <Input
+                id="sollLagerplatz"
+                value="{viewModel>/sollLagerplatzBarcode}"
+                visible="true"
+                width="50%"
+                editable="false"
+            />
+            <FlexBox
+                direction="Row"
+                alignItems="Center"
+                class="sapUiSmallMarginTop"
+                justifyContent="SpaceBetween"
+            >
+                <core:Icon
+                    src="sap-icon://map-2"
+                    size="2.8rem"
+                    class="sapUiTinyMarginEnd"
+                    color="blue"
+                />
+
+                <FlexBox
+                    direction="Column"
+                    width="85%"
+                >
+                    <Label
+                        text="{i18n>isstorageLocationLabel}"
+                        width="100%"
+                    />
+                    <Input
+                        id="istLagerplatzBarcode"
+                        valueState="{viewModel>/istLagerplatzBarcodeState}"
+                        valueStateText="{viewModel>/istLagerplatzBarcodeStateText}"
+                        value="{viewModel>/istLagerplatzBarcode}"
+                        width="100%"
+                        submit="onIstLagerplatzSubmit"
+                        change="onIstLagerplatzChange"
+                        liveChange="onIstLagerplatzLiveChange"
+                        editable="{= ${viewModel>/TANummer}.length &gt; 0 }"
+                    />
+                </FlexBox>
+            </FlexBox>
+            <FlexBox
+                direction="Row"
+                alignItems="Center"
+                class="sapUiLargeMarginTop"
+                justifyContent="SpaceBetween"
+            >
+                <core:Icon
+                    src="sap-icon://add-product"
+                    size="2.8rem"
+                    class="sapUiTinyMarginEnd"
+                    color="brown"
+                />
+                <FlexBox
+                    direction="Column"
+                    width="85%"
+                >
+                    <Label
+                        text="{i18n>storageUnitLabel}"
+                        required="true"
+                        width="100%"
+                    />
+                    <Input
+                        id="sollLagereinheitBarcode"
+                        valueState="{viewModel>/sollLagereinheitBarcodeState}"
+                        valueStateText="{viewModel>/sollLagereinheitBarcodeStateText}"
+                        value="{viewModel>/sollLagereinheitBarcode}"
+                        width="100%"
+                        submit="onSollLagereinheitSubmit"
+                        change="onSollLagereinheitChange"
+                        liveChange="onSollLagereinheitLiveChange"
+                        editable="{= ${viewModel>/istLagerplatzBarcode}.length &gt; 0 }"
+                    />
+                </FlexBox>
+            </FlexBox>
+        </content>
+        <footer>
+            <Toolbar>
+                <Button
+                    id="resetButton"
+                    press="onResetApp"
+                    type="Ghost"
+                    text="{i18n>resetButton}"
+                />
+                <Button
+                    id="keyBoardButton"
+                    type="Ghost"
+                    text="{i18n>keyboardButton}"
+                    press="onKeyboardAction"
+                />
+                <ToolbarSpacer />
+                <Button
+                    id="buchenButton"
+                    text="{i18n>postButton}"
+                    type="Emphasized"
+                    press="onBuchenPress"
+                />
+            </Toolbar>
+        </footer>
+    </Page>
 </mvc:View>

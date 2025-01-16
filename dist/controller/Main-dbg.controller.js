@@ -10,6 +10,10 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
         sollLagereinheitBarcode: '',
         TANummer: '',
         anzahlPositionen: '',
+        istLagerplatzBarcodeState: 'None',
+        istLagerplatzBarcodeStateText: '',
+        sollLagereinheitBarcodeState: 'None',
+        sollLagereinheitBarcodeStateText: '',
         appVersion: this.getOwnerComponent().getManifestEntry('sap.app').applicationVersion.version,
       });
       this.setModel(oViewModel, 'viewModel');
@@ -32,6 +36,7 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
             oDomRef.setAttribute('inputmode', 'none');
             oDomRef.addEventListener('focus', (event) => {
               this.onInputFocus(event);
+              this._lastFocusedInputId = oInput.getId();
             });
           },
         });
@@ -39,6 +44,13 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
 
       // Event Listener für Key Events hinzufügen
       document.addEventListener('keydown', this.onKeyDown.bind(this));
+
+      // Audios
+      this.successSound = new Audio('./sounds/success.mp3');
+      this.warningSound = new Audio('./sounds/warning.mp3');
+
+      // Submitblocker
+      this.firstsubmit = false;
     },
 
     onKeyDown: function (oEvent) {
@@ -69,6 +81,13 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
           this.onArrowDown(iCurrentIndex);
           break;
         default:
+        //   MessageToast.show("Key pressed: " + oEvent.key + " | KeyCode: " + oEvent.keyCode, {
+        //     duration: 3000, // Optional: Wie lange der Toast angezeigt wird (in Millisekunden)
+        //     my: "center center", // Positioniert den Toast in der Mitte des Bildschirms
+        //     at: "center center", // Zeigt den Toast in der Mitte des Bildschirms
+        //     of: window, // Definiert, dass der Toast im Fenster (browser) angezeigt wird
+        //     offset: "0 0" // Verhindert eine Verschiebung
+        // });
       }
     },
 
@@ -94,38 +113,47 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       const oDomRef = oInput.getDomRef('inner');
       const currentInputMode = oDomRef.getAttribute('inputmode');
 
-      this.aInputs[currentIndex + 1].focus();
-
-      this.requestBackendData();
-
       if (currentInputMode === 'text') {
-        this.triggerInputMode('istLagereinheitBarcode');
+        this.onKeyboardAction('istLagereinheitBarcode');
       }
+
+      this.aInputs[currentIndex + 1].focus();
+      this.requestBackendData();
     },
+
     onIstLagerplatzSubmit: function (oEvent) {
       const oInput = oEvent.getSource();
       const currentIndex = this.aInputs.indexOf(oInput);
       const oDomRef = oInput.getDomRef('inner');
       const currentInputMode = oDomRef.getAttribute('inputmode');
 
-      this.aInputs[currentIndex + 1].focus();
-
       if (currentInputMode === 'text') {
-        this.triggerInputMode('istLagerplatzBarcode');
+        this.onKeyboardAction('istLagerplatzBarcode');
       }
+
+      this.aInputs[currentIndex + 1].focus();
     },
+
     onSollLagereinheitSubmit: function (oEvent) {
       const oInput = oEvent.getSource();
-      const oBuchenButton = this.byId('buchenButton');
+
       const oDomRef = oInput.getDomRef('inner');
       const currentInputMode = oDomRef.getAttribute('inputmode');
 
       if (currentInputMode === 'text') {
-        this.triggerInputMode('sollLagereinheitBarcode');
+        this.onKeyboardAction('sollLagereinheitBarcode');
       }
 
-      oBuchenButton.firePress();
-      this.aInputs[0].focus();
+      // const sValueState = oInput.getValueState();
+      //  if (sValueState !== "None"){
+      if (this.firstsubmit) {
+        const oBuchenButton = this.byId('buchenButton');
+        oBuchenButton.firePress();
+        this.aInputs[0].focus();
+        this.firstsubmit = false;
+      } else {
+        this.firstsubmit = true;
+      }
     },
 
     requestBackendData: function () {
@@ -157,59 +185,136 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       oViewModel.setProperty('/sollLagereinheitBarcode', '');
       oViewModel.setProperty('/TANummer', '');
       oViewModel.setProperty('/anzahlPositionen', '');
+      oViewModel.setProperty('/istLagerplatzBarcodeState', 'None');
+      oViewModel.setProperty('/istLagerplatzBarcodeStateText', '');
+      oViewModel.setProperty('/sollLagereinheitBarcodeState', 'None');
+      oViewModel.setProperty('/sollLagereinheitBarcodeStateText', '');
     },
 
     onInputFocus: function (oEvent) {
       const oDomRef = oEvent.srcElement;
       oDomRef.setSelectionRange(0, oDomRef.value.length);
     },
+    // onIstLagereinheitLiveChange: function () {
+    //   this.switchInput("istLagereinheitBarcode");
+    // },
 
-    onInputLiveChange: function (oEvent) {
-      const DELAY = 500;
-      let inputTimeout;
-      const oInput = oEvent.getSource();
-      const currentIndex = this.aInputs.indexOf(oInput);
+    // onIstLagerplatzLiveChange: function () {
+    //   this.switchInput("istLagerplatzBarcode");
+    // },
+    // onSollLagereinheitLiveChange: function () {
+    //   this.switchInput("sollLagereinheitBarcode");
+    // },
 
-      const oDomRef = oInput.getDomRef('inner');
+    // switchInput: function (sInputId) {
 
-      const currentInputMode = oDomRef.getAttribute('inputmode');
+    //   const oInput = this.byId(sInputId);
+    //   const oDomRef = oInput.getDomRef('inner');
+    //   const DELAY = 500;
+    //   let inputTimeout;
 
-      if (currentInputMode === 'none') {
-        clearTimeout(inputTimeout);
-        inputTimeout = setTimeout(() => {
-          if (this.aInputs[currentIndex + 1]) {
-            this.aInputs[currentIndex + 1].focus();
-          }
-          if (currentIndex === 0 && this.aInputs[currentIndex + 1]) {
-            this.requestBackendData();
-          }
-        }, DELAY);
+    //   const currentIndex = this.aInputs.indexOf(oInput);
+    //   const currentInputMode = oDomRef.getAttribute('inputmode');
+
+    //   if (currentInputMode === 'none') {
+    //     clearTimeout(inputTimeout);
+    //     inputTimeout = setTimeout(() => {
+    //       if (this.aInputs[currentIndex + 1]) {
+    //         this.aInputs[currentIndex + 1].focus();
+    //       }
+    //       if (currentIndex === 0 && this.aInputs[currentIndex + 1]) {
+    //         this.requestBackendData();
+    //       }
+    //     }, DELAY);
+    //   }
+    // },
+    onIstLagerplatzChange: function () {
+      const oViewModel = this.getView().getModel('viewModel');
+      const istLagerplatzBarcode = oViewModel.getProperty('/istLagerplatzBarcode');
+      const sollLagerplatzBarcode = oViewModel.getProperty('/sollLagerplatzBarcode');
+
+      if (istLagerplatzBarcode === sollLagerplatzBarcode) {
+        oViewModel.setProperty('/istLagerplatzBarcodeState', 'Success');
+        oViewModel.setProperty('/istLagerplatzBarcodeStateText', 'Soll = Ist Nachlagerplatz');
+        oViewModel.setProperty('/sollLagereinheitBarcodeStateText', 'Soll = Ist Lagereinheit');
+        this.successSound.play();
+      } else {
+        oViewModel.setProperty('/istLagerplatzBarcodeState', 'Warning');
+        oViewModel.setProperty('/istLagerplatzBarcodeStateText', 'Soll ≠ Ist Nachlagerplatz');
+        this.warningSound.play();
       }
     },
-    onIstLEKeyboardAction: function () {
-      this.triggerInputMode('istLagereinheitBarcode');
-    },
-    onLPKeyboardAction: function () {
-      this.triggerInputMode('istLagerplatzBarcode');
-    },
-    onSollLEKeyboardAction: function () {
-      this.triggerInputMode('sollLagereinheitBarcode');
+    onSollLagereinheitChange: function () {
+      const oViewModel = this.getModel('viewModel');
+      const istLagereinheitBarcode = oViewModel.getProperty('/istLagereinheitBarcode');
+      const sollLagereinheitBarcode = oViewModel.getProperty('/sollLagereinheitBarcode');
+
+      if (istLagereinheitBarcode === sollLagereinheitBarcode) {
+        oViewModel.setProperty('/sollLagereinheitBarcodeState', 'Success');
+        oViewModel.setProperty('/sollLagereinheitBarcodeStateText', 'Soll = Ist Lagereinheit');
+        this.successSound.play();
+      } else {
+        oViewModel.setProperty('/sollLagereinheitBarcodeState', 'Warning');
+        oViewModel.setProperty('/sollLagereinheitBarcodeStateText', 'Soll ≠ Ist Lagereinheit');
+        this.warningSound.play();
+      }
     },
 
-    triggerInputMode: function (sInputId) {
-      const oInput = this.byId(sInputId);
-      // Get the DOM reference of the input field
+    // onIstLEKeyboardAction: function () {
+    //   this.triggerInputMode('istLagereinheitBarcode');
+    // },
+    // onLPKeyboardAction: function () {
+    //   this.triggerInputMode('istLagerplatzBarcode');
+    // },
+    // onSollLEKeyboardAction: function () {
+    //   this.triggerInputMode('sollLagereinheitBarcode');
+    // },
+
+    // triggerInputMode: function (sInputId) {
+    //   const oInput = this.byId(sInputId);
+    //   // Get the DOM reference of the input field
+    //   const oDomRef = oInput.getDomRef('inner');
+
+    //   // Select the text in the input field if the DOM element exists
+    //   if (oDomRef) {
+    //     const currentInputMode = oDomRef.getAttribute('inputmode');
+    //     const newInputMode = currentInputMode === 'text' ? 'none' : 'text';
+    //     oDomRef.setAttribute('inputmode', newInputMode);
+    //     setTimeout(() => {
+    //       oInput.focus();
+    //       oDomRef.select();
+    //     }, 100);
+    //   }
+    // },
+
+    onKeyboardAction: function (inputId) {
+      let focusedInputId = null;
+
+      // Überprüfen, ob `inputId` gültig ist und zu einem Input-Feld gehört
+      if (typeof inputId === 'string') {
+        focusedInputId = inputId;
+      }
+
+      // Fallback zu `_lastFocusedInputId`, falls keine gültige ID übergeben wurde
+      if (!focusedInputId) {
+        focusedInputId = this._lastFocusedInputId;
+      }
+
+      const oInput = this.byId(focusedInputId);
       const oDomRef = oInput.getDomRef('inner');
 
-      // Select the text in the input field if the DOM element exists
       if (oDomRef) {
+        // `inputmode` wechseln
         const currentInputMode = oDomRef.getAttribute('inputmode');
         const newInputMode = currentInputMode === 'text' ? 'none' : 'text';
         oDomRef.setAttribute('inputmode', newInputMode);
-        setTimeout(() => {
-          oInput.focus();
-          oDomRef.select();
-        }, 100);
+
+        if (newInputMode === 'text') {
+          setTimeout(() => {
+            oInput.focus();
+            oDomRef.select();
+          }, 100);
+        }
       }
     },
 
