@@ -122,7 +122,7 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       this.requestBackendData();
 
       if (currentInputMode === 'text') {
-        this.triggerInputMode('istLagereinheitBarcode');
+        this.onKeyboardAction();
       }
     },
     onIstLagerplatzSubmit: function (oEvent) {
@@ -134,7 +134,7 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       this.aInputs[currentIndex + 1].focus();
 
       if (currentInputMode === 'text') {
-        this.triggerInputMode('istLagerplatzBarcode');
+        this.onKeyboardAction();
       }
     },
     onSollLagereinheitSubmit: function (oEvent) {
@@ -144,7 +144,7 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       const currentInputMode = oDomRef.getAttribute('inputmode');
 
       if (currentInputMode === 'text') {
-        this.triggerInputMode('sollLagereinheitBarcode');
+        this.onKeyboardAction();
       }
     },
 
