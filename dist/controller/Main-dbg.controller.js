@@ -43,6 +43,10 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
 
       // Event Listener für Key Events hinzufügen
       document.addEventListener('keydown', this.onKeyDown.bind(this));
+
+      // Audios
+      this.successSound = new Audio('./sounds/success.mp3');
+      this.warningSound = new Audio('./sounds/warning.mp3');
     },
 
     onKeyDown: function (oEvent) {
@@ -215,21 +219,15 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       const istLagerplatzBarcode = oViewModel.getProperty('/istLagerplatzBarcode');
       const sollLagerplatzBarcode = oViewModel.getProperty('/sollLagerplatzBarcode');
 
-      const warningAudio = document.getElementById('warningSound');
-      const successAudio = document.getElementById('successSound');
-
-      const successSound = new Audio(successAudio);
-      const warningSound = new Audio(warningAudio);
-
       if (istLagerplatzBarcode === sollLagerplatzBarcode) {
         oViewModel.setProperty('/istLagerplatzBarcodeState', 'Success');
         oViewModel.setProperty('/istLagerplatzBarcodeStateText', 'Soll = Ist Nachlagerplatz');
         oViewModel.setProperty('/sollLagereinheitBarcodeStateText', 'Soll = Ist Lagereinheit');
-        successAudio.play();
+        this.successSound.play();
       } else {
         oViewModel.setProperty('/istLagerplatzBarcodeState', 'Warning');
         oViewModel.setProperty('/istLagerplatzBarcodeStateText', 'Soll ≠ Ist Nachlagerplatz');
-        warningAudio.play();
+        this.warningSound.play();
       }
     },
     onSollLagereinheitChange: function () {
@@ -237,21 +235,14 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       const istLagereinheitBarcode = oViewModel.getProperty('/istLagereinheitBarcode');
       const sollLagereinheitBarcode = oViewModel.getProperty('/sollLagereinheitBarcode');
 
-      const successSound = new Audio('inw.le_scanner/resources/sounds/success.mp3');
-      const warningSound = new Audio('inw.le_scanner/resources/sounds/warning.mp3');
-
       if (istLagereinheitBarcode === sollLagereinheitBarcode) {
         oViewModel.setProperty('/sollLagereinheitBarcodeState', 'Success');
-        oViewModel.setProperty('/sollLagereinheitBarcodeStateText', 'Soll = Ist Lagereinheit');
-        successSound.addEventListener('canplaythrough', function () {
-          successSound.play();
-        });
+        oViewModel.setProperty('/sollLagereinheitBarcodeStateText', 'Soll = Ist Lagereinheit');  
+        this.successSound.play();
       } else {
         oViewModel.setProperty('/sollLagereinheitBarcodeState', 'Warning');
         oViewModel.setProperty('/sollLagereinheitBarcodeStateText', 'Soll ≠ Ist Lagereinheit');
-        warningSound.addEventListener('canplaythrough', function () {
-          warningSound.play();
-        });
+        this.warningSound.play();
       }
     },
 
@@ -281,6 +272,9 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
     //     }, 100);
     //   }
     // },
+  
+    // !!!!! TODO METHODE !!!!!!!!!
+
     // onKeyboardAction: function (oButton) {
     //   const oInput = this.byId(sInputId);
     //   // Get the DOM reference of the input field
