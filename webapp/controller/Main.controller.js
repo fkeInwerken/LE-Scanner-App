@@ -48,6 +48,7 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       // Audios
       this.successSound = new Audio('./sounds/success.mp3');
       this.warningSound = new Audio('./sounds/warning.mp3');
+      this.errorSound = new Audio('./sounds/error.mp3');
 
       // Submitblocker
       this.firstsubmit = false;
@@ -189,6 +190,12 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       oViewModel.setProperty('/istLagerplatzBarcodeStateText', '');
       oViewModel.setProperty('/sollLagereinheitBarcodeState', 'None');
       oViewModel.setProperty('/sollLagereinheitBarcodeStateText', '');
+
+      // Error Handling
+      // if (err){
+      //   this.errorSound.play();
+      // }
+
     },
 
     onInputFocus: function (oEvent) {

@@ -31,9 +31,9 @@
             >
                 <core:Icon
                     src="sap-icon://shipping-status"
-                    size="2.8rem"
+                    size="2.1rem"
                     class="sapUiTinyMarginEnd"
-                    color="black"
+                    color="grey"
                 />
 
                 <FlexBox
@@ -107,9 +107,9 @@
             >
                 <core:Icon
                     src="sap-icon://map-2"
-                    size="2.8rem"
+                    size="2.1rem"
                     class="sapUiTinyMarginEnd"
-                    color="blue"
+                    color="grey"
                 />
 
                 <FlexBox
@@ -141,9 +141,9 @@
             >
                 <core:Icon
                     src="sap-icon://add-product"
-                    size="2.8rem"
+                    size="2.1rem"
                     class="sapUiTinyMarginEnd"
-                    color="brown"
+                    color="grey"
                 />
                 <FlexBox
                     direction="Column"
