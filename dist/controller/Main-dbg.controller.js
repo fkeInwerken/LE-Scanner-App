@@ -72,10 +72,11 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
           }
           this.onArrowDown(iCurrentIndex);
           break;
-        case 'P2':
-          this.onP2();
-          break;
+        // case 'P2':
+        //   this.onP2();
+        //   break;
         default:
+          console.log(`Unhandled key: ${sKey}`);
       }
     },
 
@@ -97,6 +98,7 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
     onP2: function () {
       const oBuchenButton = this.byId('buchenButton');
       oBuchenButton.firePress();
+      this.aInputs[0].focus();
     },
 
     onIstLagereinheitSubmit: function (oEvent) {
@@ -134,8 +136,6 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       if (currentInputMode === 'text') {
         this.triggerInputMode('sollLagereinheitBarcode');
       }
-
-      this.aInputs[0].focus();
     },
 
     requestBackendData: function () {
