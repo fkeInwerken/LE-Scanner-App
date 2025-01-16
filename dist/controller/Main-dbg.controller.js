@@ -123,7 +123,7 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       this.requestBackendData();
 
       if (currentInputMode === 'text') {
-        this.onKeyboardAction();
+        this.onCallKeyboardAction();
       }
     },
     onIstLagerplatzSubmit: function (oEvent) {
@@ -135,7 +135,7 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       this.aInputs[currentIndex + 1].focus();
 
       if (currentInputMode === 'text') {
-        this.onKeyboardAction();
+        this.onCallKeyboardAction();
       }
     },
     onSollLagereinheitSubmit: function (oEvent) {
@@ -145,8 +145,12 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       const currentInputMode = oDomRef.getAttribute('inputmode');
 
       if (currentInputMode === 'text') {
-        this.onKeyboardAction();
+        this.onCallKeyboardAction();
       }
+    },
+    onCallKeyboardAction: function () {
+      const currentIndex = this.aInputs.findIndex((input) => input.getId() === this._lastFocusedInputId);
+      this.onKeyboardAction(currentIndex);
     },
 
     requestBackendData: function () {
@@ -280,21 +284,37 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
     //   }
     // },
 
-    onKeyboardAction: function () {
-      if (this._lastFocusedInputId) {
-        const oInput = this.byId(this._lastFocusedInputId);
-        const oDomRef = oInput.getDomRef('inner'); 
+    onKeyboardAction: function (inputId) {
+      let focusedInputId = null;
 
-        if (oDomRef) {
-            const currentInputMode = oDomRef.getAttribute('inputmode');
-            const newInputMode = currentInputMode === 'text' ? 'none' : 'text';
-            oDomRef.setAttribute('inputmode', newInputMode);
-            setTimeout(() => {
-                oInput.focus();        
-                oDomRef.select();
-            }, 100);
-          }
+      // Überprüfen, ob `inputId` gültig ist und zu einem Input-Feld gehört
+      if (typeof inputId === 'string') {
+        const oControl = this.byId(inputId);
+        if (oControl && oControl.isA('sap.m.Input')) {
+          focusedInputId = inputId;
         }
+      }
+
+      // Fallback zu `_lastFocusedInputId`, falls keine gültige ID übergeben wurde
+      if (!focusedInputId) {
+        focusedInputId = this._lastFocusedInputId;
+      }
+
+      const oInput = this.byId(focusedInputId);
+      const oDomRef = oInput.getDomRef('inner');
+
+      if (oDomRef) {
+        // `inputmode` wechseln
+        const currentInputMode = oDomRef.getAttribute('inputmode');
+        const newInputMode = currentInputMode === 'text' ? 'none' : 'text';
+        oDomRef.setAttribute('inputmode', newInputMode);
+
+        // Fokus und Textauswahl
+        setTimeout(() => {
+          oInput.focus();
+          oDomRef.select?.();
+        }, 100);
+      }
     },
 
     _getFocusedInputIndex: function () {
