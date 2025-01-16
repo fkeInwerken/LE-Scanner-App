@@ -114,25 +114,26 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       const currentInputMode = oDomRef.getAttribute('inputmode');
 
       if (currentInputMode === 'text') {
-        this.onKeyboardAction("istLagereinheitBarcode");
+        this.onKeyboardAction('istLagereinheitBarcode');
       }
 
       this.aInputs[currentIndex + 1].focus();
-
       this.requestBackendData();
     },
+
     onIstLagerplatzSubmit: function (oEvent) {
       const oInput = oEvent.getSource();
       const currentIndex = this.aInputs.indexOf(oInput);
       const oDomRef = oInput.getDomRef('inner');
-      const currentInputMode = oDomRef.getAttribute('inputmode');   
+      const currentInputMode = oDomRef.getAttribute('inputmode');
 
       if (currentInputMode === 'text') {
-        this.onKeyboardAction("istLagerplatzBarcode");
+        this.onKeyboardAction('istLagerplatzBarcode');
       }
 
       this.aInputs[currentIndex + 1].focus();
     },
+
     onSollLagereinheitSubmit: function (oEvent) {
       const oInput = oEvent.getSource();
 
@@ -140,12 +141,12 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       const currentInputMode = oDomRef.getAttribute('inputmode');
 
       if (currentInputMode === 'text') {
-        this.onKeyboardAction("sollLagereinheitBarcode");
+        this.onKeyboardAction('sollLagereinheitBarcode');
       }
 
-     // const sValueState = oInput.getValueState();
-    //  if (sValueState !== "None"){
-    if (this.firstsubmit){
+      // const sValueState = oInput.getValueState();
+      //  if (sValueState !== "None"){
+      if (this.firstsubmit) {
         const oBuchenButton = this.byId('buchenButton');
         oBuchenButton.firePress();
         this.aInputs[0].focus();
@@ -153,10 +154,7 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       } else {
         this.firstsubmit = true;
       }
-
-    
     },
-   
 
     requestBackendData: function () {
       // hier getProperty viewModel istLagereinheitBarcode
@@ -293,8 +291,8 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       let focusedInputId = null;
 
       // Überprüfen, ob `inputId` gültig ist und zu einem Input-Feld gehört
-      if (typeof inputId === 'string') {      
-          focusedInputId = this.byId(inputId);
+      if (typeof inputId === 'string') {
+        focusedInputId = inputId;
       }
 
       // Fallback zu `_lastFocusedInputId`, falls keine gültige ID übergeben wurde
