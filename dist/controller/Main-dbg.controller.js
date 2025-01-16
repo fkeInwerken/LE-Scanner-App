@@ -243,7 +243,7 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
 
       if (istLagereinheitBarcode === sollLagereinheitBarcode) {
         oViewModel.setProperty('/sollLagereinheitBarcodeState', 'Success');
-        oViewModel.setProperty('/sollLagereinheitBarcodeStateText', 'Soll = Ist Lagereinheit');  
+        oViewModel.setProperty('/sollLagereinheitBarcodeStateText', 'Soll = Ist Lagereinheit');
         this.successSound.play();
       } else {
         oViewModel.setProperty('/sollLagereinheitBarcodeState', 'Warning');
@@ -278,25 +278,20 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
     //     }, 100);
     //   }
     // },
-  
-    // !!!!! TODO METHODE !!!!!!!!!
 
-    // onKeyboardAction: function (oButton) {
-    //   const oInput = this.byId(sInputId);
-    //   // Get the DOM reference of the input field
-    //   const oDomRef = oInput.getDomRef('inner');
+    onKeyboardAction: function () {
+      const oDomRef = document.activeElement;
 
-    //   // Select the text in the input field if the DOM element exists
-    //   if (oDomRef) {
-    //     const currentInputMode = oDomRef.getAttribute('inputmode');
-    //     const newInputMode = currentInputMode === 'text' ? 'none' : 'text';
-    //     oDomRef.setAttribute('inputmode', newInputMode);
-    //     setTimeout(() => {
-    //       oInput.focus();
-    //       oDomRef.select();
-    //     }, 100);
-    //   }
-    // },
+      if (oDomRef && oDomRef.tagName === 'INPUT') {
+        const currentInputMode = oDomRef.getAttribute('inputmode');
+        const newInputMode = currentInputMode === 'text' ? 'none' : 'text';
+        oDomRef.setAttribute('inputmode', newInputMode);
+        setTimeout(() => {
+          oDomRef.focus();
+          oDomRef.select();
+        }, 100);
+      }
+    },
 
     _getFocusedInputIndex: function () {
       // get Element ID
