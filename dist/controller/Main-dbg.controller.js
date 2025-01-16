@@ -122,7 +122,7 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
 
       this.requestBackendData();
 
-      if (currentInputMode === 'none') {
+      if (currentInputMode === 'text') {
         this.onCallKeyboardAction();
       }
     },
