@@ -309,11 +309,12 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
         const newInputMode = currentInputMode === 'text' ? 'none' : 'text';
         oDomRef.setAttribute('inputmode', newInputMode);
 
-        // Fokus und Textauswahl
-        // setTimeout(() => {
-        //   oInput.focus();
-        //   oDomRef.select();
-        // }, 100);
+        if (newInputMode === 'text') {
+          setTimeout(() => {
+            oInput.focus();
+            oDomRef.select();
+          }, 100);
+        }
       }
     },
 
