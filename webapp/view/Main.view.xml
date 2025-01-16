@@ -6,9 +6,13 @@
 			<Button text="{viewModel>/appVersion}" enabled="false" type="Transparent" />
 		</headerContent>
 		<content>
-			<Label text="{i18n>palletLabel}" required="true" class="sapUiSmallMarginTop" />
+					
+				
+			<Label text="{i18n>palletLabel}" required="true" class="sapUiSmallMarginTop" width="89%" />
+			
 			<Input id="istLagereinheitBarcode" value="{viewModel>/istLagereinheitBarcode}" width="89%" submit="onIstLagereinheitSubmit" liveChange="onIstLagereinheitLiveChange">
-			</Input>		
+			</Input>
+		<core:Icon src="sap-icon://cargo-train" size="4rem" class="sapUiSmallMarginTop" width="10%"></core:Icon>	
 			<Text id="taPlaceholder" text="{i18n>TAPlaceholder}" width="50%" textAlign="Left" class="sapUiSmallMarginTop">
 			</Text>
 			<Input id="TANummer" value="{viewModel>/TANummer}" visible="true" width="50%" editable="false" />

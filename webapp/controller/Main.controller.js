@@ -303,6 +303,8 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
 
       const oInput = this.byId(focusedInputId);
       const oDomRef = oInput.getDomRef('inner');
+      const oFocusInput = this.byId(this._lastFocusedInputId);
+      const oFocusDomRef = oInput.getDomRef('inner');
 
       if (oDomRef) {
         // `inputmode` wechseln
@@ -312,8 +314,8 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
 
         // Fokus und Textauswahl
         setTimeout(() => {
-          oInput.focus();
-          oDomRef.select?.();
+          oFocusInput.focus();
+          oFocusDomRef.select();
         }, 100);
       }
     },
