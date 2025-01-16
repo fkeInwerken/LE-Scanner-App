@@ -122,7 +122,7 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
 
       this.requestBackendData();
 
-      if (currentInputMode === 'text') {
+      if (currentInputMode === 'none') {
         this.onCallKeyboardAction();
       }
     },
@@ -150,7 +150,8 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
     },
     onCallKeyboardAction: function () {
       const currentIndex = this.aInputs.findIndex((input) => input.getId() === this._lastFocusedInputId);
-      this.onKeyboardAction(currentIndex);
+      const previousInput = this.aInputs[currentIndex - 1].getId();
+      this.onKeyboardAction(previousInput);
     },
 
     requestBackendData: function () {
