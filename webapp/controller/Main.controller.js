@@ -36,6 +36,7 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
             oDomRef.setAttribute('inputmode', 'none');
             oDomRef.addEventListener('focus', (event) => {
               this.onInputFocus(event);
+              this._lastFocusedInputId = oInput.getId();
             });
           },
         });
@@ -280,17 +281,20 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
     // },
 
     onKeyboardAction: function () {
-      const oDomRef = document.activeElement;
+      if (this._lastFocusedInputId) {
+        const oInput = this.byId(this._lastFocusedInputId);
+        const oDomRef = oInput.getDomRef('inner'); 
 
-      if (oDomRef && oDomRef.tagName === 'INPUT') {
-        const currentInputMode = oDomRef.getAttribute('inputmode');
-        const newInputMode = currentInputMode === 'text' ? 'none' : 'text';
-        oDomRef.setAttribute('inputmode', newInputMode);
-        setTimeout(() => {
-          oDomRef.focus();
-          oDomRef.select();
-        }, 100);
-      }
+        if (oDomRef) {
+            const currentInputMode = oDomRef.getAttribute('inputmode');
+            const newInputMode = currentInputMode === 'text' ? 'none' : 'text';
+            oDomRef.setAttribute('inputmode', newInputMode);
+            setTimeout(() => {
+                oInput.focus();        
+                oDomRef.select();
+            }, 100);
+          }
+        }
     },
 
     _getFocusedInputIndex: function () {

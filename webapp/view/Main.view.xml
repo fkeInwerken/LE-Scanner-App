@@ -30,7 +30,7 @@
 			<Toolbar>
 				<Button id="resetButton" press="onResetApp" type="Reject" icon="sap-icon://refresh" />
 				<ToolbarSpacer />
-				<Button id="keyBoardButton" type="Default" icon="sap-icon://keyboard-and-mouse" press="onIstLEKeyboardAction" />
+				<Button id="keyBoardButton" type="Default" icon="sap-icon://keyboard-and-mouse" press="onKeyboardAction" />
 				<ToolbarSpacer />
 				<Button id="buchenButton" text="{i18n>postButton}" type="Emphasized" press="onBuchenPress" />
 			</Toolbar>
