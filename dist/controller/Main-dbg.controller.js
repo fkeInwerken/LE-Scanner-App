@@ -310,10 +310,10 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
         oDomRef.setAttribute('inputmode', newInputMode);
 
         // Fokus und Textauswahl
-        setTimeout(() => {
-          oInput.focus();
-          oDomRef.select();
-        }, 100);
+        // setTimeout(() => {
+        //   oInput.focus();
+        //   oDomRef.select();
+        // }, 100);
       }
     },
 
