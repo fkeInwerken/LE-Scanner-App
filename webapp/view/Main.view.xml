@@ -6,13 +6,13 @@
 			<Button text="{viewModel>/appVersion}" enabled="false" type="Transparent" />
 		</headerContent>
 		<content>
-					
-				
-			<Label text="{i18n>palletLabel}" required="true" class="sapUiSmallMarginTop" width="89%" />
-			
-			<Input id="istLagereinheitBarcode" value="{viewModel>/istLagereinheitBarcode}" width="89%" submit="onIstLagereinheitSubmit" liveChange="onIstLagereinheitLiveChange">
-			</Input>
-		<core:Icon src="sap-icon://cargo-train" size="4rem" class="sapUiSmallMarginTop" width="10%"></core:Icon>	
+			<FlexBox direction="Row" alignItems="Start" justifyContent="SpaceBetween" class="sapUiSmallMarginTop">
+				<core:Icon src="sap-icon://supplier" size="3rem" class="sapUiSmallMarginTop" width="15%" />
+				<FlexBox direction="Column" width="85%">
+					<Label text="{i18n>palletLabel}" required="true" class="sapUiSmallMarginTop" width="100%" />
+					<Input id="istLagereinheitBarcode" value="{viewModel>/istLagereinheitBarcode}" width="100%" submit="onIstLagereinheitSubmit" liveChange="onIstLagereinheitLiveChange" />
+				</FlexBox>
+			</FlexBox>
 			<Text id="taPlaceholder" text="{i18n>TAPlaceholder}" width="50%" textAlign="Left" class="sapUiSmallMarginTop">
 			</Text>
 			<Input id="TANummer" value="{viewModel>/TANummer}" visible="true" width="50%" editable="false" />
@@ -23,12 +23,20 @@
 			</Text>
 			<Text text="{i18n>shouldstorageLocationLabel}" class="sapUiSmallMarginTop" width="50%" />
 			<Input id="sollLagerplatz" value="{viewModel>/sollLagerplatzBarcode}" visible="true" width="50%" editable="false" />
-			<Label text="{i18n>isstorageLocationLabel}" />
-			<Input id="istLagerplatzBarcode" valueState="{viewModel>/istLagerplatzBarcodeState}" valueStateText="{viewModel>/istLagerplatzBarcodeStateText}" value="{viewModel>/istLagerplatzBarcode}" width="89%" submit="onIstLagerplatzSubmit" change="onIstLagerplatzChange" liveChange="onIstLagerplatzLiveChange" editable="{= ${viewModel>/TANummer}.length &gt; 0 }">
-			</Input>
-			<Label text="{i18n>storageUnitLabel}" required="true" class="sapUiLargeMarginTop" />
-			<Input id="sollLagereinheitBarcode"  valueState="{viewModel>/sollLagereinheitBarcodeState}" valueStateText="{viewModel>/sollLagereinheitBarcodeStateText}" value="{viewModel>/sollLagereinheitBarcode}" width="89%" submit="onSollLagereinheitSubmit" change="onSollLagereinheitChange" liveChange="onSollLagereinheitLiveChange" editable="{= ${viewModel>/istLagerplatzBarcode}.length &gt; 0 }">
-			</Input>
+			<FlexBox direction="Row" alignItems="Start" class="sapUiSmallMarginTop" justifyContent="SpaceBetween">
+				<core:Icon src="sap-icon://map-2" size="3rem" width="15%" />
+				<FlexBox direction="Column" width="85%">
+					<Label text="{i18n>isstorageLocationLabel}" width="100%" />
+					<Input id="istLagerplatzBarcode" valueState="{viewModel>/istLagerplatzBarcodeState}" valueStateText="{viewModel>/istLagerplatzBarcodeStateText}" value="{viewModel>/istLagerplatzBarcode}" width="100%" submit="onIstLagerplatzSubmit" change="onIstLagerplatzChange" liveChange="onIstLagerplatzLiveChange" editable="{= ${viewModel>/TANummer}.length &gt; 0 }" />
+				</FlexBox>
+			</FlexBox>
+			<FlexBox direction="Row" alignItems="Start" class="sapUiLargeMarginTop" justifyContent="SpaceBetween">
+				<core:Icon src="sap-icon://add-product" size="3rem" width="15%" />
+				<FlexBox direction="Column" width="85%">
+					<Label text="{i18n>storageUnitLabel}" required="true" width="100%" />
+					<Input id="sollLagereinheitBarcode" valueState="{viewModel>/sollLagereinheitBarcodeState}" valueStateText="{viewModel>/sollLagereinheitBarcodeStateText}" value="{viewModel>/sollLagereinheitBarcode}" width="100%" submit="onSollLagereinheitSubmit" change="onSollLagereinheitChange" liveChange="onSollLagereinheitLiveChange" editable="{= ${viewModel>/istLagerplatzBarcode}.length &gt; 0 }" />
+				</FlexBox>
+			</FlexBox>
 		</content>
 		<footer>
 			<Toolbar>
