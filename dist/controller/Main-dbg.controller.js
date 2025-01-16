@@ -48,6 +48,9 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       // Audios
       this.successSound = new Audio('./sounds/success.mp3');
       this.warningSound = new Audio('./sounds/warning.mp3');
+
+      // Submitblocker
+      this.firstsubmit = false;
     },
 
     onKeyDown: function (oEvent) {
@@ -140,12 +143,17 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
         this.onKeyboardAction("sollLagereinheitBarcode");
       }
 
-      const sValueState = oInput.getValueState();
-      if (sValueState !== "None"){
+     // const sValueState = oInput.getValueState();
+    //  if (sValueState !== "None"){
+    if (this.firstsubmit){
         const oBuchenButton = this.byId('buchenButton');
         oBuchenButton.firePress();
         this.aInputs[0].focus();
+        this.firstsubmit = false;
+      } else {
+        this.firstsubmit = true;
       }
+
     
     },
    
