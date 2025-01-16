@@ -80,7 +80,13 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
         //   this.onP2();
         //   break;
         default:
-          MessageToast.show("Key pressed: ", oEvent.key, " | KeyCode: ", oEvent.keyCode);
+          MessageToast.show("Key pressed: " + oEvent.key + " | KeyCode: " + oEvent.keyCode, {
+            duration: 3000, // Optional: Wie lange der Toast angezeigt wird (in Millisekunden)
+            my: "center center", // Positioniert den Toast in der Mitte des Bildschirms
+            at: "center center", // Zeigt den Toast in der Mitte des Bildschirms
+            of: window, // Definiert, dass der Toast im Fenster (browser) angezeigt wird
+            offset: "0 0" // Verhindert eine Verschiebung
+        });
       }
     },
 
