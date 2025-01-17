@@ -14,6 +14,8 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
         istLagerplatzBarcodeStateText: '',
         sollLagereinheitBarcodeState: 'None',
         sollLagereinheitBarcodeStateText: '',
+        istLagereinheitBarcodeState: 'None',
+        istLagereinheitBarcodeStateText: '',
         appVersion: this.getOwnerComponent().getManifestEntry('sap.app').applicationVersion.version,
       });
       this.setModel(oViewModel, 'viewModel');
@@ -117,9 +119,11 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       if (currentInputMode === 'text') {
         this.onKeyboardAction('istLagereinheitBarcode');
       }
-
-      this.aInputs[currentIndex + 1].focus();
       this.requestBackendData();
+
+      if (oInput.getValue()) {
+        this.aInputs[currentIndex + 1].focus();
+      }
     },
 
     onIstLagerplatzSubmit: function (oEvent) {
@@ -158,17 +162,31 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
     },
 
     requestBackendData: function () {
-      // hier getProperty viewModel istLagereinheitBarcode
-      const exampleData = {
-        TANummer: '390',
-        anzahlPositionen: 3,
-        sollLagerplatzBarcode: '101-02-B-1',
-      };
-
       const oViewModel = this.getModel('viewModel');
-      oViewModel.setProperty('/TANummer', exampleData.TANummer);
-      oViewModel.setProperty('/anzahlPositionen', exampleData.anzahlPositionen);
-      oViewModel.setProperty('/sollLagerplatzBarcode', exampleData.sollLagerplatzBarcode);
+      const istLagereinheitBarcode = oViewModel.getProperty('/istLagereinheitBarcode');
+      if (istLagereinheitBarcode) {
+        const oModel = this.getOwnerComponent().getModel('');
+        const sPath = `/LE_TRANSPORT(SollLe='${istLagereinheitBarcode}')`;
+        oModel.read(sPath, {
+          success: (oData) => {
+            // Setze die abgerufenen Werte in das viewModel
+            oViewModel.setProperty('/TANummer', oData.TaNum);
+            oViewModel.setProperty('/anzahlPositionen', oData.TaPos);
+            oViewModel.setProperty('/sollLagerplatzBarcode', oData.SollLp);
+
+            // Optional: Fehlerbehandlung falls erforderlich
+            oViewModel.setProperty('/istLagereinheitBarcodeState', 'None');
+            oViewModel.setProperty('/istLagereinheitBarcodeStateText', '');
+          },
+          error: () => {
+            // Fehlerbehandlung: Im Falle eines Fehlers kann ein Fehlerstatus gesetzt werden
+            oViewModel.setProperty('/istLagereinheitBarcodeState', 'Error');
+            oViewModel.setProperty('/istLagereinheitBarcodeStateText', 'Lagereinheit nicht gefunden.');
+            oViewModel.setProperty('/istLagereinheitBarcode', '');
+            this.errorSound.play();
+          },
+        });
+      }
     },
 
     onBuchenPress: function () {
@@ -190,13 +208,14 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       oViewModel.setProperty('/istLagerplatzBarcodeStateText', '');
       oViewModel.setProperty('/sollLagereinheitBarcodeState', 'None');
       oViewModel.setProperty('/sollLagereinheitBarcodeStateText', '');
+      oViewModel.setProperty('/istLagereinheitBarcodeState', 'None');
+      oViewModel.setProperty('/istLagereinheitBarcodeStateText', '');
 
       // Error Handling
       // if (err){
       //   this.errorSound.play();
       // }
       this.successSound.play();
-
     },
 
     onInputFocus: function (oEvent) {
@@ -244,7 +263,6 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       if (istLagerplatzBarcode === sollLagerplatzBarcode) {
         oViewModel.setProperty('/istLagerplatzBarcodeState', 'Success');
         oViewModel.setProperty('/istLagerplatzBarcodeStateText', 'Soll = Ist Nachlagerplatz');
-        oViewModel.setProperty('/sollLagereinheitBarcodeStateText', 'Soll = Ist Lagereinheit');
       } else {
         oViewModel.setProperty('/istLagerplatzBarcodeState', 'Warning');
         oViewModel.setProperty('/istLagerplatzBarcodeStateText', 'Soll ≠ Ist Nachlagerplatz');

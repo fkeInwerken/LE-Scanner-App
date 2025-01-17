@@ -48,6 +48,8 @@
                     <Input
                         id="istLagereinheitBarcode"
                         value="{viewModel>/istLagereinheitBarcode}"
+                        valueState="{viewModel>/istLagereinheitBarcodeState}"
+                        valueStateText="{viewModel>/istLagereinheitBarcodeStateText}"
                         width="100%"
                         submit="onIstLagereinheitSubmit"
                         liveChange="onIstLagereinheitLiveChange"
