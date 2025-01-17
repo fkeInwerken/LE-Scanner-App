@@ -3,6 +3,7 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
 
   return BaseController.extend('inw.le_scanner.controller.Main', {
     onInit: function () {
+      
       const oViewModel = new JSONModel({
         istLagereinheitBarcode: '',
         sollLagerplatzBarcode: '',
@@ -123,7 +124,7 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
 
       if (oInput.getValue()) {
         this.aInputs[currentIndex + 1].focus();
-      }
+      } 
     },
 
     onIstLagerplatzSubmit: function (oEvent) {
@@ -149,8 +150,6 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
         this.onKeyboardAction('sollLagereinheitBarcode');
       }
 
-      // const sValueState = oInput.getValueState();
-      //  if (sValueState !== "None"){
       if (this.firstsubmit) {
         const oBuchenButton = this.byId('buchenButton');
         oBuchenButton.firePress();
@@ -165,9 +164,13 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       const oViewModel = this.getModel('viewModel');
       const istLagereinheitBarcode = oViewModel.getProperty('/istLagereinheitBarcode');
       if (istLagereinheitBarcode) {
-        const oModel = this.getOwnerComponent().getModel('');
-        const sPath = `/LE_TRANSPORT(SollLe='${istLagereinheitBarcode}')`;
-        oModel.read(sPath, {
+        const oModel = this.getOwnerComponent().getModel();
+        const sEntitySet  = "/LE_TRANSPORTSet";
+        const aFilters = [
+          new sap.ui.model.Filter("Lenum", sap.ui.model.FilterOperator.EQ, istLagereinheitBarcode)
+      ];
+        oModel.read(sEntitySet , {
+          filters: aFilters,
           success: (oData) => {
             // Setze die abgerufenen Werte in das viewModel
             oViewModel.setProperty('/TANummer', oData.TaNum);
