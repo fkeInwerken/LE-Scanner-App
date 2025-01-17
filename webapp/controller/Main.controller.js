@@ -244,7 +244,6 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       if (istLagerplatzBarcode === sollLagerplatzBarcode) {
         oViewModel.setProperty('/istLagerplatzBarcodeState', 'Success');
         oViewModel.setProperty('/istLagerplatzBarcodeStateText', 'Soll = Ist Nachlagerplatz');
-        oViewModel.setProperty('/sollLagereinheitBarcodeStateText', 'Soll = Ist Lagereinheit');
       } else {
         oViewModel.setProperty('/istLagerplatzBarcodeState', 'Warning');
         oViewModel.setProperty('/istLagerplatzBarcodeStateText', 'Soll ≠ Ist Nachlagerplatz');
