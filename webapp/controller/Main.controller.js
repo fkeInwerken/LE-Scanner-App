@@ -3,7 +3,6 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
 
   return BaseController.extend('inw.le_scanner.controller.Main', {
     onInit: function () {
-      
       const oViewModel = new JSONModel({
         istLagereinheitBarcode: '',
         sollLagerplatzBarcode: '',
@@ -111,7 +110,7 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       }
     },
 
-    onIstLagereinheitSubmit: function (oEvent) {
+    onIstLagereinheitSubmit: async function (oEvent) {
       const oInput = oEvent.getSource();
       const currentIndex = this.aInputs.indexOf(oInput);
       const oDomRef = oInput.getDomRef('inner');
@@ -120,11 +119,11 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       if (currentInputMode === 'text') {
         this.onKeyboardAction('istLagereinheitBarcode');
       }
-      this.requestBackendData();
+      await this.requestBackendData();
 
       if (oInput.getValue()) {
         this.aInputs[currentIndex + 1].focus();
-      } 
+      }
     },
 
     onIstLagerplatzSubmit: function (oEvent) {
@@ -160,26 +159,25 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       }
     },
 
-    requestBackendData: function () {
+    requestBackendData: async function () {
       const oViewModel = this.getModel('viewModel');
       const istLagereinheitBarcode = oViewModel.getProperty('/istLagereinheitBarcode');
       if (istLagereinheitBarcode) {
+        const paddedBarcode = istLagereinheitBarcode.padStart(20, '0');
         const oModel = this.getOwnerComponent().getModel();
-        const sEntitySet  = "/LE_TRANSPORTSet";
-        const aFilters = [
-          new sap.ui.model.Filter("Lenum", sap.ui.model.FilterOperator.EQ, istLagereinheitBarcode)
-      ];
-        oModel.read(sEntitySet , {
+        const sEntitySet = '/LE_TRANSPORTSet';
+        const aFilters = [new sap.ui.model.Filter('Lenum', sap.ui.model.FilterOperator.EQ, paddedBarcode)];
+
+        await oModel.read(sEntitySet, {
           filters: aFilters,
           success: (oData) => {
-            // Setze die abgerufenen Werte in das viewModel
-            oViewModel.setProperty('/TANummer', oData.TaNum);
-            oViewModel.setProperty('/anzahlPositionen', oData.TaPos);
-            oViewModel.setProperty('/sollLagerplatzBarcode', oData.SollLp);
-
-            // Optional: Fehlerbehandlung falls erforderlich
-            oViewModel.setProperty('/istLagereinheitBarcodeState', 'None');
-            oViewModel.setProperty('/istLagereinheitBarcodeStateText', '');
+            if (oData.results[0]) {
+              oViewModel.setProperty('/TANummer', oData.results[0].Btanr);
+              oViewModel.setProperty('/anzahlPositionen', oData.results[0].Btaps);
+              oViewModel.setProperty('/sollLagerplatzBarcode', oData.results[0].Lgpla);
+              oViewModel.setProperty('/istLagereinheitBarcodeState', 'None');
+              oViewModel.setProperty('/istLagereinheitBarcodeStateText', '');
+            }
           },
           error: () => {
             // Fehlerbehandlung: Im Falle eines Fehlers kann ein Fehlerstatus gesetzt werden
@@ -189,6 +187,16 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
             this.errorSound.play();
           },
         });
+
+        // if (!oViewModel.getProperty('/TANummer')) {
+        //   oViewModel.setProperty('/istLagereinheitBarcodeState', 'Error');
+        //   oViewModel.setProperty('/istLagereinheitBarcodeStateText', 'Daten Fehlerhaft.');
+        //   oViewModel.setProperty('/istLagereinheitBarcode', '');
+        //   oViewModel.setProperty('/TANummer', '');
+        //   oViewModel.setProperty('/anzahlPositionen', '');
+        //   oViewModel.setProperty('/sollLagerplatzBarcode', '');
+        //   this.errorSound.play();
+        // }
       }
     },
 
