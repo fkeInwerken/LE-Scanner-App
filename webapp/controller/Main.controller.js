@@ -195,6 +195,7 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       // if (err){
       //   this.errorSound.play();
       // }
+      this.successSound.play();
 
     },
 
@@ -244,7 +245,6 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
         oViewModel.setProperty('/istLagerplatzBarcodeState', 'Success');
         oViewModel.setProperty('/istLagerplatzBarcodeStateText', 'Soll = Ist Nachlagerplatz');
         oViewModel.setProperty('/sollLagereinheitBarcodeStateText', 'Soll = Ist Lagereinheit');
-        this.successSound.play();
       } else {
         oViewModel.setProperty('/istLagerplatzBarcodeState', 'Warning');
         oViewModel.setProperty('/istLagerplatzBarcodeStateText', 'Soll ≠ Ist Nachlagerplatz');
@@ -259,7 +259,6 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       if (istLagereinheitBarcode === sollLagereinheitBarcode) {
         oViewModel.setProperty('/sollLagereinheitBarcodeState', 'Success');
         oViewModel.setProperty('/sollLagereinheitBarcodeStateText', 'Soll = Ist Lagereinheit');
-        this.successSound.play();
       } else {
         oViewModel.setProperty('/sollLagereinheitBarcodeState', 'Warning');
         oViewModel.setProperty('/sollLagereinheitBarcodeStateText', 'Soll ≠ Ist Lagereinheit');
