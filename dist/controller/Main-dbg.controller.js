@@ -48,9 +48,9 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
       document.addEventListener('keydown', this.onKeyDown.bind(this));
 
       // Audios
-      this.successSound = new Audio('./sounds/success.mp3');
-      this.warningSound = new Audio('./sounds/warning.mp3');
-      this.errorSound = new Audio('./sounds/error.mp3');
+      this.successSound = new Audio('./sounds/success.png');
+      this.warningSound = new Audio('./sounds/warning.png');
+      this.errorSound = new Audio('./sounds/error.png');
 
       // Submitblocker
       this.firstsubmit = false;
