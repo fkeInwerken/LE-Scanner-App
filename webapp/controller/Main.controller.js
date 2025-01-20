@@ -200,6 +200,7 @@ sap.ui.define(['./BaseController', 'sap/ui/model/json/JSONModel', 'sap/m/Message
     },
 
     onInputFocus: function (oEvent) {
+      this.firstsubmit = false;
       const oDomRef = oEvent.srcElement;
       oDomRef.setSelectionRange(0, oDomRef.value.length);
     },
