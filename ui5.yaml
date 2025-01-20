@@ -4,33 +4,32 @@ metadata:
 type: application
 framework:
   name: OpenUI5
-  version: "1.131.1"
+  version: "1.71.61"
   libraries:
     - name: sap.m
     - name: sap.ui.core
-    - name: themelib_sap_horizon
-# builder:
-#     customTasks:
-#         - name: ui5-task-nwabap-deployer
-#           afterTask: generateVersionInfo
-#           configuration:
-#               resources:
-#                   path: dist
-#                   pattern: "**/*.*"
-#               connection:
-#                   server: http://ffg-sap-dfg.intern.ffg-flensburg.de:8000
-#                   useStrictSSL: false
-#                   client: "110"
-#               authentication:
-#                   user: BACHMANN
-#                   password: 1999!Inwerken6
-#               ui5:
-#                   language: DE
-#                   package: Z0WM_MOB
-#                   bspContainer: ZFFG_LE_SCANNER
-#                   bspContainerText: LE_Scanner
-#                   transportNo: DFGK913634
-#                   calculateApplicationIndex: true
+builder:
+    customTasks:
+        - name: ui5-task-nwabap-deployer
+          afterTask: generateVersionInfo
+          configuration:
+              resources:
+                  path: dist
+                  pattern: "**/*.*"
+              connection:
+                  server: http://ffg-sap-dfg.intern.ffg-flensburg.de:8000
+                  useStrictSSL: false
+                  client: "110"
+              authentication:
+                  user: BACHMANN
+                  password: 1999!Inwerken6
+              ui5:
+                  language: DE
+                  package: Z0WM_MOB
+                  bspContainer: ZFFG_LE_SCANNER
+                  bspContainerText: LE_Scanner
+                  transportNo: DFGK913634
+                  calculateApplicationIndex: true
 server:
   customMiddleware:
     - name: ui5-middleware-livereload
